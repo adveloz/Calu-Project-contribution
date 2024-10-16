@@ -1,0 +1,398 @@
+
+#header-about-container{
+    position: relative;
+    top: 7vw;
+    width: 96vw;
+    height: 30vw;
+    margin: auto;
+    border-radius: .7vw;
+    box-shadow: 0 0 10px #ddd;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    font-size: 1vw;
+}
+#header-about-text-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 5vw;
+    color: #fff;
+    gap: 1vw;
+    width: 60%;
+}
+#header-about-text-container p{
+    text-align: start; 
+    color:#fff;
+    font-size: 1.1vw;
+}
+#header-about-img-container{
+    position: absolute;
+    width: 97%;
+    height: 90%;
+    align-self: center;
+    bottom: 0;
+    top: 0;
+    overflow: hidden;
+    border-radius: .7vw;
+    z-index: -1;
+    background-image: url("../static/media/lotus-design-n-print-wRzBarqn3hs-unsplash.png");
+    background-position: right;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#header-about-img-container::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:linear-gradient(to right, rgba(255, 109, 51, 0.629),rgba(255, 109, 51, 0.563),rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+    border-radius: .7vw;
+}
+#header-about-img-container img{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 30vw;
+}
+#header-button-container{
+    display: flex;
+    gap: 1vw;
+    flex-wrap: wrap;
+    max-width: 700px;
+    margin-top: 2vw;
+}
+#header-button-container button{
+    border: 1px solid #fff;
+    background-color: transparent;
+    color: #fff;
+    width: 10vw;
+    height: 2.5vw;
+    border-radius: 2vw;
+    transition-duration: .5s;
+    font-size: 1vw;
+    padding: .5vw;
+}
+#header-button-container button:hover{
+    background-color: #FE6D36 !important;
+}  
+#header-button-container > button:nth-child(5), #header-button-container > button:nth-child(6){
+    width: 13vw;
+}
+.about-pag-container{
+    width: 93vw;
+    box-shadow: 0 0 10px #ddd;
+    display: flex;
+    flex-direction: row;
+    padding: 1.5vw;
+    margin: auto;
+    margin-top: 8vw;
+    margin-bottom: 2vw;
+    border-radius: .7vw;
+    font-size: 1vw;
+}
+#history-container img{
+    width: 30vw;
+}
+#history-container{
+    gap: 3vw;
+    align-items: center;
+}
+#history-container p{
+    padding-bottom: 2vw;
+    border-bottom: 2px solid #FE6D36;
+}
+#mission-container img{
+    width: 30vw;
+}
+#mission-container{
+    gap: 3vw;
+    align-items: center;
+    display: none;
+}
+#mission-container p{
+    padding-bottom: 2vw;
+    border-bottom: 2px solid #FE6D36;
+}
+#mission-container div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#mission-container div div{
+    display: flex;
+    flex-direction: row;
+    gap: 1.2vw;
+    margin-top: 1.5vw;
+}
+#mission-container div div img{
+    width: 4vw;
+}
+#vision-container{
+    display: flex;
+    flex-direction: row;
+    gap: 2vw;
+    display: none;
+}
+#vision-container img{
+    width: 20%;
+}
+#vision-container div img{
+    width: 100%;
+}
+#vision-container div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #eee;
+    border-radius: 2vw;
+}
+#vision-container p{
+    padding: 1vw;
+    text-align: center;
+}
+#val-container{
+    display: flex;
+    gap: 1vw;
+    justify-content: space-evenly;
+    align-items: center;
+    display: none;
+}
+#filosofy-container div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background-color: #ddd;
+    border-radius: 3vw;
+}
+#filosofy-container div p{
+    padding: 2vw;
+    font-weight: bold;
+}
+#filosofy-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    display: none;
+}
+#team-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    display: none;
+}
+.team-card{
+    box-shadow: 0 0 10px #aaa;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    width: 22vw;
+    border-radius: 2vw;
+    overflow: hidden;
+}
+.team-card img{
+    height: 85%;
+    object-fit: cover;
+}
+.team-card div{
+    padding: 1vw;
+    display: flex;
+    flex-direction: column;
+}
+.team-card div h3{
+    margin: 0;
+    font-size: 1.1vw;
+    font-weight: bold;
+}
+.team-card div span{
+    font-size: 1vw;
+}
+
+
+@media screen and (max-width: 800px){
+    #header-about-container{
+        height: 40vw;
+    }
+    #header-about-text-container{
+        width: 70%;
+    }
+    #header-about-text-container p{
+        font-size: 1.8vw;
+    }
+    #header-button-container button{
+        width: fit-content;
+        height: fit-content;
+        font-size: 1.5vw;
+        padding: 1vw;
+    }
+    #header-button-container > button:nth-child(5), #header-button-container > button:nth-child(6){
+        width: fit-content
+    }
+    #history-container{
+        display: flex;
+        flex-direction: column;
+    }
+    #history-container img{
+        width: 100%;
+        height: 40vw;
+        object-fit: cover;
+        border-radius: 1vw;
+    }
+    #history-container p{
+        font-size: 2vw;
+    }
+    #mission-container{
+        flex-direction: column;
+    }
+    #mission-container img{
+        width: 100%;
+        height: 40vw;
+        object-fit: cover;
+        border-radius: 1vw;
+    }
+    #mission-container div div img{
+        width: 7vw;
+        height: 7vw;
+    }
+    #vision-container img{
+        width: 20%;
+        object-fit: cover;
+        border-radius: 1vw;
+    }
+    #val-container{
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
+    #team-container{
+        flex-direction: row;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
+    .team-card{
+        width: 42vw;
+        margin-top: 2vw;
+        margin-bottom: 2vw;
+    }
+    .team-card div h3{
+        font-size: 1.8vw;
+    }
+    .team-card div span{
+        font-size: 1.8vw;
+    }
+}
+@media screen and (max-width: 580px){
+    #header-about-container{
+        height: 210vw;
+        top: 15vw;
+        margin-bottom: 20vw;
+        justify-content: flex-start;
+        align-items: flex-start;
+        border-radius: 3vw;
+    }
+    #header-about-text-container{
+        width: 90%;
+        margin: 2vw;
+    }
+    #header-about-text-container p{
+        font-size: 4vw;
+    }
+    #header-button-container{
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        gap: 4vw;
+        margin-top: 6vw;
+    }
+    #header-button-container button{
+        width: 80% !important;
+        font-size: 4vw;
+        border-radius: 5vw;
+        height: 11vw;
+    }
+    #header-about-img-container{
+        width: 100%;
+        height: 100%;
+        background-position: top;
+        border-radius: 3vw;
+    }
+    #header-about-img-container img{
+        width: 100%;
+        z-index: 1;
+    }
+    .about-pag-container p{
+        font-size: 4vw !important;
+        padding-bottom: 6vw !important;
+        padding-top: 5vw !important;
+    }
+    #mission-container div div{
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 1.2vw;
+        margin-top: 1.5vw;
+    }
+    #mission-container div div img{
+        width: 15vw;
+        height: 15vw;
+    }
+    #vision-container img{
+        display: none;
+    }
+    #vision-container div img{
+        display: block;
+    }
+    #vision-container div{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background-color: #eee;
+        border-radius: 8vw;
+    }
+    #val-container{
+        flex-direction: column;
+        gap: 1vw;
+    }
+    #filosofy-container{
+        border-bottom-left-radius: 10vw;
+        border-bottom-right-radius: 10vw;
+    }
+    #filosofy-container div{
+        background-color: #f3f3f3ee;
+        border-radius: 10vw;
+    }
+    #filosofy-container div p{
+        font-weight: normal;
+    }
+    #filosofy-container img{
+        height: 25vw;
+        object-fit: cover;
+    }
+    #team-container{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
+    .team-card{
+        width: 95%;
+        border-radius: 10vw;
+    }
+    .team-card div{
+        padding: 4vw;
+    }
+    .team-card div h3{
+        font-size: 5vw;
+    }
+    .team-card div span{
+        font-size: 4vw;
+    }
+}

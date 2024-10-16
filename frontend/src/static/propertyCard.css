@@ -1,0 +1,155 @@
+.property-card{
+    background-color: #fff;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    border-radius: 1vw;
+    width: 20vw;
+    height: 27vw;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    box-shadow: 0 0 10px #ddd;
+    margin: 0 2vw 0 2vw;
+    position: relative;
+}
+.property-card button{
+   width: 100%;
+   height: 2.5vw;
+   border: 0;
+   border-radius: 2vw;
+   background-color: #FE6D36;
+   color: #fff;
+   font-size: 1.1vw;
+}
+.property-card p{
+    height: 4vw;
+    overflow: auto;
+    cursor: grab;
+}
+.property-card p::-webkit-scrollbar{
+    display: none;
+}
+.property-card h3{
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
+#property-card-picture{
+    height: 12vw;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    gap: .5vw;
+    padding-left: .5vw;
+    padding-bottom: .5vw;
+}
+#property-card-picture img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    border-radius: 1vw;
+}
+#property-card-picture p{
+    position: relative;
+    z-index: 10;
+    margin: 0;
+    font-size: .8vw;
+    text-align: center;
+    border-radius: 2vw;
+    height: 1.4vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
+#price{
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+#for-sale-sign{
+    background-color: #fff;
+    color: #000;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+@media screen and (max-width: 800px) {
+    .property-card{
+        min-width: 30vw;
+        min-height: 40vw;
+        padding: 1vw;
+        padding-left: 1.5vw;
+        padding-right: 1.5vw;
+        margin: 0 6vw 0 6vw;
+    }
+    .property-card button{
+        height: 4.5vw;
+        border-radius: 4vw;
+        font-size: 1.8vw;
+     }
+     .property-card p{
+        font-size: 1.6vw;
+        min-height: fit-content;
+        height: 8vw;
+        line-height: 2.5vw;
+    }
+    #property-card-picture{
+        height: 50%;
+        position: relative;
+        padding-left: 1vw;
+        padding-bottom: 1vw;
+    }
+    #property-card-picture p{
+        font-size: 1.5vw;
+        border-radius: 2vw;
+        height: 3vw;
+        padding-left: 1.2vw;
+        padding-right: 1.2vw;
+    }
+}
+@media screen and (max-width: 580px) {
+    .property-card{
+        min-width:74vw;
+        min-height: 100vw;
+        padding: 2vw;
+        justify-content: flex-start;
+        border-radius: 3vw;
+        margin: 0 9vw 0 9vw;
+    }
+    .property-card button{
+        height: 8vw;
+        border-radius: 4vw;
+        font-size: 4vw;
+        width: 90%;
+        margin: auto;
+     }
+     .property-card p{
+        font-size:  4vw;
+        height: 25vw;
+        line-height: 5vw;
+        margin: 2vw;
+    }
+    #property-card-picture{
+        height: 50%;
+    }
+    #property-card-picture img{
+        border-radius: 3vw;
+    }
+    .property-card h3{
+        font-size: 5vw;
+        margin: 2vw;
+    }
+    #property-card-picture p{
+        font-size: 4vw;
+        border-radius: 4vw;
+        height: 6vw;
+        padding-left: 2vw;
+        padding-right: 2vw;
+    }
+}
