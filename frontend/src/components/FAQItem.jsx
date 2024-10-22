@@ -11,6 +11,7 @@ function FAQItem(props){
     }
     window.addEventListener("load", adjustSize);
     window.addEventListener("resize", adjustSize);
+    
     const Collapse = (e) =>{
         const faqItems = document.querySelectorAll(".faq-item");
         const faqAnswers = document.querySelectorAll(".faq-item-answer");

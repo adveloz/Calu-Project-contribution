@@ -12,6 +12,7 @@
     box-shadow: 0 0 10px #ddd;
     margin: 0 2vw 0 2vw;
     position: relative;
+    transition: all .4s ease;
 }
 .property-card button{
    width: 100%;

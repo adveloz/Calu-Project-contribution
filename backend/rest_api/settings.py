@@ -83,11 +83,14 @@ WSGI_APPLICATION = "rest_api.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'caluDB',
+        'NAME': 'calu',
         'USER': 'postgres',  # Reemplaza con tu usuario de PostgreSQL
         'PASSWORD': 'jabs025*',  # Reemplaza con tu contraseña
         'HOST': 'localhost',  # O la dirección de tu servidor de base de datos
         'PORT': '5432',  # Puerto por defecto de PostgreSQL
+        'OPTIONS': {
+            'client_encoding': 'UTF8',
+        },
     }
 }
 
