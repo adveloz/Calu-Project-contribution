@@ -4,10 +4,12 @@ import "../static/privacypol.css"
 import headerImg1 from "../static/media/Group 35022.png"
 import headerImg2 from "../static/media/christina-wocintechchat-com-UTw3j_aoIKM-unsplash.png"
 import headerImg3 from "../static/media/Group 35023.png"
+import ExtSearchBar from "./ExtSearchBar"
 
 function PrivacyPol(){
     return(
         <>
+            <ExtSearchBar/>
             <style>
                     {`
                     body {

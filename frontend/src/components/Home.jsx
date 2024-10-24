@@ -31,7 +31,7 @@ function Home(){
     const[propertys, setPropertys] = useState([]);
     const[movementLeft, setMovementLeft] = useState(0);
     const[movementRight, setMovementRight] = useState(0);
-    const { selects, setSelect } = useStore();
+    const { selects, setSelect, selectOptions, setSelectOptions, usableSelects, setUsableSelect, filteredPropertys, setFilteredPropertys } = useStore();
 
     useEffect(()=>{
         const getPropertys = async () => {
@@ -40,6 +40,69 @@ function Home(){
                 const response = await axios.get('http://127.0.0.1:8000/api/v1/props/');
                 console.log(response.data);
                 setPropertys(response.data);
+
+                const transformedSelects = [];
+                for(const key in selects){
+                    transformedSelects.push(selects[key]);
+                }
+                setUsableSelect(transformedSelects);
+
+                for(const key in selects){
+                    setSelect(key, "all")
+                }
+                
+
+                let pricesArr = [];
+                for(let i = 0; i < response.data.length; i++){
+                    if(!(pricesArr.includes(parseInt(response.data[i].price)))){
+                        pricesArr.push(parseInt(response.data[i].price))
+                    }
+                }
+                const sortedPricesArr = pricesArr.sort();
+                setSelectOptions('prices', sortedPricesArr);
+
+                let roomsArr = [];
+                for(let i = 0; i < response.data.length; i++){
+                    if(!(roomsArr.includes(response.data[i].numberOfRooms))){
+                        roomsArr.push(response.data[i].numberOfRooms)
+                    }
+                }
+                const sortedRoomsArr = roomsArr.sort();
+                setSelectOptions('rooms', sortedRoomsArr);
+
+                let bathroomsArr = [];
+                for(let i = 0; i < response.data.length; i++){
+                    if(!(bathroomsArr.includes(response.data[i].numberOfBathR))){
+                        bathroomsArr.push(response.data[i].numberOfBathR)
+                    }
+                }
+                const sortedBathroomsArr = bathroomsArr.sort();
+                setSelectOptions('bathrooms', sortedBathroomsArr);
+
+                let surfaceArr = []
+                for(let i = 0; i < response.data.length; i++){
+                    if(!(surfaceArr.includes(response.data[i].surface))){
+                        surfaceArr.push(response.data[i].surface)
+                    }
+                }
+                setSelectOptions('surface', surfaceArr)
+
+                let locationArr = []
+                for(let i = 0; i < response.data.length; i++){
+                    if(!(locationArr.includes(response.data[i].location))){
+                        locationArr.push(response.data[i].location)
+                    }
+                }
+                setSelectOptions('location', locationArr)
+
+                let typeArr = []
+                for(let i = 0; i < response.data.length; i++){
+                    if(!(typeArr.includes(response.data[i].type))){
+                        typeArr.push(response.data[i].type)
+                    }
+                }
+                setSelectOptions('type', typeArr)
+
             } catch (error) {
               console.error('Error al obtener los datos:', error);
             }
@@ -142,10 +205,91 @@ function Home(){
         }
     }
 
-    const modalPop = () =>{
+    const scrollLimit = () => {
+        const modalSearchBar = document.getElementById('modal-search-bar');
+        const modalSearchBarDisplay = modalSearchBar.style.display
+        if (modalSearchBarDisplay === "flex") {
+            const rect = modalSearchBar.getBoundingClientRect();
+            const scrollBottom = window.innerHeight;
+            const maxScroll = modalSearchBar.clientHeight - scrollBottom;
+            if (rect.bottom <= scrollBottom) {
+                window.scrollTo(0, maxScroll);
+            }
+        }
+    };
+
+    const modalPop = () => {
         const modalSearchBar = document.getElementById("modal-search-bar");
-        modalSearchBar.style.display = "flex";
+        const modalSearchBarDisplay = modalSearchBar.style.display;
+        if (modalSearchBarDisplay === "none") {
+            modalSearchBar.style.display = "flex";
+            window.addEventListener('scroll', scrollLimit);
+        } else {
+            modalSearchBar.style.display = "none";
+            window.removeEventListener('scroll', scrollLimit);
+        }
+    };
+    
+    const transformSelect = ()=>{
+        const transformedSelects = [];
+        for(const key in selects){
+            transformedSelects.push(selects[key]);
+        }
+        setUsableSelect(transformedSelects);
+        let toFilterPropertys = propertys;
+
+        propertys.map((property) =>{
+            for(const key in selects){
+                if(selects[key] !== "all"){
+                    if(key === "action"){
+                        if(selects[key] === "Comprar"){
+                            if(!property.forSale){
+                                toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                                break
+                            }   
+                        }
+                        else if(selects[key] === "Vender"){
+                            if(!property.clientSale){
+                                toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                                break
+                            }   
+                        }
+                        else if(selects[key] === "Rentar"){
+                            if(!property.forRent){
+                                toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                                break
+                            }   
+                        }
+                        else{
+                            if(!property.coVivienda){
+                                toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                                break
+                            }   
+                        }
+                    }
+                    if(key === "location" && selects[key] !== property.location){
+                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        break
+                    }
+                    if(key === "surface" && selects[key] !== property.surface){
+                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        break
+                    }
+                    if(key === "price" && parseInt(selects[key]) !== parseInt(property.price)){
+                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        break
+                    }
+                    if(key === "type" && selects[key] !== property.type){
+                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        break
+                    }
+                }
+            }
+            return(null)
+        })
+        setFilteredPropertys(toFilterPropertys)
     }
+
     return(
         <>
             <header className="App-header">
@@ -260,10 +404,10 @@ function Home(){
                         </div>
                         <div id = "search-bar">
                             <ul id = "tab-bar">
-                                <li onClick = {tabBarFocus}>Comprar</li>
-                                <li onClick = {tabBarFocus}>Vender</li>
-                                <li onClick = {tabBarFocus}>Rentar</li>
-                                <li onClick = {tabBarFocus}>Co-vivienda</li>
+                                <li onClick={(e) => { setSelect('action', 'Comprar'); tabBarFocus(e); }}>Comprar</li>
+                                <li onClick={(e) => { setSelect('action', 'Vender'); tabBarFocus(e); }}>Vender</li>
+                                <li onClick={(e) => { setSelect('action', 'Rentar'); tabBarFocus(e); }}>Rentar</li>
+                                <li onClick={(e) => { setSelect('action', 'Co-Vivienda'); tabBarFocus(e); }}>Co-Vivienda</li>
                                 <li>
                                     <button onClick={modalPop}>
                                         <svg
@@ -275,7 +419,7 @@ function Home(){
                                             <path d="M8 4a.5.5 0 01.5.5v3h3a.5.5 0 010 1h-3v3a.5.5 0 01-1 0v-3h-3a.5.5 0 010-1h3v-3A.5.5 0 018 4z" />
                                         </svg>
                                     </button>
-                                    <Link to = "/props/">
+                                    <Link to = "/props/" onClick={transformSelect}>
                                         <button>
                                             <svg
                                                     viewBox="0 0 24 24"
@@ -302,7 +446,11 @@ function Home(){
                                     Ubicación
                                     <select name="location" id="location" onChange={(e) => setSelect('location', e.target.value)}>
                                         <option value="all" selected>Todas las ubicaciones</option>
-                                        <option value="test">test</option>
+                                        {selectOptions.location.map((location) => {
+                                            return(
+                                                <option value={location}>{location}</option>
+                                            )
+                                        })}
                                     </select>
                                 </li>
                                 <li>
@@ -321,6 +469,11 @@ function Home(){
                                     </svg>
                                     <select name="price" id="searchPrice" onChange={(e) => setSelect('price', e.target.value)}>
                                         <option value="all" selected>Todos los precios</option>
+                                        {selectOptions.prices.map((price) => {
+                                            return(
+                                                <option value={price}>{price}</option>
+                                            )
+                                        })}
                                     </select>
                                     Precio
                                 </li>
@@ -335,6 +488,11 @@ function Home(){
                                     </svg>
                                     <select name="surface" id="surface" onChange={(e) => setSelect('surface', e.target.value)}>
                                         <option value="all" selected>Todas las superficies</option>
+                                        {selectOptions.surface.map((surface) => {
+                                            return(
+                                                <option value={surface}>{surface}</option>
+                                            )
+                                        })}
                                     </select>
                                     Superficie
                                 </li>
@@ -349,6 +507,11 @@ function Home(){
                                     </svg>
                                     <select name="types" id="types" onChange={(e) => setSelect('types', e.target.value)}>
                                         <option value="all" selected>Todos los tipos</option>
+                                        {selectOptions.type.map((type) => {
+                                            return(
+                                                <option value={type}>{type}</option>
+                                            )
+                                        })}
                                     </select>
                                     Tipo de propiedad
                                 </li>
@@ -363,7 +526,7 @@ function Home(){
                                             <path d="M8 4a.5.5 0 01.5.5v3h3a.5.5 0 010 1h-3v3a.5.5 0 01-1 0v-3h-3a.5.5 0 010-1h3v-3A.5.5 0 018 4z" />
                                         </svg>
                                     </button>
-                                    <Link to = "/props/">
+                                    <Link to = "/props/" onClick={transformSelect}>
                                         <button> 
                                             <svg
                                                 viewBox="0 0 24 24"
@@ -536,9 +699,10 @@ function Home(){
                         </div>
                         <h2>Donde cada propiedad cuenta</h2>
                         <p>¿Listo para dar el siguiente paso?<br/> Ya sea que busques tu próximo hogar o una oportunidad de inversión, estamos aquí para ayudarte a lograr tus objetivos inmobiliarios</p>
-                        <form id='quick-contact-form'> 
-                            <input type="text" placeholder='Enter your mail address'/>
+                        <form id='quick-contact-form' action="https://formsubmit.co/jabs0025@gmail.com" method="POST"> 
+                            <input type="text" name = "email" placeholder='Enter your mail address'/>
                             <button>Submit</button>
+                            <input type="hidden" name="_captcha" value="false" />
                         </form>
                     </div>
                 </div>

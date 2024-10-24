@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 const useStore = create((set) => ({
     selects: {
+      action: 'all',
       location: 'all',
       surface: 'all',
       price: 'all',
@@ -22,6 +23,33 @@ const useStore = create((set) => ({
         ...state.selects,
         [key]: value,
       },
+    })),
+
+    selectOptions: {
+      prices: [],
+      bathrooms: [],
+      rooms:[],
+      surface:[],
+      location:[],
+      type:[],
+    },
+    setSelectOptions: (key, value) => set((state) =>({
+      selectOptions: {
+        ...state.selectOptions,
+        [key]: value,
+      }
+    })),
+
+    usableSelects: [],
+
+    setUsableSelect: (selectSet) => set((state) => ({
+        usableSelects: selectSet
+    })),
+
+    filteredPropertys:[], 
+
+    setFilteredPropertys: (filter) =>set((state) =>({
+      filteredPropertys: filter
     })),
   }));
   

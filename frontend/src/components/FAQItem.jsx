@@ -5,7 +5,6 @@ function FAQItem(props){
         const faqItems = document.querySelectorAll(".faq-item");
         const faqQuestions = document.querySelectorAll(".faq-item-question-container");
         for(let i = 0; i < faqItems.length; i++){
-            console.log(faqItems[i].offsetHeight + "px");
             faqItems[i].style.height = (faqQuestions[i].offsetHeight + 1) + "px";
         }
     }

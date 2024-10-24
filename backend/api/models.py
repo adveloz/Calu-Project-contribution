@@ -23,7 +23,9 @@ class propModel(models.Model):
     elevator = models.BooleanField(default=False)
     pool = models.BooleanField(default=False)
     forSale = models.BooleanField(default=False)
-
+    clientSale = models.BooleanField(default=False)
+    forRent = models.BooleanField(default=False)
+    coVivienda = models.BooleanField(default=False)
 
 
 class reviewModel(models.Model):
@@ -33,3 +35,8 @@ class reviewModel(models.Model):
     title = models.CharField(max_length= 100)
     review = models.TextField(max_length= 300)
     img = models.CharField(max_length= 100)
+
+class faqModel(models.Model):
+    index = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5000)], primary_key=True)
+    question = models.CharField(max_length=300)
+    answer = models.TextField(max_length=2000)

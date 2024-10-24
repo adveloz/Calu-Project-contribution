@@ -90,8 +90,6 @@
     border-top-left-radius: .3vw;
     border-top-right-radius: .3vw;
     margin: 0;
-    font-weight: bold;
-
 }
 #allprops-tab-bar li{
     height: 100%;
@@ -101,6 +99,9 @@
     display: flex;
     align-items: center;
     box-sizing: content-box;
+}
+#allprops-tab-bar li{
+    font-weight: bold;
 }
 #allprops-search-parameters-list{
     background-color: #fff;

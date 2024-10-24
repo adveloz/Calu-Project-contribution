@@ -8,9 +8,11 @@ import { UilMapPinAlt } from '@iconscout/react-unicons'
 import { UilPhone } from '@iconscout/react-unicons'
 import { UilEnvelope } from '@iconscout/react-unicons'
 import '@fontsource/montserrat';
+import ExtSearchBar from './ExtSearchBar'
 function Contact(){
     return(
         <>
+        <ExtSearchBar/>
         <style>
                 {`
                 body {
@@ -66,7 +68,7 @@ function Contact(){
                     </div>
                 </div>
                 <h3>Por favor completa el formulario a continuación y uno de nuestros agentes te contactará lo antes posible.</h3>
-                <form id = "form" action="">
+                <form id = "form" action="https://formsubmit.co/jabs0025@gmail.com" method="POST">
                     <div id='input-container'>
                         <div>
                             <label htmlFor="name">Nombre</label>
@@ -90,6 +92,7 @@ function Contact(){
                         <textarea placeholder='Escribe un mensaje' name = 'message' id = 'message'/>
                     </div>
                     <button>Enviar Mensaje</button>
+                    <input type="hidden" name="_captcha" value="false" />
                 </form>
             </div>
             <Footer/>

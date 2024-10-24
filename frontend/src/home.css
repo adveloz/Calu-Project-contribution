@@ -131,6 +131,7 @@ header::before{
     list-style-type: none;
     width: 30vw;
     height: 4vw;
+    padding: 0;
     padding-bottom: 1px;
     padding-top: 1px;
     justify-content: space-evenly;
@@ -138,8 +139,6 @@ header::before{
     border-top-left-radius: .3vw;
     border-top-right-radius: .3vw;
     margin: 0;
-    font-weight: bold;
-
 }
 #tab-bar li{
     height: 100%;
@@ -149,6 +148,9 @@ header::before{
     display: flex;
     align-items: center;
     box-sizing: content-box;
+}
+#tab-bar li{
+    font-weight: bold;
 }
 #search-parameters-list{
     background-color: #fff;
@@ -515,10 +517,9 @@ header::before{
         margin-left: .5vw;
     }
     #tab-bar{
-        width: 60vw;
+        width: 65vw;
         height: 5vw;
-        justify-content: flex-start;
-        padding-left: 2vw;
+        justify-content: center;
         gap: 5vw;
     }
     #search-parameters-list{
@@ -530,6 +531,9 @@ header::before{
         column-gap: 8vw;
         justify-content: flex-start;
         align-items: center;
+    }
+    #search-parameters-list li{
+        justify-content: flex-start;
     }
     #search-parameters-list li select{
         position: absolute;
@@ -590,6 +594,7 @@ header::before{
         flex-direction: column;
         border-bottom-left-radius: 3vw;
         border-bottom-right-radius: 3vw;
+        padding: .3vw;
     }
     #search-parameters-list li{
         height: 15vw;

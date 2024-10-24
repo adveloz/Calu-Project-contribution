@@ -11,6 +11,7 @@ import { useEffect, useState} from "react";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import ExtSearchBar from './ExtSearchBar'
 
 function PropView(){
     const location = useLocation();
@@ -99,6 +100,7 @@ function PropView(){
     }
     return(
         <>
+            <ExtSearchBar/>
             <style>
                     {`
                     body {
@@ -137,7 +139,7 @@ function PropView(){
                         </svg>
                     </button>
                     <h3>Por favor completa el formulario a continuación y uno de nuestros agentes te contactará lo antes posible.</h3>
-                    <form id = "form" action="">
+                    <form id = "form" action="https://formsubmit.co/jabs0025@gmail.com" method="POST">
                         <div id='input-container'>
                             <div>
                                 <label htmlFor="name">Nombre</label>
@@ -185,7 +187,7 @@ function PropView(){
                                     >
                                     <path d="M20 9a1 1 0 001-1V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v1H9V4a1 1 0 00-1-1H4a1 1 0 00-1 1v4a1 1 0 001 1h1v6H4a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1v-1h6v1a1 1 0 001 1h4a1 1 0 001-1v-4a1 1 0 00-1-1h-1V9h1zm-3-4h2v2h-2V5zM5 5h2v2H5V5zm2 14H5v-2h2v2zm12 0h-2v-2h2v2zm-2-4h-1a1 1 0 00-1 1v1H9v-1a1 1 0 00-1-1H7V9h1a1 1 0 001-1V7h6v1a1 1 0 001 1h1v6z" />
                                 </svg>
-                                <p>{property.area}</p>
+                                <p>{property.surface}</p>
                             </div>
                             <div>   
                                 <svg

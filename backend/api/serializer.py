@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import propModel, reviewModel
+from .models import propModel, reviewModel, faqModel
 
 class PropSerializer(serializers.ModelSerializer):
     class Meta:
@@ -9,4 +9,9 @@ class PropSerializer(serializers.ModelSerializer):
 class ReviewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = reviewModel
+        fields = '__all__'
+
+class FaqSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = faqModel
         fields = '__all__'

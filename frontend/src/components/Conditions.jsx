@@ -6,10 +6,12 @@ import headerImg2 from "../static/media/Group 35024.png"
 import headerImg3 from "../static/media/Group 35036.png"
 import headerImg4 from "../static/media/Group 35023.png"
 import headerImg5 from "../static/media/brooke-cagle-uWVWQ8gF8PE-unsplash (1).png"
+import ExtSearchBar from './ExtSearchBar'
 function Conditions(){
 
     return(
         <>
+            <ExtSearchBar/>
             <style>
                     {`
                     body {

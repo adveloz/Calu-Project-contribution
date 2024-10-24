@@ -13,15 +13,71 @@ import ExtSearchBar from './ExtSearchBar'
 function AllProps(){
 
     const[propertys, setPropertys] = useState([]);
-    const { selects, setSelect } = useStore();
+    const { selects, setSelect, selectOptions, setSelectOptions, usableSelects, setUsableSelect, filteredPropertys, setFilteredPropertys } = useStore();
+
 
     useEffect(()=>{
         const getPropertys = async () => {
 
             try {
               const response = await axios.get('http://127.0.0.1:8000/api/v1/props/');
-              console.log(response.data);
               setPropertys(response.data);
+              console.log(filteredPropertys)
+              setFilteredPropertys(filteredPropertys)
+              for (const key in selects){
+                setSelect(key, "all");
+              }
+
+              let pricesArr = [];
+                for(let i = 0; i < response.data.length; i++){
+                    if(!(pricesArr.includes(parseInt(response.data[i].price)))){
+                        pricesArr.push(parseInt(response.data[i].price))
+                    }
+                }
+                const sortedPricesArr = pricesArr.sort();
+                setSelectOptions('prices', sortedPricesArr);
+
+                let roomsArr = [];
+                for(let i = 0; i < response.data.length; i++){
+                    if(!(roomsArr.includes(response.data[i].numberOfRooms))){
+                        roomsArr.push(response.data[i].numberOfRooms)
+                    }
+                }
+                const sortedRoomsArr = roomsArr.sort();
+                setSelectOptions('rooms', sortedRoomsArr);
+
+                let bathroomsArr = [];
+                for(let i = 0; i < response.data.length; i++){
+                    if(!(bathroomsArr.includes(response.data[i].numberOfBathR))){
+                        bathroomsArr.push(response.data[i].numberOfBathR)
+                    }
+                }
+                const sortedBathroomsArr = bathroomsArr.sort();
+                setSelectOptions('bathrooms', sortedBathroomsArr);
+
+                let surfaceArr = []
+                for(let i = 0; i < response.data.length; i++){
+                    if(!(surfaceArr.includes(response.data[i].surface))){
+                        surfaceArr.push(response.data[i].surface)
+                    }
+                }
+                setSelectOptions('surface', surfaceArr)
+
+                let locationArr = []
+                for(let i = 0; i < response.data.length; i++){
+                    if(!(locationArr.includes(response.data[i].location))){
+                        locationArr.push(response.data[i].location)
+                    }
+                }
+                setSelectOptions('location', locationArr)
+
+                let typeArr = []
+                for(let i = 0; i < response.data.length; i++){
+                    if(!(typeArr.includes(response.data[i].type))){
+                        typeArr.push(response.data[i].type)
+                    }
+                }
+                setSelectOptions('type', typeArr)
 
             } catch (error) {
               console.error('Error al obtener los datos:', error);
@@ -42,11 +98,91 @@ function AllProps(){
             }
         }
     }
+    const scrollLimit = () => {
+        const modalSearchBar = document.getElementById('modal-search-bar');
+        const modalSearchBarDisplay = modalSearchBar.style.display
+        if (modalSearchBarDisplay === "flex") {
+            const rect = modalSearchBar.getBoundingClientRect();
+            const scrollBottom = window.innerHeight;
+            const maxScroll = modalSearchBar.clientHeight - scrollBottom;
+            if (rect.bottom <= scrollBottom) {
+                window.scrollTo(0, maxScroll);
+            }
+        }
+    };
 
-    const modalPop = () =>{
+    const modalPop = () => {
         const modalSearchBar = document.getElementById("modal-search-bar");
-        modalSearchBar.style.display = "flex";
+        const modalSearchBarDisplay = modalSearchBar.style.display;
+        if (modalSearchBarDisplay === "none") {
+            modalSearchBar.style.display = "flex";
+            window.addEventListener('scroll', scrollLimit);
+        } else {
+            modalSearchBar.style.display = "none";
+            window.removeEventListener('scroll', scrollLimit);
+        }
+    };
+
+    const transformSelect = ()=>{
+        const transformedSelects = [];
+        for(const key in selects){
+            transformedSelects.push(selects[key]);
+        }
+        setUsableSelect(transformedSelects);
+        let toFilterPropertys = propertys;
+
+        propertys.map((property) =>{
+            for(const key in selects){
+                if(selects[key] !== "all"){
+                    if(key === "action"){
+                        if(selects[key] === "Comprar"){
+                            if(!property.forSale){
+                                toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                                break
+                            }   
+                        }
+                        else if(selects[key] === "Vender"){
+                            if(!property.clientSale){
+                                toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                                break
+                            }   
+                        }
+                        else if(selects[key] === "Rentar"){
+                            if(!property.forRent){
+                                toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                                break
+                            }   
+                        }
+                        else{
+                            if(!property.coVivienda){
+                                toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                                break
+                            }   
+                        }
+                    }
+                    if(key === "location" && selects[key] !== property.location){
+                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        break
+                    }
+                    if(key === "surface" && selects[key] !== property.surface){
+                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        break
+                    }
+                    if(key === "price" && parseInt(selects[key]) !== parseInt(property.price)){
+                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        break
+                    }
+                    if(key === "type" && selects[key] !== property.type){
+                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        break
+                    }
+                }
+            }
+            return(toFilterPropertys)
+        })
+        setFilteredPropertys(toFilterPropertys)
     }
+
 
     return(
         <>
@@ -82,10 +218,10 @@ function AllProps(){
                         </div>
                         <div id = "allprops-search-bar">
                             <ul id = "allprops-tab-bar">
-                                <li onClick = {tabBarFocus}>Comprar</li>
-                                <li onClick = {tabBarFocus}>Vender</li>
-                                <li onClick = {tabBarFocus}>Rentar</li>
-                                <li onClick = {tabBarFocus}>Co-vivienda</li>
+                                <li onClick={(e) => { setSelect('action', 'Comprar'); tabBarFocus(e); }}>Comprar</li>
+                                <li onClick={(e) => { setSelect('action', 'Vender'); tabBarFocus(e); }}>Vender</li>
+                                <li onClick={(e) => { setSelect('action', 'Rentar'); tabBarFocus(e); }}>Rentar</li>
+                                <li onClick={(e) => { setSelect('action', 'Co-Vivienda'); tabBarFocus(e); }}>Co-Vivienda</li>
                                 <li>
                                     <button onClick={modalPop}>
                                         <svg
@@ -97,7 +233,7 @@ function AllProps(){
                                             <path d="M8 4a.5.5 0 01.5.5v3h3a.5.5 0 010 1h-3v3a.5.5 0 01-1 0v-3h-3a.5.5 0 010-1h3v-3A.5.5 0 018 4z" />
                                         </svg>
                                     </button>
-                                    <Link to = "/props/">
+                                    <Link onClick={transformSelect}>
                                         <button>
                                             <svg
                                                     viewBox="0 0 24 24"
@@ -112,7 +248,7 @@ function AllProps(){
                                 </li>
                             </ul>
                             <ul id = "allprops-search-parameters-list">
-                                <li>
+                            <li>
                                     <svg
                                     viewBox="0 0 24 24"
                                     fill="currentColor"
@@ -124,6 +260,11 @@ function AllProps(){
                                     Ubicación
                                     <select name="location" id="location" onChange={(e) => setSelect('location', e.target.value)}>
                                         <option value="all" selected>Todas las ubicaciones</option>
+                                        {selectOptions.location.map((location) => {
+                                            return(
+                                                <option value={location}>{location}</option>
+                                            )
+                                        })}
                                     </select>
                                 </li>
                                 <li>
@@ -141,7 +282,12 @@ function AllProps(){
                                         <path d="M16.7 8A3 3 0 0014 6h-4a3 3 0 000 6h4a3 3 0 010 6h-4a3 3 0 01-2.7-2M12 3v3m0 12v3" />
                                     </svg>
                                     <select name="price" id="searchPrice" onChange={(e) => setSelect('price', e.target.value)}>
-                                        <option value="Todos los precios" selected>Todos los precios</option>
+                                        <option value="all" selected>Todos los precios</option>
+                                        {selectOptions.prices.map((price) => {
+                                            return(
+                                                <option value={price}>{price}</option>
+                                            )
+                                        })}
                                     </select>
                                     Precio
                                 </li>
@@ -156,6 +302,11 @@ function AllProps(){
                                     </svg>
                                     <select name="surface" id="surface" onChange={(e) => setSelect('surface', e.target.value)}>
                                         <option value="all" selected>Todas las superficies</option>
+                                        {selectOptions.surface.map((surface) => {
+                                            return(
+                                                <option value={surface}>{surface}</option>
+                                            )
+                                        })}
                                     </select>
                                     Superficie
                                 </li>
@@ -168,8 +319,13 @@ function AllProps(){
                                         >
                                         <path d="M8.354 1.146a.5.5 0 00-.708 0l-6 6A.5.5 0 001.5 7.5v7a.5.5 0 00.5.5h4.5a.5.5 0 00.5-.5v-4h2v4a.5.5 0 00.5.5H14a.5.5 0 00.5-.5v-7a.5.5 0 00-.146-.354L13 5.793V2.5a.5.5 0 00-.5-.5h-1a.5.5 0 00-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 00-.5-.5h-3a.5.5 0 00-.5.5v4H2.5z" />
                                     </svg>
-                                    <select name="types" id="types" onChange={(e) => setSelect('types', e.target.value)}>
+                                    <select name="type" id="type" onChange={(e) => setSelect('type', e.target.value)}>
                                         <option value="all" selected>Todos los tipos</option>
+                                        {selectOptions.type.map((type) => {
+                                            return(
+                                                <option value={type}>{type}</option>
+                                            )
+                                        })}
                                     </select>
                                     Tipo de propiedad
                                 </li>
@@ -184,7 +340,7 @@ function AllProps(){
                                             <path d="M8 4a.5.5 0 01.5.5v3h3a.5.5 0 010 1h-3v3a.5.5 0 01-1 0v-3h-3a.5.5 0 010-1h3v-3A.5.5 0 018 4z" />
                                         </svg>
                                     </button>
-                                    <Link to = "/props/">
+                                    <Link onClick={transformSelect}>
                                         <button>
                                             <svg
                                                     viewBox="0 0 24 24"
@@ -205,22 +361,19 @@ function AllProps(){
             <div id="search-results">
                     <p>Resultados de búsqueda:</p>
                     <div id="search-results-container">
-                        <SearchResultItem
-                            text = "Texto de prueba Texto de prueba"
-                        />
-                        <SearchResultItem
-                            text = "Texto de prueba Texto de prueba Texto de prueba"
-                        />
-                        <SearchResultItem
-                            text = "Texto de prueba"
-                        />
-                        <SearchResultItem
-                            text = "Texto de prueba"
-                        />
+                        {usableSelects.map((searchResult) =>{
+                            if(searchResult !== "all"){
+                                return(
+                                    <SearchResultItem
+                                        text = {searchResult}
+                                    />
+                                )
+                            }
+                        })}
                     </div>   
             </div>
             <div id="allprops-container">
-                {propertys.map((property) => {
+                {filteredPropertys.map((property) => {
                     return(
                         <PropertyCard 
                             id={property.id}

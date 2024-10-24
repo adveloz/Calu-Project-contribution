@@ -23,7 +23,7 @@
 #modal-search-parameters-list{
     width: 100%;  
     flex-wrap: wrap; 
-    height: 45vw;
+    height: 35vw;
     background-color: #fff;
     display: flex;
     flex-direction: row;
@@ -38,8 +38,8 @@
     padding-top: 2vw;
 }
 #ext-search-bar{
-    width: 87vw; 
-    top: 5vw;
+    width: 75vw; 
+    top: 3.5vw;
     position: absolute;
     font-size: 1.1vw;
 }
@@ -56,6 +56,8 @@
     border-top-left-radius: 2vw;
     border-top-right-radius: 2vw;
     margin: 0;
+}
+#modal-tab-bar li{
     font-weight: bold;
 }
 #modal-search-parameters-list li select{
@@ -108,7 +110,7 @@
         align-items: center;
         justify-content: center;
         gap: 12vw;
-        padding-top: 6vw;
+        padding-top: 1vw;
     }
     #modal-tab-bar{
         font-size: 3vw;

@@ -5,9 +5,28 @@ import "../static/faq.css";
 import headerImg1 from "../static/media/alberto-castillo-q-mx4mSkK9zeo-unsplash.png"
 import headerImg2 from "../static/media/Leonardo_Phoenix_A_collection_of_stunning_Spanishstyle_houses_3.png"
 import headerImg3 from "../static/media/jason-briscoe-AQl-J19ocWE-unsplash.png"
+import ExtSearchBar from './ExtSearchBar'
+import React, { useEffect,  useState } from 'react';
+import axios from "axios";
 function FAQ(){
+    const [faqSet, setFaqSet] = useState([]);
+    useEffect(()=>{
+        const getPropertys = async () => {
+
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/v1/faq/');
+                setFaqSet(response.data)
+                
+            } catch (error) {
+              console.error('Error al obtener los datos:', error);
+            }
+          };
+      
+          getPropertys()
+    }, []);
     return(
         <>
+            <ExtSearchBar/>
             <style>
                     {`
                     body {
@@ -46,31 +65,15 @@ function FAQ(){
                         <img src={headerImg1} alt="Living Room" />
                     </div>
                     <div id = "faq">
-                        <FAQItem
-                            index = "0"
-                            question = "¿Cómo puedo programar una visita a una propiedad?"
-                            answer = "Texto de prueba Texto de prueba Texto de prueba Texto de pruebaTexto de pruebaTexto de prueba Texto de prueba Texto de prueba Texto de pruebaTexto de pruebaTexto de pruebaTexto de prueba Texto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de prueba Texto de prueba Texto de prueba Texto de prueba Texto de prueba Texto de prueba "
-                        />
-                        <FAQItem
-                            index = "1"
-                            question = "¿Cómo puedo programar una visita a una propiedad?"
-                            answer = "Texto de prueba Texto de prueba Texto de prueba Texto de pruebaTexto de pruebaTexto de prueba Texto de prueba Texto de prueba Texto de pruebaTexto de pruebaTexto de pruebaTexto de prueba Texto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de prueba Texto de prueba Texto de prueba Texto de prueba Texto de prueba Texto de prueba "
-                        />
-                        <FAQItem
-                            index = "2"
-                            question = "¿Cómo puedo programar una visita a una propiedad?"
-                            answer = "Texto de prueba Texto de prueba Texto de prueba Texto de prueba Texto de prueba Texto de prueba "
-                        />
-                        <FAQItem
-                            index = "3"
-                            question = "¿Cómo puedo programar una visita a una propiedad?"
-                            answer = "Texto de prueba Texto de prueba Texto de prueba Texto de pruebaTexto de pruebaTexto de prueba Texto de prueba Texto de prueba Texto de pruebaTexto de pruebaTexto de pruebaTexto de prueba Texto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de prueba Texto de prueba Texto de prueba Texto de prueba Texto de prueba Texto de prueba "
-                        />
-                        <FAQItem
-                            index = "4"
-                            question = "¿Cómo puedo programar una visita a una propiedad?"
-                            answer = "Texto de prueba Texto de prueba Texto de prueba Texto de pruebaTexto de pruebaTexto de prueba Texto de prueba Texto de prueba Texto de pruebaTexto de pruebaTexto de pruebaTexto de prueba Texto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de pruebaTexto de prueba Texto de prueba Texto de prueba Texto de prueba Texto de prueba Texto de prueba "
-                        />
+                        {faqSet.map((faq, index) =>{
+                            return(
+                                <FAQItem
+                                    index = {index}
+                                    question = {faq.question}
+                                    answer = {faq.answer}
+                                />
+                            )
+                        })}
                     </div>
             </div>           
             <Footer/>

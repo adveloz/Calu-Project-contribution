@@ -5,6 +5,7 @@ from api import views
 router = routers.DefaultRouter()
 router.register(r'props', views.PropViewSet)
 router.register(r'reviews', views.ReviewsViewSet)
+router.register(r'faq', views.FaqViewSet)
 
 urlpatterns = [
     path('', include(router.urls))
