@@ -699,7 +699,7 @@ function Home(){
                         </div>
                         <h2>Donde cada propiedad cuenta</h2>
                         <p>¿Listo para dar el siguiente paso?<br/> Ya sea que busques tu próximo hogar o una oportunidad de inversión, estamos aquí para ayudarte a lograr tus objetivos inmobiliarios</p>
-                        <form id='quick-contact-form' action="https://formsubmit.co/jabs0025@gmail.com" method="POST"> 
+                        <form id='quick-contact-form' action="https://formsubmit.co/info@inmobiliariacalu.com" method="POST"> 
                             <input type="text" name = "email" placeholder='Enter your mail address'/>
                             <button>Submit</button>
                             <input type="hidden" name="_captcha" value="false" />

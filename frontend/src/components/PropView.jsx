@@ -70,7 +70,7 @@ function PropView(){
           
     }, [location]);
 
-    const fullStar = <svg viewBox="0 0 512 512" fill="#FE6D36" height="1em" width="1em">
+    const fullStar = <svg viewBox="0 0 512 512" fill="#FE6D36" height="1.4em" width="1.4em">
       <path
         fill="true"
         stroke="#FE6D36"
@@ -139,7 +139,7 @@ function PropView(){
                         </svg>
                     </button>
                     <h3>Por favor completa el formulario a continuación y uno de nuestros agentes te contactará lo antes posible.</h3>
-                    <form id = "form" action="https://formsubmit.co/jabs0025@gmail.com" method="POST">
+                    <form id = "form" action="https://formsubmit.co/info@inmobiliariacalu.com" method="POST">
                         <div id='input-container'>
                             <div>
                                 <label htmlFor="name">Nombre</label>
@@ -295,13 +295,10 @@ function PropView(){
                             </div>
                             <h3>4 Opiniones</h3> 
                         </div>
-                        <div id = "global-rating-buttons-container">
-                            <button>Escribir una opinión</button>
-                            <button>Calificar</button>
-                        </div>
                         <div id="reviews-form-container">
-                            <form action="">
-                                <textarea name="" id=""></textarea>
+                            <form action="https://formsubmit.co/info@inmobiliariacalu.com" method="POST">
+                                <textarea name="client-review" id="client-review" placeholder="Escriba su opinión"></textarea>
+                                <input type="submit" value="Enviar" />
                             </form>
                         </div>
                 </div>

@@ -58,7 +58,7 @@ function Contact(){
                     </div>
                     <div className = "info-sector">
                         <div className='info-icon'><UilEnvelope color = "#fff" size = "2vw"/></div>
-                        <h4>info@infoejemplo.com</h4>
+                        <h4>info@inmobiliariacalu.com</h4>
                         <h5>Correo Electrónico</h5>
                     </div>
                     <div className = "info-sector">
@@ -68,7 +68,7 @@ function Contact(){
                     </div>
                 </div>
                 <h3>Por favor completa el formulario a continuación y uno de nuestros agentes te contactará lo antes posible.</h3>
-                <form id = "form" action="https://formsubmit.co/jabs0025@gmail.com" method="POST">
+                <form id = "form" action="https://formsubmit.co/info@inmobiliariacalu.com" method="POST">
                     <div id='input-container'>
                         <div>
                             <label htmlFor="name">Nombre</label>

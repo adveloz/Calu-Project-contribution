@@ -7,6 +7,7 @@ import headerImg3 from "../static/media/Group 35036.png"
 import headerImg4 from "../static/media/Group 35023.png"
 import headerImg5 from "../static/media/brooke-cagle-uWVWQ8gF8PE-unsplash (1).png"
 import ExtSearchBar from './ExtSearchBar'
+import {Link} from 'react-router-dom'
 function Conditions(){
 
     return(
@@ -68,8 +69,12 @@ function Conditions(){
                         <p>No compartimos, vendemos ni alquilamos tu información personal a terceros sin tu consentimiento, excepto cuando sea necesario para completar una transacción solicitada o requerido por la ley.</p>
                     </div>
                     <div id = "conditions-buttons">
-                        <button id = "accept-button">Aceptar</button>
-                        <button id = "decline-button">Rechazar</button>
+                        <Link to="/">
+                            <button id = "accept-button">Aceptar</button>
+                        </Link>
+                        <Link to="">
+                            <button id = "decline-button">Rechazar</button>
+                        </Link>
                     </div>
             </div>
             <Footer/>
