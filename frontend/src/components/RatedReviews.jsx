@@ -27,7 +27,7 @@ function RatedReviews(props){
                         {rate}
                     </div>
                 </div>
-                <p>{props.text}</p>
+                <p className="rated-card-text">{props.text}</p>
             </div>
         </div>
     );

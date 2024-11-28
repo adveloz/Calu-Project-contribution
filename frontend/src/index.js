@@ -11,6 +11,8 @@ import Conditions from './components/Conditions';
 import FAQ from './components/FAQ';
 import AllProps from './components/AllProps';
 import PropView from './components/PropView';
+import AdminSite from './components/AdminSite';
+import Login from './components/Login';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -24,6 +26,8 @@ root.render(
       <Route path="/faq" element={<FAQ />} />
       <Route path="/props" element={<AllProps />} />
       <Route path={`/property/:id`} element={<PropView />} />
+      <Route path={`/admin`} element={<AdminSite />} />
+      <Route path={`/login`} element={<Login/>} />
     </Routes>
   </Router>,
 );

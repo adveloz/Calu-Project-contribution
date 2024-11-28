@@ -38,7 +38,6 @@
     padding-top: 2vw;
 }
 #ext-search-bar{
-    width: 75vw; 
     top: 3.5vw;
     position: absolute;
     font-size: 1.1vw;
@@ -59,6 +58,7 @@
 }
 #modal-tab-bar li{
     font-weight: bold;
+    cursor: pointer;
 }
 #modal-search-parameters-list li select{
     position: absolute;
@@ -85,7 +85,6 @@
         height: 115vh;
     }
     #ext-search-bar{
-        width: 87%;
         top: 10vw;
         font-size: 1.5vw;
     }
@@ -96,7 +95,7 @@
 }
 @media screen and (max-width: 580px){
     #modal-search-bar{
-        height: 170vh;
+        height: 480vw;
     }
     #ext-search-bar{
         width: 87%;

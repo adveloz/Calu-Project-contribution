@@ -1,6 +1,10 @@
 import { create } from 'zustand';
 
 const useStore = create((set) => ({
+    currentPage: "",
+    setCurrentPage: (value) => set((state) => ({
+      currentPage: value,
+    })),
     selects: {
       action: 'all',
       location: 'all',
@@ -15,8 +19,14 @@ const useStore = create((set) => ({
       elevator: 'all',
       garden: 'all',
       bedrooms: 'all',
+      doubleBedrooms: 'all',
+      simpleBedrooms: 'all',
       bathrooms: 'all',
+      fullBrooms: 'all',
+      simpleBrooms: 'all',
       garage: 'all',
+      balcon: 'all',
+      plazaGarage: 'all',
     },
     setSelect: (key, value) => set((state) => ({
       selects: {
@@ -32,6 +42,10 @@ const useStore = create((set) => ({
       surface:[],
       location:[],
       type:[],
+      doubleBedrooms:[],
+      simpleBedrooms:[],
+      fullBrooms: [],
+      simpleBrooms: [],
     },
     setSelectOptions: (key, value) => set((state) =>({
       selectOptions: {

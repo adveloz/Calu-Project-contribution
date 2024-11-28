@@ -65,7 +65,7 @@ header::before{
     width: 55%;
     position: relative;
     top: 4vw;
-    left: 5.7vw;
+    left: 2vw;
     font-size: 1.5vw;
 }
 #search-container-text p{
@@ -73,10 +73,10 @@ header::before{
     font-size: 1.3vw;
 }
 #search-bar{
-    width: 74vw;
+    width: 75vw;
     position: absolute;
     top: 15vw;
-    left: 5.7vw;
+    left: 2vw;
     font-size: 1.1vw;
 }
 #header-building-container img{
@@ -87,7 +87,7 @@ header::before{
     position: absolute;
     width: 30vw;
     bottom: -.3vw;
-    right: -16vw;
+    right: -18vw;
     pointer-events: none;
 }
 #header-building-container::after{
@@ -148,26 +148,30 @@ header::before{
     display: flex;
     align-items: center;
     box-sizing: content-box;
+    transition: all .4s ease;
 }
 #tab-bar li{
     font-weight: bold;
+}
+#tab-bar li:hover{
+    transform: scale(1.15);
 }
 #search-parameters-list{
     background-color: #fff;
     display: flex;
     flex-direction: row;
     list-style-type: none;
-    width: 60vw;
+    width: 75vw;
     height: 5.5vw;
     padding: .5vw;
     align-items: flex-start;
-    gap: 4.5vw;
+    gap: 6.5vw;
     border-bottom-left-radius: .3vw;
     border-bottom-right-radius: .3vw;
     border-top-right-radius: .3vw;
     margin: 0;
     margin-top: .1vw;
-    padding-left: 2vw;
+    padding-left: 1vw;
 }
 #search-parameters-list li{
     font-weight: bold;
@@ -175,14 +179,18 @@ header::before{
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: .2vw;
+    gap: .4vw;
     position: relative;
     padding-top: 1vw;
 }
+#search-parameters-list li:nth-child(5){
+    position: relative;
+    left: -4vw;
+}
 #search-parameters-list li select{
     position: absolute;
-    width: fit-content;
     height: 2vw;
+    width: 11vw;
     top: 3vw;
     left: 1.2vw;
     z-index: 100;
@@ -192,6 +200,7 @@ header::before{
 #search-parameters-list li select option{
     font-size: .7vw;
     height: fit-content;
+    width: fit-content;
 }
 #carousel-control{
     position: absolute;
@@ -373,6 +382,7 @@ header::before{
     flex-direction: row;
     gap: .5vw;
     align-items: center;
+    z-index: 1000;
 }
 #quick-contact-form input{
     height: 2.5vw;
@@ -414,7 +424,7 @@ header::before{
         margin-bottom: 3vw;
     }
     #client-cards-container{
-        flex-direction: column;
+        flex-direction: column-reverse;
     }
     #client-reviews-container{
         gap: 0;
@@ -570,6 +580,9 @@ header::before{
         top: 27vw;
         width: 90%;
         left: 3vw;
+    }
+    #search-parameters-list li:nth-child(5){
+        left: 0;
     }
     #tab-bar{
         width: 100%;

@@ -53,18 +53,18 @@ function Contact(){
                 <div id = "form-info">
                     <div className = "info-sector">
                         <div className='info-icon'><UilPhone color = "#fff" size = "2vw"/></div>
-                        <h4>+123 456 7890</h4>
+                        <h4>+34 647 662 840</h4>
                         <h5>Teléfono</h5>
+                    </div>
+                    <div className = "info-sector">
+                        <div className='info-icon'><UilMapPinAlt color = "#fff" size = "2vw"/></div>
+                        <h4> Calle Treinta de Mayo 11 <br/>CP: 38670, Adeje, Santa Cruz de Tenerife, España</h4>
+                        <h5>Dirección</h5>
                     </div>
                     <div className = "info-sector">
                         <div className='info-icon'><UilEnvelope color = "#fff" size = "2vw"/></div>
                         <h4>info@inmobiliariacalu.com</h4>
                         <h5>Correo Electrónico</h5>
-                    </div>
-                    <div className = "info-sector">
-                        <div className='info-icon'><UilMapPinAlt color = "#fff" size = "2vw"/></div>
-                        <h4>Calle Ejemplo 123</h4>
-                        <h5>Dirección</h5>
                     </div>
                 </div>
                 <h3>Por favor completa el formulario a continuación y uno de nuestros agentes te contactará lo antes posible.</h3>

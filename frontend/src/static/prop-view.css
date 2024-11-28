@@ -72,15 +72,16 @@
     width: 60vw;
     border-radius: 1vw;
 }
-#main-info-img-set div{
+#carousel-content{
     display: flex;
     flex-direction: row;
     gap: 1vw;
     width: 100%;
+    overflow-x: scroll;
 }
-#main-info-img-set div img{
+#carousel-content img{
     height: 8vw;
-    width: 33%;
+    object-fit: cover;
 }
 #main-info-text-container{
     flex-grow: 1;

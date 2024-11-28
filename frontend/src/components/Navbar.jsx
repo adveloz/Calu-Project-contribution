@@ -2,7 +2,35 @@ import "../static/navbar.css"
 import colorLogo from "../static/media/color-logo.png"
 import logo from "../static/media/logo.svg"
 import { Link } from 'react-router-dom';
+import useStore from './store';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+
 function Navbar(props){
+    const { currentPage, setCurrentPage } = useStore();
+    const location = useLocation();
+    useEffect(() => {
+        if (location.hash) {
+            const element = document.getElementById(location.hash.substring(1));
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        const linkSet = document.querySelectorAll("#nav-bar-link-list ul li")
+        for( let i = 0 ; i < linkSet.length; i++){
+            if(currentPage !== linkSet[i].textContent){
+                linkSet[i].style.borderBottom = "0"
+            }
+            else{
+                linkSet[i].style.borderBottom = "2px solid #FE6D36"
+            }
+        }    
+    }, [location]);
+
+    const pageMarker = (page)=>{
+        setCurrentPage(page)
+    }
     const scrollEvent = (e)=>{
         if(window.location.pathname === "/"){
             const navbar = document.getElementById("nav-bar");
@@ -10,6 +38,7 @@ function Navbar(props){
             const logoColor = document.getElementById("color-logo");
             const navBarLinks = document.querySelectorAll("#nav-bar-link-list a");
             const bars = document.querySelector("#bars");
+            
 
             if(window.scrollY > 50){
                 bars.style.fill = "#FE6D36";
@@ -66,9 +95,9 @@ function Navbar(props){
                             <Link to="/">
                                 <li>Inicio</li>
                             </Link>
-                            <Link to="/#service-section-title">
+                            <a href="#services-section">
                                 <li>Servicios</li>
-                            </Link>
+                            </a>
                             <Link to="/props">
                                 <li>Todas las propiedades</li>
                             </Link>
@@ -104,22 +133,22 @@ function Navbar(props){
                 </svg>
                 <div id = "nav-bar-link-list">
                     <ul>
-                        <Link to="/">
+                        <Link to="/" onClick = {()=>pageMarker("Inicio")}>
                             <li>Inicio</li>
                         </Link>
-                        <Link to="/#service-section-title">
+                        <Link to="/#service-section-title" onClick = {()=>pageMarker("Servicios")}>
                             <li>Servicios</li>
                         </Link>
-                        <Link to="/props">
+                        <Link to="/props" onClick = {()=>pageMarker("Todas las propiedades")}>
                             <li>Todas las propiedades</li>
                         </Link>
-                        <Link to="/about">
+                        <Link to="/about" onClick = {()=>pageMarker("Sobre nosotros")}>
                             <li>Sobre nosotros</li>
                         </Link>
-                        <Link to="/contact">
+                        <Link to="/contact" onClick = {()=>pageMarker("Contactos")}>
                             <li>Contactos</li>
                         </Link>
-                        <Link to="/faq">
+                        <Link to="/faq" onClick = {()=>pageMarker("Preguntas frecuentes")}>
                             <li>Preguntas frecuentes</li>
                         </Link>
                     </ul>

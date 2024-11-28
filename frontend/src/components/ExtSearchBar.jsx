@@ -63,9 +63,25 @@ function ExtSearchBar(){
                 const bedrooms = `${selects[key]} Dormitorios`
                 transformedSelects.push(bedrooms);
             }
+            else if(key === "doubleBedrooms" && selects[key] !== "all"){
+                const doubleBedrooms = `${selects[key]} Dormitorios dobles`
+                transformedSelects.push(doubleBedrooms);
+            }
+            else if(key === "simpleBedrooms" && selects[key] !== "all"){
+                const simpleBedrooms = `${selects[key]} Dormitorios simples`
+                transformedSelects.push(simpleBedrooms);
+            }
             else if(key === "bathrooms" && selects[key] !== "all"){
                 const bathrooms = `${selects[key]} Baños`
                 transformedSelects.push(bathrooms);
+            }
+            else if(key === "fullBrooms" && selects[key] !== "all"){
+                const fullBathrooms = `${selects[key]} Baños completos`
+                transformedSelects.push(fullBathrooms);
+            }
+            else if(key === "simpleBrooms" && selects[key] !== "all"){
+                const simpleBathrooms = `${selects[key]} Baños de aseo`
+                transformedSelects.push(simpleBathrooms);
             }
             else{
                 transformedSelects.push(selects[key]);
@@ -84,20 +100,8 @@ function ExtSearchBar(){
                                 break
                             }   
                         }
-                        else if(selects[key] === "Vender"){
-                            if(!property.clientSale){
-                                toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
-                                break
-                            }   
-                        }
-                        else if(selects[key] === "Rentar"){
-                            if(!property.forRent){
-                                toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
-                                break
-                            }   
-                        }
                         else{
-                            if(!property.coVivienda){
+                            if(!property.clientSale){
                                 toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
                                 break
                             }   
@@ -169,11 +173,47 @@ function ExtSearchBar(){
                             break
                         }
                     }
+                    if(key === "balcon"){
+                        if(selects[key]==='Balcón' && !property.balcon){
+                            toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                            break
+                        }
+                        else if(selects[key]==='Sin balcón' && property.balcon){
+                            toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                            break
+                        }
+                    }
+                    if(key === "plazaGarage"){
+                        if(selects[key]==='Plaza de garage' && !property.plazaGarage){
+                            toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                            break
+                        }
+                        else if(selects[key]==='Sin plaza de garage' && property.plazaGarage){
+                            toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                            break
+                        }
+                    }
                     if(key === "bedrooms" && parseInt(selects[key]) !== parseInt(property.numberOfRooms)){
                         toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
                         break
                     }
+                    if(key === "doubleBedrooms" && parseInt(selects[key]) !== parseInt(property.doubleBedRooms)){
+                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        break
+                    }
+                    if(key === "simpleBedrooms" && parseInt(selects[key]) !== parseInt(property.simpleBedRooms)){
+                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        break
+                    }
                     if(key === "bathrooms" && parseInt(selects[key]) !== parseInt(property.numberOfBathR)){
+                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        break
+                    }
+                    if(key === "fullBrooms" && parseInt(selects[key]) !== parseInt(property.fullBathrooms)){
+                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        break
+                    }
+                    if(key === "simpleBrooms" && parseInt(selects[key]) !== parseInt(property.simpleBathrooms)){
                         toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
                         break
                     }
@@ -222,8 +262,6 @@ function ExtSearchBar(){
                             <ul id ="modal-tab-bar">
                                 <li onClick={(e) => { setSelect('action', 'Comprar'); tabBarFocus(e); }}>Comprar</li>
                                 <li onClick={(e) => { setSelect('action', 'Vender'); tabBarFocus(e); }}>Vender</li>
-                                <li onClick={(e) => { setSelect('action', 'Rentar'); tabBarFocus(e); }}>Rentar</li>
-                                <li onClick={(e) => { setSelect('action', 'Co-Vivienda'); tabBarFocus(e); }}>Co-Vivienda</li>
                             </ul>
                             <ul id = "modal-search-parameters-list">
                             <li>
@@ -246,18 +284,13 @@ function ExtSearchBar(){
                                     Ubicación
                                 </li>
                                 <li>
-                                    <svg
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        viewBox="0 0 24 24"
-                                        height="1.3em"
-                                        width="1.3em"
-                                        >
-                                        <path stroke="none" d="M0 0h24v24H0z" />
-                                        <path d="M16.7 8A3 3 0 0014 6h-4a3 3 0 000 6h4a3 3 0 010 6h-4a3 3 0 01-2.7-2M12 3v3m0 12v3" />
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    height="1.3em"
+                                    width="1.3em"
+                                    >
+                                    <path d="M19.2 17.41A6 6 0 0114.46 20c-2.68 0-5-2-6-5H14a1 1 0 000-2H8.05c0-.33-.05-.67-.05-1s0-.67.05-1H14a1 1 0 000-2H8.47c1-3 3.31-5 6-5a6 6 0 014.73 2.59 1 1 0 101.6-1.18A7.92 7.92 0 0014.46 2c-3.76 0-7 2.84-8.07 7H4a1 1 0 000 2h2.05v2H4a1 1 0 000 2h2.39c1.09 4.16 4.31 7 8.07 7a7.92 7.92 0 006.34-3.41 1 1 0 00-1.6-1.18z" />
                                     </svg>
                                     <select name="price" id="searchPrice" onChange={(e) => setSelect('price', e.target.value)}>
                                         <option value="all" selected>Todos los precios</option>
@@ -331,7 +364,8 @@ function ExtSearchBar(){
                                     height="1.3em"
                                     width="1.3em"
                                     >
-                                    <path d="M20 9.556V3h-2v2H6V3H4v6.557C2.81 10.25 2 11.526 2 13v4a1 1 0 001 1h1v4h2v-4h12v4h2v-4h1a1 1 0 001-1v-4c0-1.474-.811-2.75-2-3.444zM11 9H6V7h5v2zm7 0h-5V7h5v2z" />
+                                    <path fill="none" d="M0 0h24v24H0z" />
+                                    <path d="M22 11v9h-2v-3H4v3H2V4h2v10h8V7h6a4 4 0 014 4zM8 13a3 3 0 110-6 3 3 0 010 6z" />
                                     </svg>
                                     <select name="bedrooms" id="bedrooms" onChange={(e) => setSelect('bedrooms', e.target.value)}>
                                         <option value="all" selected>Seleccione una opción</option>
@@ -342,6 +376,44 @@ function ExtSearchBar(){
                                         })}
                                     </select>
                                     Dormitorios
+                                </li>
+                                <li>
+                                    <svg
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    height="1.3em"
+                                    width="1.3em"
+                                    >
+                                    <path d="M20 9.556V3h-2v2H6V3H4v6.557C2.81 10.25 2 11.526 2 13v4a1 1 0 001 1h1v4h2v-4h12v4h2v-4h1a1 1 0 001-1v-4c0-1.474-.811-2.75-2-3.444zM11 9H6V7h5v2zm7 0h-5V7h5v2z" />
+                                    </svg>
+                                    <select name="doubleBedrooms" id="doubleBedrooms" onChange={(e) => setSelect('doubleBedrooms', e.target.value)}>
+                                        <option value="all" selected>Seleccione una opción</option>
+                                        {selectOptions.doubleBedrooms.map((doubleRooms) => {
+                                            return(
+                                                <option value={doubleRooms}>{doubleRooms}</option>
+                                            )
+                                        })}
+                                    </select>
+                                    Dormitorios dobles
+                                </li>
+                                <li>
+                                    <svg
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    height="1.3em"
+                                    width="1.3em"
+                                    >
+                                    <path d="M19 10V7a2 2 0 00-2-2H7a2 2 0 00-2 2v3a2 2 0 00-2 2v5h1.33L5 19h1l.67-2h10.66l.67 2h1l.67-2H21v-5a2 2 0 00-2-2m-2 0H7V7h10z" />
+                                    </svg>
+                                    <select name="simpleBedrooms" id="simpleBedrooms" onChange={(e) => setSelect('simpleBedrooms', e.target.value)}>
+                                        <option value="all" selected>Seleccione una opción</option>
+                                        {selectOptions.simpleBedrooms.map((simpleRooms) => {
+                                            return(
+                                                <option value={simpleRooms}>{simpleRooms}</option>
+                                            )
+                                        })}
+                                    </select>
+                                    Dormitorios sencillos
                                 </li>
                                 <li>
                                     <svg
@@ -361,6 +433,44 @@ function ExtSearchBar(){
                                         })}
                                     </select>
                                     Baños
+                                </li>
+                                <li>
+                                    <svg
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    height="1.3em"
+                                    width="1.3em"
+                                    >
+                                    <path d="M17.42 22.5H5.33C3.5 22.5 2 21 2 19.17v-6.09c0-.9.36-1.75 1-2.37l5.63-5.54s1.03 1.05 1.04 1.08a.985.985 0 01.11 1.16C9.77 7.44 8 10 8 10h10.67a1.25 1.25 0 010 2.5h-5.84v.83h7.92a1.25 1.25 0 010 2.5h-7.92v.84h7.09a1.25 1.25 0 010 2.5h-7.09V20h4.59a1.25 1.25 0 010 2.5M13.5 4.8S12 6.46 12 7.5c0 2 3 2 3 0 0-1.04-1.5-2.7-1.5-2.7m5-3.8S16 3.76 16 5.5c0 3.33 5 3.33 5 0C21 3.76 18.5 1 18.5 1z" />
+                                    </svg>
+                                    <select name="simpleBrooms" id="simpleBrooms" onChange={(e) => setSelect('simpleBrooms', e.target.value)}>
+                                        <option value="all" selected>Seleccione una opción</option>
+                                        {selectOptions.simpleBrooms.map((simplebathrooms) => {
+                                            return(
+                                                <option value={simplebathrooms}>{simplebathrooms}</option>
+                                            )
+                                        })}
+                                    </select>
+                                    Baños de aseo
+                                </li>
+                                <li>
+                                    <svg
+                                    viewBox="0 0 512 512"
+                                    fill="currentColor"
+                                    height="1.3em"
+                                    width="1.3em"
+                                    >
+                                    <path d="M64 131.9C64 112.1 80.1 96 99.9 96c9.5 0 18.6 3.8 25.4 10.5l16.2 16.2c-21 38.9-17.4 87.5 10.9 123L151 247c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0L345 121c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-1.3 1.3c-35.5-28.3-84.1-31.9-123-10.9l-16.3-16.2C151.8 42.5 126.4 32 99.9 32 44.7 32 0 76.7 0 131.9V448c0 17.7 14.3 32 32 32s32-14.3 32-32V131.9zM256 352c17.7 0 32-14.3 32-32s-14.3-32-32-32-32 14.3-32 32 14.3 32 32 32zm64 64c0-17.7-14.3-32-32-32s-32 14.3-32 32 14.3 32 32 32 32-14.3 32-32zm0-128c17.7 0 32-14.3 32-32s-14.3-32-32-32-32 14.3-32 32 14.3 32 32 32zm64 64c0-17.7-14.3-32-32-32s-32 14.3-32 32 14.3 32 32 32 32-14.3 32-32zm0-128c17.7 0 32-14.3 32-32s-14.3-32-32-32-32 14.3-32 32 14.3 32 32 32zm64 64c0-17.7-14.3-32-32-32s-32 14.3-32 32 14.3 32 32 32 32-14.3 32-32zm32-32c17.7 0 32-14.3 32-32s-14.3-32-32-32-32 14.3-32 32 14.3 32 32 32z" />
+                                    </svg>
+                                    <select name="fullBrooms" id="fullBrooms" onChange={(e) => setSelect('fullBrooms', e.target.value)}>
+                                        <option value="all" selected>Seleccione una opción</option>
+                                        {selectOptions.fullBrooms.map((fullbathrooms) => {
+                                            return(
+                                                <option value={fullbathrooms}>{fullbathrooms}</option>
+                                            )
+                                        })}
+                                    </select>
+                                    Baños completos
                                 </li>
                                 <li>
                                     <svg
@@ -450,7 +560,7 @@ function ExtSearchBar(){
                                     <select name="garden" id="garden" onChange={(e) => setSelect('garden', e.target.value)}>
                                         <option value="all" selected>Seleccione una opción</option>
                                         <option value="Jardín">Sí</option>
-                                        <option value="SIn jardín">No</option>
+                                        <option value="Sin jardín">No</option>
                                     </select>
                                     Jardín
                                 </li>
@@ -490,6 +600,43 @@ function ExtSearchBar(){
                                         <option value="Sin terraza">No</option>
                                     </select>
                                     Terraza
+                                </li>
+                                <li>
+                                    <svg
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    height="1.3em"
+                                    width="1.3em"
+                                    >
+                                    <path d="M10 10v2H8v-2h2m6 2v-2h-2v2h2m5 2v8H3v-8h1v-4c0-4.42 3.58-8 8-8s8 3.58 8 8v4h1M7 16H5v4h2v-4m4 0H9v4h2v-4m0-11.92C8.16 4.56 6 7.03 6 10v4h5V4.08M13 14h5v-4c0-2.97-2.16-5.44-5-5.92V14m2 2h-2v4h2v-4m4 0h-2v4h2v-4z" />
+                                    </svg>
+                                    <select name="balcon" id="balcon" onChange={(e) => setSelect('balcon', e.target.value)}>
+                                        <option value="all" selected>Seleccione una opción</option>
+                                        <option value="Balcón">Sí</option>
+                                        <option value="Sin balcón">No</option>
+                                    </select>
+                                    Balcón
+                                </li>
+                                <li>
+                                    <svg
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    viewBox="0 0 24 24"
+                                    height="1.3em"
+                                    width="1.3em"
+                                    >
+                                    <path d="M22 12 A10 10 0 0 1 12 22 A10 10 0 0 1 2 12 A10 10 0 0 1 22 12 z" />
+                                    <path d="M9 17V7h4a3 3 0 010 6H9" />
+                                    </svg>
+                                    <select name="plazaGarage" id="plazaGarage" onChange={(e) => setSelect('plazaGarage', e.target.value)}>
+                                        <option value="all" selected>Seleccione una opción</option>
+                                        <option value="Plaza de garage">Sí</option>
+                                        <option value="Sin plaza de garage">No</option>
+                                    </select>
+                                    Plaza de Garage
                                 </li>
                                 <li>
                                     <Link to = "/props/" onClick={transformSelect}>

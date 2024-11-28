@@ -6,7 +6,7 @@ function PropertyCard(props){
         <div className = "property-card" id = {props.id}>
             <div id = "property-card-picture">
                 <img src = {props.picture} alt = "Property" />
-                <p id='for-sale-sign'>For Sale</p>
+                <p id='for-sale-sign'>{props.forSaleSign}</p>
                 <p id='price'>Price: $ {props.price}</p>
             </div>
             <h3>

@@ -40,16 +40,17 @@
     position: relative;
     font-size: 1.3vw;
     top: 4vw;
+    right: 2vw;
 }
 #allprops-search-container-text p{
     color: #fff;
     font-size: 1.4vw;
 }
 #allprops-search-bar{
-    width: 74vw;
+    width: 75vw;
     position: absolute;
     top: 13vw;
-    left: 4vw;
+    left: 2vw;
     font-size: 1.1vw;
     pointer-events: all;
     z-index: 100;
@@ -99,26 +100,30 @@
     display: flex;
     align-items: center;
     box-sizing: content-box;
+    transition: all .4s ease;
 }
 #allprops-tab-bar li{
     font-weight: bold;
+}
+#allprops-tab-bar li:hover{
+    transform: scale(1.15);
 }
 #allprops-search-parameters-list{
     background-color: #fff;
     display: flex;
     flex-direction: row;
     list-style-type: none;
-    width: 60vw;
+    width: 75vw;
     height: 5.5vw;
     padding: .5vw;
     align-items: flex-start;
-    gap: 4.5vw;
+    gap: 6.5vw;
     border-bottom-left-radius: .3vw;
     border-bottom-right-radius: .3vw;
     border-top-right-radius: .3vw;
     margin: 0;
     margin-top: .1vw;
-    padding-left: 2vw;
+    padding-left: 1vw;
 }
 #allprops-search-parameters-list li{
     font-weight: bold;
@@ -132,7 +137,7 @@
 }
 #allprops-search-parameters-list li select{
     position: absolute;
-    width: fit-content;
+    width: 11vw;
     height: 2vw;
     top: 3vw;
     left: 1.2vw;
@@ -143,11 +148,16 @@
 #allprops-search-parameters-list li select option{
     font-size: .7vw;
     height: fit-content;
+    width: fit-content;
+}
+#allprops-search-parameters-list li:nth-child(5){
+    position: relative;
+    left: -4vw;
 }
 #allprops-search-container img{
     position: absolute;
     bottom: 0;
-    right: 1vw;
+    right: -1vw;
     width: 37vw;
     z-index:110;
     pointer-events: none;
@@ -225,6 +235,9 @@
         width: 13vw;
         height: 3vw;
         margin-left: .5vw;
+    }
+    #allprops-search-parameters-list li:nth-child(5){
+        left: 0;
     }
     #allprops-search-parameters-list{
         display: grid;
@@ -305,6 +318,7 @@
         border-bottom-left-radius: 3vw;
         border-bottom-right-radius: 3vw;
         margin: 0;
+        padding-left: 2vw;
     }
     #allprops-search-parameters-list li:nth-child(5){
         margin-top: 5vw;
@@ -355,5 +369,8 @@
     }
     #search-results p{
         font-size: 3vw;
+    }
+    #allprops-search-container-text{
+        right: 0;
     }
 }

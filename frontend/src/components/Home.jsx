@@ -16,10 +16,7 @@ import Vector1 from "../static/media/Vector.svg"
 import Vector2 from "../static/media/Vector (1).svg"
 import Vector3 from "../static/media/Vector (2).svg"
 import Vector4 from "../static/media/Vector (3).svg"
-import Cavendish from "../static/media/marvin-meyer-HrfZ1yOQw_E-unsplash.png"
 import Fox from "../static/media/matthew-hamilton-tNCH0sKSZbA-unsplash.png"
-import Herrera from "../static/media/todd-trapani-qXJ6NldT2Xs-unsplash.png"
-import Lopez from "../static/media/guillaume-bolduc-ByT3r80omGs-unsplash.png"
 import buildingImg from '../static/media/building.png';
 import { useEffect, useState} from "react";
 import axios from 'axios';
@@ -29,6 +26,7 @@ import useStore from './store';
 
 function Home(){
     const[propertys, setPropertys] = useState([]);
+    const[reviews, setReviews] = useState([]);
     const[movementLeft, setMovementLeft] = useState(0);
     const[movementRight, setMovementRight] = useState(0);
     const { selects, setSelect, selectOptions, setSelectOptions, usableSelects, setUsableSelect, filteredPropertys, setFilteredPropertys } = useStore();
@@ -37,6 +35,13 @@ function Home(){
         const getPropertys = async () => {
 
             try {
+                const clientReviewsResponse = await axios.get('http://127.0.0.1:8000/api/v1/reviews/');
+                const clientReviews = []
+                for(let i = 0; i < 4; i++){
+                    clientReviews.push(clientReviewsResponse.data[i])
+                }
+                setReviews(clientReviews)
+                
                 const response = await axios.get('http://127.0.0.1:8000/api/v1/props/');
                 console.log(response.data);
                 setPropertys(response.data);
@@ -70,6 +75,24 @@ function Home(){
                 const sortedRoomsArr = roomsArr.sort();
                 setSelectOptions('rooms', sortedRoomsArr);
 
+                let simpleRoomsArr = [];
+                for(let i = 0; i < response.data.length; i++){
+                    if(!(simpleRoomsArr.includes(response.data[i].simpleBedRooms))){
+                        simpleRoomsArr.push(response.data[i].simpleBedRooms)
+                    }
+                }
+                const sortedSimpleRoomsArr = simpleRoomsArr.sort();
+                setSelectOptions('simpleBedrooms', sortedSimpleRoomsArr);
+
+                let doubleRoomsArr = [];
+                for(let i = 0; i < response.data.length; i++){
+                    if(!(doubleRoomsArr.includes(response.data[i].doubleBedRooms))){
+                        doubleRoomsArr.push(response.data[i].doubleBedRooms)
+                    }
+                }
+                const sortedDoubleRoomsArr = doubleRoomsArr.sort();
+                setSelectOptions('doubleBedrooms', sortedDoubleRoomsArr);
+
                 let bathroomsArr = [];
                 for(let i = 0; i < response.data.length; i++){
                     if(!(bathroomsArr.includes(response.data[i].numberOfBathR))){
@@ -78,6 +101,24 @@ function Home(){
                 }
                 const sortedBathroomsArr = bathroomsArr.sort();
                 setSelectOptions('bathrooms', sortedBathroomsArr);
+
+                let simpleBathroomsArr = [];
+                for(let i = 0; i < response.data.length; i++){
+                    if(!(simpleBathroomsArr.includes(response.data[i].simpleBathrooms))){
+                        simpleBathroomsArr.push(response.data[i].simpleBathrooms)
+                    }
+                }
+                const sortedSimpleBathroomsArr = simpleBathroomsArr.sort();
+                setSelectOptions('simpleBrooms', sortedSimpleBathroomsArr);
+
+                let fullBathroomsArr = [];
+                for(let i = 0; i < response.data.length; i++){
+                    if(!(fullBathroomsArr.includes(response.data[i].fullBathrooms))){
+                        fullBathroomsArr.push(response.data[i].fullBathrooms)
+                    }
+                }
+                const sortedFullBathroomsArr = fullBathroomsArr.sort();
+                setSelectOptions('fullBrooms', sortedFullBathroomsArr);
 
                 let surfaceArr = []
                 for(let i = 0; i < response.data.length; i++){
@@ -248,20 +289,8 @@ function Home(){
                                 break
                             }   
                         }
-                        else if(selects[key] === "Vender"){
-                            if(!property.clientSale){
-                                toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
-                                break
-                            }   
-                        }
-                        else if(selects[key] === "Rentar"){
-                            if(!property.forRent){
-                                toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
-                                break
-                            }   
-                        }
                         else{
-                            if(!property.coVivienda){
+                            if(!property.clientSale){
                                 toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
                                 break
                             }   
@@ -406,8 +435,6 @@ function Home(){
                             <ul id = "tab-bar">
                                 <li onClick={(e) => { setSelect('action', 'Comprar'); tabBarFocus(e); }}>Comprar</li>
                                 <li onClick={(e) => { setSelect('action', 'Vender'); tabBarFocus(e); }}>Vender</li>
-                                <li onClick={(e) => { setSelect('action', 'Rentar'); tabBarFocus(e); }}>Rentar</li>
-                                <li onClick={(e) => { setSelect('action', 'Co-Vivienda'); tabBarFocus(e); }}>Co-Vivienda</li>
                                 <li>
                                     <button onClick={modalPop}>
                                         <svg
@@ -455,17 +482,12 @@ function Home(){
                                 </li>
                                 <li>
                                     <svg
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        viewBox="0 0 24 24"
-                                        height="1.3em"
-                                        width="1.3em"
-                                        >
-                                        <path stroke="none" d="M0 0h24v24H0z" />
-                                        <path d="M16.7 8A3 3 0 0014 6h-4a3 3 0 000 6h4a3 3 0 010 6h-4a3 3 0 01-2.7-2M12 3v3m0 12v3" />
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    height="1.3em"
+                                    width="1.3em"
+                                    >
+                                    <path d="M19.2 17.41A6 6 0 0114.46 20c-2.68 0-5-2-6-5H14a1 1 0 000-2H8.05c0-.33-.05-.67-.05-1s0-.67.05-1H14a1 1 0 000-2H8.47c1-3 3.31-5 6-5a6 6 0 014.73 2.59 1 1 0 101.6-1.18A7.92 7.92 0 0014.46 2c-3.76 0-7 2.84-8.07 7H4a1 1 0 000 2h2.05v2H4a1 1 0 000 2h2.39c1.09 4.16 4.31 7 8.07 7a7.92 7.92 0 006.34-3.41 1 1 0 00-1.6-1.18z" />
                                     </svg>
                                     <select name="price" id="searchPrice" onChange={(e) => setSelect('price', e.target.value)}>
                                         <option value="all" selected>Todos los precios</option>
@@ -531,8 +553,8 @@ function Home(){
                                             <svg
                                                 viewBox="0 0 24 24"
                                                 fill="#fff"
-                                                height="1.5em"
-                                                width="1.5em"
+                                                height="1.4em"
+                                                width="1.4em"
                                                 >
                                                 <path d="M16.32 14.9l5.39 5.4a1 1 0 01-1.42 1.4l-5.38-5.38a8 8 0 111.41-1.41zM10 16a6 6 0 100-12 6 6 0 000 12z" />
                                             </svg>
@@ -577,10 +599,21 @@ function Home(){
                             </div>
                             <div id = "props-cards-container">
                                 {propertys.map((property) => {
+                                    var isForSale = ""
+                                    if(property.forSale === true){
+                                        isForSale = "Para comprar"
+                                    }
+                                    else if(property.forRent === true){
+                                        isForSale = "Para rentar"
+                                    }
+                                    else{
+                                        isForSale = "Para vender"
+                                    }
                                     return(
                                         <PropertyCard 
                                             id={property.id}
-                                            picture={require(`../static/media/${property.img1}`)}
+                                            forSaleSign={isForSale}
+                                            picture={`../static/media/assets/${property.img1}`}
                                             price={property.price} 
                                             title={property.title} 
                                             description={property.description}
@@ -603,11 +636,6 @@ function Home(){
                         title = "Compra y venta de propiedades"
                         />
                         <Service
-                        icon = {Vector1}
-                        text = "Administración de inmuebles en alquiler, incluyendo el cobro de rentas, mantenimiento y atención a inquilinos."
-                        title = "Gestión de propiedades"
-                        />
-                        <Service
                         icon = {Vector3}
                         text = "Asesoramiento para inversores interesados en adquirir propiedades con potencial de rentabilidad, ayudándolos a tomar decisiones estratégicas."
                         title = "Consultoría en inversiones inmobiliarias"
@@ -616,6 +644,11 @@ function Home(){
                         icon = {Vector4}
                         text = "Determinación del valor de mercado de inmuebles, tanto para la venta como para fines hipotecarios o de inversión"
                         title = "Valoración y tasación de propiedades"
+                        />
+                        <Service
+                        icon = {Vector1}
+                        text = "Ofrecemos  la posibilidad de asistencia a nuestros clientes que necesitan hipoteca."
+                        title = "Asesoramiento Financiero"
                         />
                     </div>
                     <div id = "service-section-pictures">
@@ -644,36 +677,31 @@ function Home(){
                     <h2>Opiniones de nuestros clientes</h2>
                     <div id='client-cards-scroller'>
                         <div id='client-cards-container'>
-                            <ClientOpinion
-                                picture = {Fox}
-                                name = "Laura Fox"
-                                profession = "Programmer"
-                                title = "Mis propiedades, en manos expertas."
-                                review = "Desde que contraté sus servicios de gestión, me he olvidado de todos los dolores de cabeza que tenía con los inquilinos y el mantenimiento. Ellos se encargaran de absolutamente todo."
-                            />
-                            <ClientOpinion
-                                picture = {Cavendish}
-                                is_reversed = "is_reversed"
-                                name = "Mac Cavendish"
-                                profession = "Banker"
-                                title = "Historias de éxito que hablan por sí solas..."
-                                review = "Gracias a su equipo encontramos la casa de nuestros sueños en tiempo récord. Hicieron que todo el proceso fuera mucho más fácil de lo que esperábamos."
-                            />
-                            <ClientOpinion
-                                picture = {Herrera}
-                                name = "Elena Herrera"
-                                profession = "Doctor"
-                                title = "Mis propiedades, en manos expertas."
-                                review = "Desde que contraté sus servicios de gestión, me he olvidado de todos los dolores de cabeza que tenía con los inquilinos y el mantenimiento. Ellos se encargaran de absolutamente todo."
-                            />
-                            <ClientOpinion
-                                picture = {Lopez}
-                                is_reversed = "is_reversed"
-                                name = "María López"
-                                profession = "Teacher"
-                                title = "Mis propiedades, en manos expertas."
-                                review = "Desde que contraté sus servicios de gestión, me he olvidado de todos los dolores de cabeza que tenía con los inquilinos y el mantenimiento. Ellos se encargaran de absolutamente todo."
-                            />
+                            {reviews.map((review, index) =>{
+                                if(index % 2 === 0){
+                                    return(
+                                        <ClientOpinion
+                                            picture = {Fox}
+                                            name = {review.name}
+                                            profession = {review.job}
+                                            title = {review.title}
+                                            review = {review.review}
+                                            is_reversed = "is_reversed"
+                                        />
+                                    )
+                                }
+                                else{
+                                    return(
+                                        <ClientOpinion
+                                            picture = {Fox}
+                                            name = {review.name}
+                                            profession = {review.job}
+                                            title = {review.title}
+                                            review = {review.review}
+                                        />
+                                    )
+                                }  
+                            })}
                         </div>
                     </div>
                     <div id = "quick-contact-container">

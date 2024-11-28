@@ -11,12 +11,14 @@ function Footer(){
     return(
         <div id="footer">
             <div id = "footer-logo-container">
-                <img src={logo} alt="CalJ Logo" id="footer-logo"/>
+                <Link to= "/login">
+                    <img src={logo} alt="CalJ Logo" id="footer-logo"/>
+                </Link>
                 <h5>© 2024CalJ. All rights reserved.</h5>
             </div>
             <div id= "footer-links-container">
                 <ul id = "pages-links">
-                    <li><Link to= "/">Home</Link></li>
+                    <li><Link to= "/">Inicio</Link></li>
                     <li><Link to= "/#service-section-title">Servicios</Link></li>
                     <li><Link to= "/props">Todas las propiedades</Link></li>
                     <li><Link to= "/about">Sobre nosotros</Link></li>

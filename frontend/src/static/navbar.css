@@ -53,6 +53,10 @@
 }
 #nav-bar-link-list ul li{
     list-style-type: none;
+    transition: all .4s ease;
+}
+#nav-bar-link-list ul li:hover{
+    transform: scale(1.15);
 }
 #color-logo{
     display: none;
