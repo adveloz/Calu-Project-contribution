@@ -1,0 +1,82 @@
+services:
+  django:
+    build:
+      context: ./backend
+    container_name: django
+    entrypoint: ["/app/entrypoint.sh"]
+    volumes:
+      - ./backend:/app
+      - ./frontend/build/static:/app/static/react
+      - django_static:/app/staticfiles
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - react
+    env_file:
+      - ./backend/.env
+    networks:
+      - webnet
+
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    env_file:
+      - /backend/.env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./assets:/app/static/react/media/assets
+      - ./assets:/app/staticfiles/media/assets
+      - ./assets:/app/staticfiles/react/media/assets
+    ports:
+      - "5433:5432"
+    networks:
+      - webnet
+
+  react:
+    build:
+      context: ./frontend
+    container_name: react
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    networks:
+      - webnet
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "82:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend/build:/usr/share/nginx/html
+      - django_static:/app/staticfiles
+      - ./assets:/app/staticfiles/media/assets
+      - ./assets:/app/staticfiles/react/media/assets
+      - ./assets:/usr/share/nginx/html/static/media/assets
+    depends_on:
+      - react
+      - django
+    networks:
+      - webnet
+
+
+networks:
+  webnet:
+    driver: bridge
+    ipam:
+      config: 
+        - subnet: 172.16.238.0/24
+
+
+volumes:
+  postgres_data:
+  django_static:
