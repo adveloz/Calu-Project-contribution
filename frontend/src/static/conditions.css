@@ -1,0 +1,191 @@
+#header-conditions-container{
+    position: relative;
+    top: 7vw;
+    width: 96vw;
+    height: 30vw;
+    margin: auto;
+    border-radius: .7vw;
+    box-shadow: 0 0 10px #ddd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#header-conditions-img-container{
+    position: absolute;
+    width: 97%;
+    height: 90%;
+    align-self: center;
+    bottom: 0;
+    top: 0;
+    overflow: hidden;
+    border-radius: .7vw;
+    z-index: -1;
+    background-image: url("../static/media/lotus-design-n-print-wRzBarqn3hs-unsplash.png");
+    background-position: right;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#header-conditions-img-container::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:linear-gradient(to right, rgba(255, 109, 51, 0.629),rgba(255, 109, 51, 0.563),rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+    border-radius: .7vw;
+}
+#header-conditions-text-container p, h2{
+    margin: 0;
+    text-align: center;
+    color: #fff;
+    margin: .5vw;
+}
+#header-conditions-text-container h2{
+    font-size: 3vw
+}
+#header-conditions-text-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    margin-top: 6vw;
+}
+#conditions-img-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 11vw;
+    gap: 2.5vw;
+}
+#conditions-img-container img{
+    width: 20%;
+}
+#conditions-img-container > img:nth-child(2), #conditions-img-container > img:nth-child(4){
+    width: 30%;
+}
+#conditions-container{
+    width: 85vw;
+    background-color: #ffffff;
+    border-radius: .7vw;
+    box-shadow: 0 0 10px #ddd;
+    margin: auto;
+    padding: 2vw;
+    position: relative;
+    margin-bottom: 2vw;
+    top: -4vw;
+}
+.conditions-text{
+    margin-top: 4vw;
+}
+.conditions-text h3{
+    font-size: 1.5vw;
+    margin: 0;
+    margin-bottom: 1vw;
+    font-weight: bold;
+}
+.conditions-text p{
+    font-size: 1.2vw;
+    margin: 0;
+}
+.conditions-text ul{
+    font-size: 1.2vw;
+    margin: 0;
+    margin-top: .5vw;
+}
+#conditions-buttons{
+    width: 100%;
+    display: flex;
+    gap: 2vw;
+    justify-content: center;
+    margin-bottom: 4vw;
+    margin-top: 5vw;
+}
+#conditions-buttons button{
+    font-size: 1vw;
+    border: 0;
+    border-radius: 2vw;
+    height: 2.5vw;
+    width: 9vw;
+}
+#accept-button{
+    background-color: #FE6D36;
+    color: #fff;
+}
+#decline-button{
+    background-color: #ccc;
+}
+@media screen and (max-width: 800px) {
+    #conditions-container{
+        top: 0;
+    }
+    #header-conditions-text-container{
+        width: 90%;
+    }
+    #conditions-buttons button{
+        font-size: 1.8vw;
+        height: 3.5vw;
+        width: 13vw;
+    }
+    .conditions-text h3{
+        font-size: 2vw;
+    }
+    .conditions-text p{
+        font-size: 1.8vw;
+    }
+    .conditions-text ul{
+        font-size: 1.8vw;
+    }
+}
+@media screen and (max-width: 580px) {
+    #header-conditions-container{
+        top: 15vw;
+        height: 45vw;
+    }
+    #conditions-container{
+        top: 7vw;
+        margin-bottom: 10vw;
+    }
+    #header-conditions-text-container{
+        width: 90%;
+    }
+    #header-conditions-text-container h2{
+        font-size: 5vw;
+    }
+    #header-conditions-text-container p{
+        font-size: 3vw;
+    }
+    #conditions-buttons button{
+        font-size: 1.8vw;
+        height: 3.5vw;
+        width: 13vw;
+    }
+    .conditions-text h3{
+        font-size: 4vw;
+    }
+    .conditions-text p{
+        font-size: 3vw;
+    }
+    #conditions-img-container > img:nth-child(1), #conditions-img-container > img:nth-child(3), #conditions-img-container > img:nth-child(4), #conditions-img-container > img:nth-child(5){
+        display: none;
+    }
+    #conditions-img-container > img:nth-child(2){
+        width: 100%;
+        height: 40vw;
+    }
+    #conditions-img-container{
+        height: 100%;
+    }
+    #conditions-buttons{
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+    #conditions-buttons button{
+        width: 80%;
+        height: 10vw;
+        font-size: 4vw;
+        border-radius: 5vw;
+    }
+}

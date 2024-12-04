@@ -1,0 +1,120 @@
+#footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-top: 4vw;
+    padding-bottom: 4vw;
+    box-shadow: 0 0 10px #ddd;
+    font-size: 1vw;
+}
+#footer ul li{
+    list-style-type: none;
+}
+#footer a{
+    text-decoration: none;
+    color: #000;
+}
+#footer-links-container{
+    display: flex;
+    flex-direction: row;
+}
+#footer h5{
+    font-weight: normal;
+}
+#footer-logo-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#pages-links{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: .6vw;
+}
+#misc-links{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: .6vw;
+}
+#footer-logo{
+    width: 15vw;
+}
+#social-media{
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    gap: 1vw;
+    place-self: end;
+}
+#social-media img{
+    width: 70%;
+}
+#copyright-tablet{
+    display: none;
+}
+
+@media  screen and (max-width: 800px){ 
+    #footer{
+        flex-direction: column;
+        gap: 2vw;
+    }
+    #social-media{
+        margin: auto;
+    }
+    #pages-links{
+        font-size: 1.8vw;
+        gap: 2vw;
+    }
+    #misc-links{
+        font-size: 1.8vw;
+        gap: 2vw;
+    }
+    #footer-logo{
+        width: 30vw;
+    }
+    #footer-links-container{
+        gap: 5vw;
+    }
+    #footer-logo-container h5{
+        display: none;
+    }
+    #copyright-tablet{
+        display: block;
+        font-size: 1.8vw;
+        text-align: center;
+        margin-top: 2vw;
+    }
+    #social-media{
+        place-self: none;
+        padding: 0;
+    }
+}
+@media  screen and (max-width: 580px){
+    #footer{
+        gap: 5vw;
+    }
+    #footer-links-container{
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+    #pages-links{
+        font-size: 4vw;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+    }
+    #misc-links{
+        font-size: 4vw;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+    }
+    #copyright-tablet{
+        font-size: 3vw;
+    }
+}

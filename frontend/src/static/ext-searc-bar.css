@@ -1,0 +1,139 @@
+#modal-search-bar{
+    position: absolute;
+    width: 100%;
+    height: 120vh;
+    background-color: #000000d5;
+    z-index: 1000000;
+    pointer-events: all;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    display: none;
+}
+#modal-search-parameters-list li{
+    width: 20vw;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .2vw;
+    position: relative;
+    height: fit-content;
+}
+#modal-search-parameters-list{
+    width: 100%;  
+    flex-wrap: wrap; 
+    height: 35vw;
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    justify-content: center;
+    gap: 4.5vw;
+    border-bottom-left-radius: 2vw;
+    border-bottom-right-radius: 2vw;
+    margin: 0;
+    margin-top: .1vw;
+    padding: 0;
+    padding-top: 2vw;
+}
+#ext-search-bar{
+    top: 3.5vw;
+    position: absolute;
+    font-size: 1.1vw;
+}
+#modal-tab-bar{
+    width: 100%;
+    padding: 0;
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    height: 4vw;
+    justify-content: space-evenly;
+    align-items: center;
+    border-top-left-radius: 2vw;
+    border-top-right-radius: 2vw;
+    margin: 0;
+}
+#modal-tab-bar li{
+    font-weight: bold;
+    cursor: pointer;
+}
+#modal-search-parameters-list li select{
+    position: absolute;
+    width: 70%;
+    height: 2vw;
+    top: 2vw;
+    z-index: 100;
+    font-size: .8vw;
+    border: 2px solid #fff;
+}
+#modal-search-parameters-list li button{
+    background-color: #FE6D36;
+    border: 0;
+    border-radius: 2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 20vw;
+    height: 3vw;
+}
+@media screen and (max-width: 800px){
+    #modal-search-bar{
+        height: 115vh;
+    }
+    #ext-search-bar{
+        top: 10vw;
+        font-size: 1.5vw;
+    }
+    #modal-search-parameters-list li select{
+        font-size: 1.3vw;
+        width: 100%;
+    }
+}
+@media screen and (max-width: 580px){
+    #modal-search-bar{
+        height: 480vw;
+    }
+    #ext-search-bar{
+        width: 87%;
+        top: 20vw;
+        font-size: 1.5vw;
+        height: 100%;
+    }
+    #modal-search-parameters-list{
+        flex-direction: column;
+        height: 80%;
+        align-items: center;
+        justify-content: center;
+        gap: 12vw;
+        padding-top: 1vw;
+    }
+    #modal-tab-bar{
+        font-size: 3vw;
+        margin-bottom: .5vw;
+        height: 7vw;
+    }
+    #modal-search-parameters-list li{
+        font-size: 3vw;
+        width: 90%;
+        height: 6vw;
+    }
+    #modal-search-parameters-list li select{
+        font-size: 3vw;
+        top: 5vw;
+        height: 6vw;
+    }
+    #modal-search-parameters-list li a{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    #modal-search-parameters-list li button{
+        width: 90%;
+        height: 6vw;
+        border-radius: 3vw;
+    }
+}

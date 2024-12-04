@@ -1,0 +1,62 @@
+.val-card{
+    box-shadow: 0 0 10px #aaa;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    width: 22vw;
+    border-radius: 2vw;
+    overflow: hidden;
+}
+.val-card img{
+    height: 55%;
+    object-fit: cover;
+}
+.val-card h3,p{
+    margin: 0;
+}
+.val-card div{
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    padding: 1.5vw;
+}
+.val-card h3{
+    font-weight: bold;
+    font-size: 1.1vw;
+}
+.val-card p{
+    font-size: 1vw;
+}
+@media screen and (max-width: 800px){
+    .val-card{
+        width: 35vw;
+        margin-top: 3vw;
+        margin-bottom: 3vw;
+    }
+    .val-card img{
+        height: 27vw;
+    }
+    .val-card h3{
+        font-size: 1.8vw;
+    }
+    .val-card p{
+        font-size: 1.8vw;
+    }
+}
+@media screen and (max-width: 580px){
+    .val-card{
+        width: 100%;
+        border-radius: 7vw;
+    }
+    .val-card img{
+        height: 50vw;
+    }
+    .val-card h3{
+        font-size: 5vw;
+        padding-left: 5vw;
+    }
+    .val-card p{
+        padding-left: 5vw;
+        font-size: 1.8vw;
+    }
+}
