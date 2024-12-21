@@ -3,18 +3,16 @@ services:
     build:
       context: ./backend
     container_name: django
+    env_file:
+      - .env
     entrypoint: ["/app/entrypoint.sh"]
     volumes:
       - ./backend:/app
-      - ./frontend/build/static:/app/static/react
       - django_static:/app/staticfiles
     ports:
       - "8000:8000"
     depends_on:
       - postgres
-      - react
-    env_file:
-      - .env
     networks:
       - calu-network
 
@@ -29,9 +27,6 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./assets:/app/static/react/media/assets
-      - ./assets:/app/staticfiles/media/assets
-      - ./assets:/app/staticfiles/react/media/assets
     ports:
       - "5433:5432"
     networks:
@@ -59,15 +54,12 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./frontend/build:/usr/share/nginx/html
       - django_static:/app/staticfiles
-      - ./assets:/app/staticfiles/media/assets
-      - ./assets:/app/staticfiles/react/media/assets
-      - ./assets:/usr/share/nginx/html/static/media/assets
+      - ./assets:/app/media
     depends_on:
       - react
       - django
     networks:
       - calu-network
-
 
 networks:
   calu-network:
@@ -75,7 +67,6 @@ networks:
     ipam:
       config: 
         - subnet: 172.16.238.0/24
-
 
 volumes:
   postgres_data:
