@@ -38,6 +38,7 @@ services:
     build:
       context: ./frontend
     container_name: react
+    # entrypoint: ["/app/entrypoint.sh"]
     volumes:
       - react_build:/app/build
     # Remove in production
@@ -57,6 +58,7 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - django_static:/app/staticfiles
       - react_build:/app/build
+      - ./assets:/app/build/static/media/assets
     depends_on:
       - react
       - django

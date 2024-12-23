@@ -19,7 +19,26 @@ SECRET_KEY = get_env_variable('DJANGO_SECRET_KEY')
 
 DEBUG = os.getenv('DEBUG', '0') == '1'
 
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# REST Framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'URL_FIELD_NAME': 'url',
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
+}
+
+# Force Django to use the correct domain and port for URLs
+USE_X_FORWARDED_PORT = True
+
+# Use X-Forwarded-Host header from Nginx
+USE_X_FORWARDED_HOST = True
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+FORCE_SCRIPT_NAME = ''
 
 ALLOWED_HOSTS = [
     '*',
@@ -31,6 +50,35 @@ ALLOWED_HOSTS = [
     # 'https://www.inmobiliariacalu.com'
 ]
 
+# CORS settings
+# CORS_ALLOW_ALL_ORIGINS = True  # to True for testing
+# If you need to allow cookies to be sent with requests
+# CORS_ALLOW_CREDENTIALS = False  # To False for testing
+# CORS_ALLOWED_ORIGINS = [
+    # Access api though nginx localhost
+    # "http://localhost:82",
+    # "http://127.0.0.1:82",
+    
+    # Access api though django localhost 
+    # "http://localhost:8000",
+    # "http://127.0.0.1:8000",
+    
+    # React localhost
+    # "http://localhost:3000",
+    # "http://127.0.0.1:3000",
+    
+    # localhost
+    # "http://localhost",
+    # "http://127.0.0.1",
+    # "http://172.16.238.4",
+     
+    # "https://inmobiliariacalu.com",
+    # "https://www.inmobiliariacalu.com",
+    # "http://inmobiliariacalu.com",
+    # "http://www.inmobiliariacalu.com",
+    
+# ]
+
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -41,11 +89,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'rest_framework',
     "api",
-    'corsheaders',
+    # 'corsheaders',
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    # 'corsheaders.middleware.CorsMiddleware',  
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -55,44 +103,22 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ALLOW_ALL_ORIGINS = False
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost",
-    "http://127.0.0.1",
-    # "http://localhost:3000",
-    # "http://localhost:8000",
-    # "http://172.16.238.5:3000",
-    # "http://172.16.238.5:8000",
-    # "https://172.16.238.5",
-    # "https://172.16.238.5:82",
-    "https://inmobiliariacalu.com",
-    "https://www.inmobiliariacalu.com",
-    "http://inmobiliariacalu.com",
-    "http://www.inmobiliariacalu.com",
-    # "https://www.inmobiliariacalu.com:80",
-    # "https://www.inmobiliariacalu.com:82",
-    # "https://www.inmobiliariacalu.com:8000",
-]
-
-# CORS_ALLOW_METHODS = [
-#     "GET",
-#     "POST",
-#     "PUT",
-#     "PATCH",
-#     "DELETE",
-#     "OPTIONS",
-# ]
-
-# If you need to allow cookies to be sent with requests
-CORS_ALLOW_CREDENTIALS = True  
-CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
+CSRF_COOKIE_SECURE = True
+
+# False so JS can read it
+CSRF_COOKIE_HTTPONLY = False
+
+CSRF_USE_SESSIONS = False
+
+CSRF_COOKIE_SAMESITE = 'Lax'
+
 CSRF_TRUSTED_ORIGINS = [
-    
-    # "https://172.16.238.5",
-    # "https://172.16.238.5:82",
+    "https://172.16.238.5",
+    "https://172.16.238.5:82",
+    "http://127.0.0.1:82",
+    "http://localhost:82",
     "http://inmobiliariacalu.com",
     "http://www.inmobiliariacalu.com",
     "https://inmobiliariacalu.com",

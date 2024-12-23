@@ -1,5 +1,5 @@
 # Stage 1: Build the React app
-FROM node:18 AS build
+FROM node:18
 
 WORKDIR /app
 
@@ -13,14 +13,11 @@ COPY . .
 # Build the React application
 RUN npm run build --verbose
 
-# Stage 2: Serve the app with Nginx
-# FROM nginx:latest
+# Make entrypoint script executable
+# RUN chmod +x /app/entrypoint.sh
 
-# Copy the build artifacts from the previous stage to Nginx
-# COPY --from=build /app/build /usr/share/nginx/html
+# Set the entrypoint
+# ENTRYPOINT ["/app/entrypoint.sh"]
 
-# Expose port 80 to the outside world
-# EXPOSE 80
-
-# Run Nginx in the foreground
-# CMD ["nginx", "-g", "daemon off;"]
+# Keep container running
+CMD tail -f /dev/null
