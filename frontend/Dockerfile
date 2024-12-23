@@ -5,22 +5,22 @@ WORKDIR /app
 
 # Copy package.json and package-lock.json for installing dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm install --fetch-timeout=60000 --global-style
 
 # Copy the rest of your application code
 COPY . .
 
 # Build the React application
-RUN npm run build
+RUN npm run build --verbose
 
 # Stage 2: Serve the app with Nginx
-FROM nginx:latest
+# FROM nginx:latest
 
 # Copy the build artifacts from the previous stage to Nginx
-COPY --from=build /app/build /usr/share/nginx/html
+# COPY --from=build /app/build /usr/share/nginx/html
 
 # Expose port 80 to the outside world
-EXPOSE 80
+# EXPOSE 80
 
 # Run Nginx in the foreground
-CMD ["nginx", "-g", "daemon off;"]
+# CMD ["nginx", "-g", "daemon off;"]

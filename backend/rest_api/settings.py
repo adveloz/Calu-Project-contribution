@@ -135,7 +135,7 @@ DATABASES = {
         'NAME': get_env_variable('DB_NAME'),
         'USER': get_env_variable('DB_USER'),
         'PASSWORD': get_env_variable('DB_PASSWORD'),
-        'HOST': 'postgres', # Seervice name for docker-compose
+        'HOST': 'postgres', # Service name for docker compose
         'PORT': '5432',
     }
 }
@@ -163,12 +163,13 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
+# I don't need this, I'm serving static files with nginx
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static',
+#     BASE_DIR / 'static/react',
+# ]
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-    BASE_DIR / 'static/react',
-]
+STATIC_URL = '/staticfiles/'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
