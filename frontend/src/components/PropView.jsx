@@ -29,7 +29,8 @@ function PropView(){
                 const indiceUltimoSlash = urlActual.lastIndexOf('/');   
                 let id = urlActual.substring(indiceUltimoSlash + 1)
 
-                const response = await axios.get(`http://127.0.0.1:8000/api/v1/props/${id}/`);
+                // const response = await axios.get('http://127.0.0.1:8000/api/v1/props/${id}/');
+                const response = await axios.get(`/api/v1/props/${id}/`);
                 setProperty(response.data);
 
                 setImgset([
@@ -66,7 +67,8 @@ function PropView(){
                             response.data.mapImg
                         ])
 
-                const getPropSet = await axios.get('http://127.0.0.1:8000/api/v1/props');
+                // const getPropSet = await axios.get('http://127.0.0.1:8000/api/v1/props');
+                const getPropSet = await axios.get('/api/v1/props');
                 const propSet = getPropSet.data;
 
                 for (let i = 0; i < propSet.length; i++){
@@ -86,7 +88,8 @@ function PropView(){
                         }
                    }
                 }
-                const reviewsResponse = await axios.get(`http://127.0.0.1:8000/api/v1/reviews/`);
+                // const reviewsResponse = await axios.get('http://127.0.0.1:8000/api/v1/reviews/');
+                const reviewsResponse = await axios.get('/api/v1/reviews/');
                 let reviewArr = []
                 for(let i = 0; i < 4 ; i++){
                     reviewArr.push(reviewsResponse.data[i])
@@ -215,36 +218,36 @@ function PropView(){
                         <div id="main-info-img-set">
                             <img src={`../static/media/assets/${imgSet[mainImgIndex]}`} alt="Property"/>
                             <div id = "carousel-content">
-                                {imgSet[0] && <img index = "0" src={`../static/media/assets${imgSet[0]}`} alt="Property" onClick = {() => switchImg(0)}/>}
-                                {imgSet[1] && <img index = "1" src={`../static/media/assets${imgSet[1]}`} alt="Property" onClick = {() => switchImg(1)}/>}
-                                {imgSet[2] && <img index = "2" src={`../static/media/assets${imgSet[2]}`} alt="Property" onClick = {() => switchImg(2)}/>}
-                                {imgSet[3] && <img index = "3" src={`../static/media/assets${imgSet[3]}`} alt="Property" onClick = {() => switchImg(3)}/>}
-                                {imgSet[4] && <img index = "4" src={`../static/media/assets${imgSet[4]}`} alt="Property" onClick = {() => switchImg(4)}/>}
-                                {imgSet[5] && <img index = "5" src={`../static/media/assets${imgSet[5]}`} alt="Property" onClick = {() => switchImg(5)}/>}
-                                {imgSet[6] && <img index = "6" src={`../static/media/assets${imgSet[6]}`} alt="Property" onClick = {() => switchImg(6)}/>}
-                                {imgSet[7] && <img index = "7" src={`../static/media/assets${imgSet[7]}`} alt="Property" onClick = {() => switchImg(7)}/>}
-                                {imgSet[8] && <img index = "8" src={`../static/media/assets${imgSet[8]}`} alt="Property" onClick = {() => switchImg(8)}/>}
-                                {imgSet[9] && <img index = "9" src={`../static/media/assets${imgSet[9]}`} alt="Property" onClick = {() => switchImg(9)}/>}
-                                {imgSet[10] && <img index = "10" src={`../static/media/assets${imgSet[10]}`} alt="Property" onClick = {() => switchImg(10)}/>}
-                                {imgSet[11] && <img index = "11" src={`../static/media/assets${imgSet[11]}`} alt="Property" onClick = {() => switchImg(11)}/>}
-                                {imgSet[12] && <img index = "12" src={`../static/media/assets${imgSet[12]}`} alt="Property" onClick = {() => switchImg(12)}/>}
-                                {imgSet[13] && <img index = "13" src={`../static/media/assets${imgSet[13]}`} alt="Property" onClick = {() => switchImg(13)}/>}
-                                {imgSet[14] && <img index = "14" src={`../static/media/assets${imgSet[14]}`} alt="Property" onClick = {() => switchImg(14)}/>}
-                                {imgSet[15] && <img index = "15" src={`../static/media/assets${imgSet[15]}`} alt="Property" onClick = {() => switchImg(15)}/>}
-                                {imgSet[16] && <img index = "16" src={`../static/media/assets${imgSet[16]}`} alt="Property" onClick = {() => switchImg(16)}/>}
-                                {imgSet[17] && <img index = "17" src={`../static/media/assets${imgSet[17]}`} alt="Property" onClick = {() => switchImg(17)}/>}
-                                {imgSet[18] && <img index = "18" src={`../static/media/assets${imgSet[18]}`} alt="Property" onClick = {() => switchImg(18)}/>}
-                                {imgSet[19] && <img index = "19" src={`../static/media/assets${imgSet[19]}`} alt="Property" onClick = {() => switchImg(19)}/>}
-                                {imgSet[20] && <img index = "20" src={`../static/media/assets${imgSet[20]}`} alt="Property" onClick = {() => switchImg(20)}/>}
-                                {imgSet[21] && <img index = "21" src={`../static/media/assets${imgSet[21]}`} alt="Property" onClick = {() => switchImg(21)}/>}
-                                {imgSet[22] && <img index = "22" src={`../static/media/assets${imgSet[22]}`} alt="Property" onClick = {() => switchImg(22)}/>}
-                                {imgSet[23] && <img index = "23" src={`../static/media/assets${imgSet[23]}`} alt="Property" onClick = {() => switchImg(23)}/>}
-                                {imgSet[24] && <img index = "24" src={`../static/media/assets${imgSet[24]}`} alt="Property" onClick = {() => switchImg(24)}/>}
-                                {imgSet[25] && <img index = "25" src={`../static/media/assets${imgSet[25]}`} alt="Property" onClick = {() => switchImg(25)}/>}
-                                {imgSet[26] && <img index = "26" src={`../static/media/assets${imgSet[26]}`} alt="Property" onClick = {() => switchImg(26)}/>}
-                                {imgSet[27] && <img index = "27" src={`../static/media/assets${imgSet[27]}`} alt="Property" onClick = {() => switchImg(27)}/>}
-                                {imgSet[28] && <img index = "28" src={`../static/media/assets${imgSet[28]}`} alt="Property" onClick = {() => switchImg(28)}/>}
-                                {imgSet[29] && <img index = "29" src={`../static/media/assets${imgSet[29]}`} alt="Property" onClick = {() => switchImg(29)}/>}
+                                {imgSet[0] && <img index = "0" src={`../static/media/assets/${imgSet[0]}`} alt="Property" onClick = {() => switchImg(0)}/>}
+                                {imgSet[1] && <img index = "1" src={`../static/media/assets/${imgSet[1]}`} alt="Property" onClick = {() => switchImg(1)}/>}
+                                {imgSet[2] && <img index = "2" src={`../static/media/assets/${imgSet[2]}`} alt="Property" onClick = {() => switchImg(2)}/>}
+                                {imgSet[3] && <img index = "3" src={`../static/media/assets/${imgSet[3]}`} alt="Property" onClick = {() => switchImg(3)}/>}
+                                {imgSet[4] && <img index = "4" src={`../static/media/assets/${imgSet[4]}`} alt="Property" onClick = {() => switchImg(4)}/>}
+                                {imgSet[5] && <img index = "5" src={`../static/media/assets/${imgSet[5]}`} alt="Property" onClick = {() => switchImg(5)}/>}
+                                {imgSet[6] && <img index = "6" src={`../static/media/assets/${imgSet[6]}`} alt="Property" onClick = {() => switchImg(6)}/>}
+                                {imgSet[7] && <img index = "7" src={`../static/media/assets/${imgSet[7]}`} alt="Property" onClick = {() => switchImg(7)}/>}
+                                {imgSet[8] && <img index = "8" src={`../static/media/assets/${imgSet[8]}`} alt="Property" onClick = {() => switchImg(8)}/>}
+                                {imgSet[9] && <img index = "9" src={`../static/media/assets/${imgSet[9]}`} alt="Property" onClick = {() => switchImg(9)}/>}
+                                {imgSet[10] && <img index = "10" src={`../static/media/assets/${imgSet[10]}`} alt="Property" onClick = {() => switchImg(10)}/>}
+                                {imgSet[11] && <img index = "11" src={`../static/media/assets/${imgSet[11]}`} alt="Property" onClick = {() => switchImg(11)}/>}
+                                {imgSet[12] && <img index = "12" src={`../static/media/assets/${imgSet[12]}`} alt="Property" onClick = {() => switchImg(12)}/>}
+                                {imgSet[13] && <img index = "13" src={`../static/media/assets/${imgSet[13]}`} alt="Property" onClick = {() => switchImg(13)}/>}
+                                {imgSet[14] && <img index = "14" src={`../static/media/assets/${imgSet[14]}`} alt="Property" onClick = {() => switchImg(14)}/>}
+                                {imgSet[15] && <img index = "15" src={`../static/media/assets/${imgSet[15]}`} alt="Property" onClick = {() => switchImg(15)}/>}
+                                {imgSet[16] && <img index = "16" src={`../static/media/assets/${imgSet[16]}`} alt="Property" onClick = {() => switchImg(16)}/>}
+                                {imgSet[17] && <img index = "17" src={`../static/media/assets/${imgSet[17]}`} alt="Property" onClick = {() => switchImg(17)}/>}
+                                {imgSet[18] && <img index = "18" src={`../static/media/assets/${imgSet[18]}`} alt="Property" onClick = {() => switchImg(18)}/>}
+                                {imgSet[19] && <img index = "19" src={`../static/media/assets/${imgSet[19]}`} alt="Property" onClick = {() => switchImg(19)}/>}
+                                {imgSet[20] && <img index = "20" src={`../static/media/assets/${imgSet[20]}`} alt="Property" onClick = {() => switchImg(20)}/>}
+                                {imgSet[21] && <img index = "21" src={`../static/media/assets/${imgSet[21]}`} alt="Property" onClick = {() => switchImg(21)}/>}
+                                {imgSet[22] && <img index = "22" src={`../static/media/assets/${imgSet[22]}`} alt="Property" onClick = {() => switchImg(22)}/>}
+                                {imgSet[23] && <img index = "23" src={`../static/media/assets/${imgSet[23]}`} alt="Property" onClick = {() => switchImg(23)}/>}
+                                {imgSet[24] && <img index = "24" src={`../static/media/assets/${imgSet[24]}`} alt="Property" onClick = {() => switchImg(24)}/>}
+                                {imgSet[25] && <img index = "25" src={`../static/media/assets/${imgSet[25]}`} alt="Property" onClick = {() => switchImg(25)}/>}
+                                {imgSet[26] && <img index = "26" src={`../static/media/assets/${imgSet[26]}`} alt="Property" onClick = {() => switchImg(26)}/>}
+                                {imgSet[27] && <img index = "27" src={`../static/media/assets/${imgSet[27]}`} alt="Property" onClick = {() => switchImg(27)}/>}
+                                {imgSet[28] && <img index = "28" src={`../static/media/assets/${imgSet[28]}`} alt="Property" onClick = {() => switchImg(28)}/>}
+                                {imgSet[29] && <img index = "29" src={`../static/media/assets/${imgSet[29]}`} alt="Property" onClick = {() => switchImg(29)}/>}
                             </div>
                         </div>
                         <div id="main-info-data">
@@ -392,7 +395,8 @@ function PropView(){
                 </div>
             </div>
             <div id="map-container">
-                    <img src={imgSet[imgSet.length - 1]} alt="Map" />
+                    {/* <img src={imgSet[imgSet.length - 1]} alt="Map" /> */}
+                    <img src={`../static/media/assets/${imgSet[imgSet.length - 1]}`} alt="Map" />
             </div>
             <div id="prop-navigate-button-container">
                 {previousProp && (<Link to = {`/property/${previousProp}`}>

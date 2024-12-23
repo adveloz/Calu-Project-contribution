@@ -14,7 +14,8 @@ function FAQ(){
         const getPropertys = async () => {
 
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/v1/faq/');
+                // const response = await axios.get('http://127.0.0.1:8000/api/v1/faq/');
+                const response = await axios.get('/api/v1/faq/');
                 setFaqSet(response.data)
                 
             } catch (error) {

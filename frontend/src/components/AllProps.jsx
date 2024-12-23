@@ -20,7 +20,8 @@ function AllProps(){
         const getPropertys = async () => {
 
             try {
-              const response = await axios.get('http://127.0.0.1:8000/api/v1/props/');
+            //   const response = await axios.get('http://127.0.0.1:8000/api/v1/props/');
+              const response = await axios.get('/api/v1/props/');
               setPropertys(response.data);
               console.log(filteredPropertys)
               setFilteredPropertys(filteredPropertys)
@@ -37,7 +38,7 @@ function AllProps(){
                 const sortedPricesArr = pricesArr.sort();
                 setSelectOptions('prices', sortedPricesArr);
 
-                let roomsArr = [];
+              let roomsArr = [];
                 for(let i = 0; i < response.data.length; i++){
                     if(!(roomsArr.includes(response.data[i].numberOfRooms))){
                         roomsArr.push(response.data[i].numberOfRooms)
@@ -46,7 +47,7 @@ function AllProps(){
                 const sortedRoomsArr = roomsArr.sort();
                 setSelectOptions('rooms', sortedRoomsArr);
 
-                let simpleRoomsArr = [];
+              let simpleRoomsArr = [];
                 for(let i = 0; i < response.data.length; i++){
                     if(!(simpleRoomsArr.includes(response.data[i].simpleBedRooms))){
                         simpleRoomsArr.push(response.data[i].simpleBedRooms)
@@ -55,7 +56,7 @@ function AllProps(){
                 const sortedSimpleRoomsArr = simpleRoomsArr.sort();
                 setSelectOptions('simpleBedrooms', sortedSimpleRoomsArr);
 
-                let doubleRoomsArr = [];
+              let doubleRoomsArr = [];
                 for(let i = 0; i < response.data.length; i++){
                     if(!(doubleRoomsArr.includes(response.data[i].doubleBedRooms))){
                         doubleRoomsArr.push(response.data[i].doubleBedRooms)
@@ -64,7 +65,7 @@ function AllProps(){
                 const sortedDoubleRoomsArr = doubleRoomsArr.sort();
                 setSelectOptions('doubleBedrooms', sortedDoubleRoomsArr);
 
-                let bathroomsArr = [];
+              let bathroomsArr = [];
                 for(let i = 0; i < response.data.length; i++){
                     if(!(bathroomsArr.includes(response.data[i].numberOfBathR))){
                         bathroomsArr.push(response.data[i].numberOfBathR)
@@ -72,8 +73,8 @@ function AllProps(){
                 }
                 const sortedBathroomsArr = bathroomsArr.sort();
                 setSelectOptions('bathrooms', sortedBathroomsArr);
-                
-                let simpleBathroomsArr = [];
+
+              let simpleBathroomsArr = [];
                 for(let i = 0; i < response.data.length; i++){
                     if(!(simpleBathroomsArr.includes(response.data[i].simpleBathrooms))){
                         simpleBathroomsArr.push(response.data[i].simpleBathrooms)
@@ -82,7 +83,7 @@ function AllProps(){
                 const sortedSimpleBathroomsArr = simpleBathroomsArr.sort();
                 setSelectOptions('simpleBrooms', sortedSimpleBathroomsArr);
 
-                let fullBathroomsArr = [];
+              let fullBathroomsArr = [];
                 for(let i = 0; i < response.data.length; i++){
                     if(!(fullBathroomsArr.includes(response.data[i].fullBathrooms))){
                         fullBathroomsArr.push(response.data[i].fullBathrooms)
@@ -91,7 +92,7 @@ function AllProps(){
                 const sortedFullBathroomsArr = fullBathroomsArr.sort();
                 setSelectOptions('fullBrooms', sortedFullBathroomsArr);
 
-                let surfaceArr = []
+              let surfaceArr = []
                 for(let i = 0; i < response.data.length; i++){
                     if(!(surfaceArr.includes(response.data[i].surface))){
                         surfaceArr.push(response.data[i].surface)
@@ -99,7 +100,7 @@ function AllProps(){
                 }
                 setSelectOptions('surface', surfaceArr)
 
-                let locationArr = []
+              let locationArr = []
                 for(let i = 0; i < response.data.length; i++){
                     if(!(locationArr.includes(response.data[i].location))){
                         locationArr.push(response.data[i].location)
@@ -107,7 +108,7 @@ function AllProps(){
                 }
                 setSelectOptions('location', locationArr)
 
-                let typeArr = []
+              let typeArr = []
                 for(let i = 0; i < response.data.length; i++){
                     if(!(typeArr.includes(response.data[i].type))){
                         typeArr.push(response.data[i].type)

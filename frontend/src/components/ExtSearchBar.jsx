@@ -11,7 +11,8 @@ function ExtSearchBar(){
         const getPropertys = async () => {
 
             try {
-              const response = await axios.get('http://127.0.0.1:8000/api/v1/props/');
+            //   const response = await axios.get('http://127.0.0.1:8000/api/v1/props/');
+              const response = await axios.get('/api/v1/props/');
               setPropertys(response.data);
               setFilteredPropertys(response.data);
             } catch (error) {

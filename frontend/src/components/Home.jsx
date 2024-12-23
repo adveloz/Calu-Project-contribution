@@ -33,19 +33,38 @@ function Home(){
 
     useEffect(()=>{
         const getPropertys = async () => {
-
             try {
-                const clientReviewsResponse = await axios.get('http://127.0.0.1:8000/api/v1/reviews/');
-                const clientReviews = []
-                for(let i = 0; i < 4; i++){
-                    clientReviews.push(clientReviewsResponse.data[i])
-                }
-                setReviews(clientReviews)
+                // const clientReviewsResponse = await axios.get('http://127.0.0.1:8000/api/v1/reviews/');
+                // Get reviews
+                const clientReviewsResponse = await axios.get('/api/v1/reviews/');
+                const clientReviews = [];
                 
-                const response = await axios.get('http://127.0.0.1:8000/api/v1/props/');
-                console.log(response.data);
+                // Safely handle reviews data
+                if (clientReviewsResponse.data && Array.isArray(clientReviewsResponse.data)) {
+                    const numReviews = Math.min(4, clientReviewsResponse.data.length);
+                    for(let i = 0; i < numReviews; i++) {
+                        if (clientReviewsResponse.data[i]) {
+                            clientReviews.push(clientReviewsResponse.data[i]);
+                        }
+                    }
+                }
+                setReviews(clientReviews);
+                
+                // const response = await axios.get('http://127.0.0.1:8000/api/v1/props/');
+                // Get properties
+                const response = await axios.get('/api/v1/props/');
+                console.log('Properties response:', response.data);
+                
+                // Ensure we have valid property data
+                if (!response.data || !Array.isArray(response.data)) {
+                    console.error('Invalid or empty property data received');
+                    setPropertys([]);
+                    return;
+                }
+                
                 setPropertys(response.data);
 
+                // Process selects only if we have valid data
                 const transformedSelects = [];
                 for(const key in selects){
                     transformedSelects.push(selects[key]);
@@ -53,103 +72,121 @@ function Home(){
                 setUsableSelect(transformedSelects);
 
                 for(const key in selects){
-                    setSelect(key, "all")
+                    setSelect(key, "all");
                 }
-                
 
+                // Process prices safely
                 let pricesArr = [];
-                for(let i = 0; i < response.data.length; i++){
-                    if(!(pricesArr.includes(parseInt(response.data[i].price)))){
-                        pricesArr.push(parseInt(response.data[i].price))
+                response.data.forEach(prop => {
+                    const price = parseInt(prop.price);
+                    if (!isNaN(price) && !pricesArr.includes(price)) {
+                        pricesArr.push(price);
                     }
-                }
-                const sortedPricesArr = pricesArr.sort();
-                setSelectOptions('prices', sortedPricesArr);
+                });
+                setSelectOptions('prices', pricesArr.sort((a, b) => a - b));
 
+                // Process rooms safely
                 let roomsArr = [];
-                for(let i = 0; i < response.data.length; i++){
-                    if(!(roomsArr.includes(response.data[i].numberOfRooms))){
-                        roomsArr.push(response.data[i].numberOfRooms)
+                response.data.forEach(prop => {
+                    if (prop.numberOfRooms && !roomsArr.includes(prop.numberOfRooms)) {
+                        roomsArr.push(prop.numberOfRooms);
                     }
-                }
-                const sortedRoomsArr = roomsArr.sort();
-                setSelectOptions('rooms', sortedRoomsArr);
+                });
+                setSelectOptions('rooms', roomsArr.sort((a, b) => a - b));
 
+                // Process simple bedrooms safely
                 let simpleRoomsArr = [];
-                for(let i = 0; i < response.data.length; i++){
-                    if(!(simpleRoomsArr.includes(response.data[i].simpleBedRooms))){
-                        simpleRoomsArr.push(response.data[i].simpleBedRooms)
+                response.data.forEach(prop => {
+                    if (prop.simpleBedRooms && !simpleRoomsArr.includes(prop.simpleBedRooms)) {
+                        simpleRoomsArr.push(prop.simpleBedRooms);
                     }
-                }
-                const sortedSimpleRoomsArr = simpleRoomsArr.sort();
-                setSelectOptions('simpleBedrooms', sortedSimpleRoomsArr);
+                });
+                setSelectOptions('simpleBedrooms', simpleRoomsArr.sort((a, b) => a - b));
 
+                // Process double bedrooms safely
                 let doubleRoomsArr = [];
-                for(let i = 0; i < response.data.length; i++){
-                    if(!(doubleRoomsArr.includes(response.data[i].doubleBedRooms))){
-                        doubleRoomsArr.push(response.data[i].doubleBedRooms)
+                response.data.forEach(prop => {
+                    if (prop.doubleBedRooms && !doubleRoomsArr.includes(prop.doubleBedRooms)) {
+                        doubleRoomsArr.push(prop.doubleBedRooms);
                     }
-                }
-                const sortedDoubleRoomsArr = doubleRoomsArr.sort();
-                setSelectOptions('doubleBedrooms', sortedDoubleRoomsArr);
+                });
+                setSelectOptions('doubleBedrooms', doubleRoomsArr.sort((a, b) => a - b));
 
+                // Process bathrooms safely
                 let bathroomsArr = [];
-                for(let i = 0; i < response.data.length; i++){
-                    if(!(bathroomsArr.includes(response.data[i].numberOfBathR))){
-                        bathroomsArr.push(response.data[i].numberOfBathR)
+                response.data.forEach(prop => {
+                    if (prop.numberOfBathR && !bathroomsArr.includes(prop.numberOfBathR)) {
+                        bathroomsArr.push(prop.numberOfBathR);
                     }
-                }
-                const sortedBathroomsArr = bathroomsArr.sort();
-                setSelectOptions('bathrooms', sortedBathroomsArr);
+                });
+                setSelectOptions('bathrooms', bathroomsArr.sort((a, b) => a - b));
 
+                // Process simple bathrooms safely
                 let simpleBathroomsArr = [];
-                for(let i = 0; i < response.data.length; i++){
-                    if(!(simpleBathroomsArr.includes(response.data[i].simpleBathrooms))){
-                        simpleBathroomsArr.push(response.data[i].simpleBathrooms)
+                response.data.forEach(prop => {
+                    if (prop.simpleBathrooms && !simpleBathroomsArr.includes(prop.simpleBathrooms)) {
+                        simpleBathroomsArr.push(prop.simpleBathrooms);
                     }
-                }
-                const sortedSimpleBathroomsArr = simpleBathroomsArr.sort();
-                setSelectOptions('simpleBrooms', sortedSimpleBathroomsArr);
+                });
+                setSelectOptions('simpleBrooms', simpleBathroomsArr.sort((a, b) => a - b));
 
+                // Process full bathrooms safely
                 let fullBathroomsArr = [];
-                for(let i = 0; i < response.data.length; i++){
-                    if(!(fullBathroomsArr.includes(response.data[i].fullBathrooms))){
-                        fullBathroomsArr.push(response.data[i].fullBathrooms)
+                response.data.forEach(prop => {
+                    if (prop.fullBathrooms && !fullBathroomsArr.includes(prop.fullBathrooms)) {
+                        fullBathroomsArr.push(prop.fullBathrooms);
                     }
-                }
-                const sortedFullBathroomsArr = fullBathroomsArr.sort();
-                setSelectOptions('fullBrooms', sortedFullBathroomsArr);
+                });
+                setSelectOptions('fullBrooms', fullBathroomsArr.sort((a, b) => a - b));
 
-                let surfaceArr = []
-                for(let i = 0; i < response.data.length; i++){
-                    if(!(surfaceArr.includes(response.data[i].surface))){
-                        surfaceArr.push(response.data[i].surface)
+                // Process surface safely
+                let surfaceArr = [];
+                response.data.forEach(prop => {
+                    if (prop.surface && !surfaceArr.includes(prop.surface)) {
+                        surfaceArr.push(prop.surface);
                     }
-                }
-                setSelectOptions('surface', surfaceArr)
+                });
+                setSelectOptions('surface', surfaceArr);
 
-                let locationArr = []
-                for(let i = 0; i < response.data.length; i++){
-                    if(!(locationArr.includes(response.data[i].location))){
-                        locationArr.push(response.data[i].location)
+                // Process location safely
+                let locationArr = [];
+                response.data.forEach(prop => {
+                    if (prop.location && !locationArr.includes(prop.location)) {
+                        locationArr.push(prop.location);
                     }
-                }
-                setSelectOptions('location', locationArr)
+                });
+                setSelectOptions('location', locationArr);
 
-                let typeArr = []
-                for(let i = 0; i < response.data.length; i++){
-                    if(!(typeArr.includes(response.data[i].type))){
-                        typeArr.push(response.data[i].type)
+                // Process type safely
+                let typeArr = [];
+                response.data.forEach(prop => {
+                    if (prop.type && !typeArr.includes(prop.type)) {
+                        typeArr.push(prop.type);
                     }
-                }
-                setSelectOptions('type', typeArr)
+                });
+                setSelectOptions('type', typeArr);
 
             } catch (error) {
-              console.error('Error al obtener los datos:', error);
+                console.error('Error fetching data:', error);
+                // Set safe default states on error
+                setReviews([]);
+                setPropertys([]);
+                setUsableSelect([]);
+                // Set empty arrays for all select options
+                setSelectOptions('prices', []);
+                setSelectOptions('rooms', []);
+                setSelectOptions('simpleBedrooms', []);
+                setSelectOptions('doubleBedrooms', []);
+                setSelectOptions('bathrooms', []);
+                setSelectOptions('simpleBrooms', []);
+                setSelectOptions('fullBrooms', []);
+                setSelectOptions('surface', []);
+                setSelectOptions('location', []);
+                setSelectOptions('type', []);
             }
-          };
-      
-          getPropertys()
+        };
+
+        getPropertys()
     }, []);
 
     const tabBarFocus = (e) =>{

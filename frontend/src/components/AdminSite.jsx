@@ -1,7 +1,12 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ExtSearchBar from './ExtSearchBar'
+
+// Configure axios defaults
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+axios.defaults.withCredentials = true;
 
 function AdminSite(){
     const [fileNames, setFileNames] = useState([]);
@@ -130,7 +135,8 @@ function AdminSite(){
 
         }
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/v1/props/', propData);
+            // const response = await axios.post('http://127.0.0.1:8000/api/v1/props/', propData);
+            const response = await axios.post('/api/v1/props/', propData);
             console.log('Datos enviados:', response.data);
             alert("Los datos fueron guardados")
         } catch (error) {
