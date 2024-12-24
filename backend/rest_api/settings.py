@@ -181,7 +181,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "es"
 
 TIME_ZONE = "UTC"
 
@@ -198,5 +198,12 @@ USE_TZ = True
 STATIC_URL = '/staticfiles/'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Media files (user uploaded files)
+
+# This matches your nginx configuration
+MEDIA_URL = '/static/media/'  
+# This matches the mounted volume in Django container
+MEDIA_ROOT = BASE_DIR / 'assets'  
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

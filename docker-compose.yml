@@ -8,6 +8,7 @@ services:
     entrypoint: ["/app/entrypoint.sh"]
     volumes:
       - ./backend:/app
+      - ./assets:/app/assets
       - django_static:/app/staticfiles
     # Remove in production
     # ports:
