@@ -14,4 +14,4 @@ class PropModelAdmin(admin.ModelAdmin):
         return form
 
 admin.site.register(propModel, PropModelAdmin)
-admin.site.register(reviewModel)
+admin.site.register(reviewModel, PropModelAdmin)
