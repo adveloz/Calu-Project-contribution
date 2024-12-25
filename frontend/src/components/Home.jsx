@@ -16,7 +16,7 @@ import Vector1 from "../static/media/Vector.svg"
 import Vector2 from "../static/media/Vector (1).svg"
 import Vector3 from "../static/media/Vector (2).svg"
 import Vector4 from "../static/media/Vector (3).svg"
-import Fox from "../static/media/matthew-hamilton-tNCH0sKSZbA-unsplash.png"
+// import Fox from "../static/media/matthew-hamilton-tNCH0sKSZbA-unsplash.png"
 import buildingImg from '../static/media/building.png';
 import { useEffect, useState} from "react";
 import axios from 'axios';
@@ -718,7 +718,8 @@ function Home(){
                                 if(index % 2 === 0){
                                     return(
                                         <ClientOpinion
-                                            picture = {Fox}
+                                            // picture = {review.img}
+                                            picture = {`../static/media/assets/${review.img}`}
                                             name = {review.name}
                                             profession = {review.job}
                                             title = {review.title}
@@ -730,7 +731,8 @@ function Home(){
                                 else{
                                     return(
                                         <ClientOpinion
-                                            picture = {Fox}
+                                            // picture = {review.img}
+                                            picture = {`../static/media/assets/${review.img}`}
                                             name = {review.name}
                                             profession = {review.job}
                                             title = {review.title}
