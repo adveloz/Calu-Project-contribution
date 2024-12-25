@@ -186,6 +186,8 @@ function PropView(){
                     </button>
                     <h3>Por favor completa el formulario a continuación y uno de nuestros agentes te contactará lo antes posible.</h3>
                     <form id = "form" action="https://formsubmit.co/info@inmobiliariacalu.com" method="POST">
+                        <input type="hidden" name="_redirect" value="" />
+
                         <div id='input-container'>
                             <div>
                                 <label htmlFor="name">Nombre</label>
@@ -197,11 +199,11 @@ function PropView(){
                             </div>
                             <div>
                                 <label htmlFor="phone">Teléfono</label>
-                                <input type="text" placeholder='Número de teléfono' name = 'phone' id = 'phone'/>
+                                <input type="text" placeholder='Introduce tu teléfono' name = 'phone' id = 'phone'/>
                             </div>
                             <div>
                                 <label htmlFor="mail">Email</label>
-                                <input type="text" placeholder='you@example.com' name = 'mail' id = 'mail'/>
+                                <input type="text" placeholder='Introduce tu Correo' name = 'mail' id = 'mail'/>
                             </div>  
                         </div>
                         <div id='textarea'>
@@ -458,6 +460,7 @@ function PropView(){
                         </div>
                         <div id="reviews-form-container">
                             <form action="https://formsubmit.co/info@inmobiliariacalu.com" method="POST">
+                                <input type="hidden" name="_redirect" value="" />
                                 <textarea name="client-review" id="client-review" placeholder="Escriba su opinión"></textarea>
                                 <input type="submit" value="Enviar" />
                             </form>
