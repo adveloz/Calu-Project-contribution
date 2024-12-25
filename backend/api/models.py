@@ -2,19 +2,19 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 class propModel(models.Model):
-    id = models.CharField(max_length= 100, primary_key= True, verbose_name="Identificator", help_text="El identificador de una casa, debe ser único, no pueden haber más de una casas con un mismo identificador.")
-    title = models.CharField(max_length= 100, null=True, blank=True, verbose_name="Título", help_text="El titulo o nombre de la casa.")
-    description = models.TextField(max_length=2000, null=True, blank=True, verbose_name="Descripción", help_text="La descripción de la casa.")
-    location = models.CharField(max_length=200, null=True, blank=True, verbose_name="Ubicación", help_text="La ubicación o direcciónde la casa.")
-    surface = models.DecimalField(validators=[MinValueValidator(0), MaxValueValidator(10000)], max_digits=5,decimal_places=2, blank=True, null=True, verbose_name="Superficie", help_text="La superficie o área de la casa.")
-    type = models.CharField(max_length=50, null=True, blank=True, verbose_name="Tipo", help_text="El tipo de casa (piso, departamento, chalet, vivienda, etc.)")
-    price = models.DecimalField(max_digits= 15, decimal_places= 2, null=True, blank=True, verbose_name="Precio", help_text="El precio de la casa.")
-    numberOfRooms = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], null=True, blank=True, verbose_name="Habitaciones", help_text="El número de habitaciones de la casa.")
-    doubleBedRooms = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], null=True, blank=True, verbose_name="Habitaciones dobles", help_text="El número de habitaciones dobles de la casa.")
-    simpleBedRooms = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], null=True, blank=True, verbose_name="Habitaciones simples", help_text="El número de habitaciones simples de la casa.")
-    numberOfBathR = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], null=True, blank=True, verbose_name="Baños", help_text="El número de baños de la casa.")
-    fullBathrooms = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], null=True, blank=True, verbose_name="Baños completos", help_text="El número de baños completos de la casa.")
-    simpleBathrooms = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], null=True, blank=True, verbose_name="Baños simples", help_text="El número de baños simples de la casa.")
+    id = models.CharField(max_length= 100, primary_key= True, verbose_name="Identificador", help_text="El identificador de una propiedad, debe ser único, no pueden haber más de una propiedad con un mismo identificador.")
+    title = models.CharField(max_length= 100, null=True, blank=True, verbose_name="Título", help_text="El título o nombre de la propiedad.")
+    description = models.TextField(max_length=2000, null=True, blank=True, verbose_name="Descripción", help_text="La descripción de la propiedad.")
+    location = models.CharField(max_length=200, null=True, blank=True, verbose_name="Ubicación", help_text="La ubicación geográfica por zona de la propiedad.")
+    surface = models.DecimalField(validators=[MinValueValidator(0), MaxValueValidator(10000)], max_digits=5,decimal_places=2, blank=True, null=True, verbose_name="Superficie", help_text="La superficie o área de la propiedad en metros cuadrados.")
+    type = models.CharField(max_length=50, null=True, blank=True, verbose_name="Tipo", help_text="El tipo de propiedad (piso, departamento, chalet, vivienda, etc.)")
+    price = models.DecimalField(max_digits= 15, decimal_places= 2, null=True, blank=True, verbose_name="Precio", help_text="El precio o valor de la propiedad en euros.")
+    numberOfRooms = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], null=True, blank=True, verbose_name="Habitaciones", help_text="El número de habitaciones de la propiedad.")
+    doubleBedRooms = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], null=True, blank=True, verbose_name="Habitaciones dobles", help_text="El número de habitaciones dobles de la propiedad.")
+    simpleBedRooms = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], null=True, blank=True, verbose_name="Habitaciones simples", help_text="El número de habitaciones simples de la propiedad.")
+    numberOfBathR = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], null=True, blank=True, verbose_name="Baños", help_text="El número de baños de la propiedad.")
+    fullBathrooms = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], null=True, blank=True, verbose_name="Baños completos", help_text="El número de baños completos de la propiedad.")
+    simpleBathrooms = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], null=True, blank=True, verbose_name="Baños simples", help_text="El número de baños simples de la propiedad.")
     img1 = models.ImageField(upload_to='', default='', null=True, blank=True, verbose_name="Imagen 1")
     img2 = models.ImageField(upload_to='', default='', null=True, blank=True, verbose_name="Imagen 2")
     img3 = models.ImageField(upload_to='', default='', null=True, blank=True, verbose_name="Imagen 3")
@@ -52,22 +52,32 @@ class propModel(models.Model):
     garden = models.BooleanField(default=False, verbose_name="Jardín")
     elevator = models.BooleanField(default=False, verbose_name="Ascensor")
     pool = models.BooleanField(default=False, verbose_name="Piscina")
+    balcon = models.BooleanField(default=False, verbose_name="Balcón")
+    plazaGarage = models.BooleanField(default=False, verbose_name="Plaza Garaje")
     forSale = models.BooleanField(default=False, verbose_name="Para Venta")
     clientSale = models.BooleanField(default=False, verbose_name="Cliente Venta")
-    plazaGarage = models.BooleanField(default=False, verbose_name="Plaza Garaje")
-    balcon = models.BooleanField(default=False, verbose_name="Balcón")
 
     class Meta:
         verbose_name = "Propiedad"
         verbose_name_plural = "Propiedades"
+        
+    def __str__(self):
+        return f"{self.id} - {self.title or 'Propiedad sin título'} - {self.location or 'Sin ubicación'}"
 
 class reviewModel(models.Model):
-    name = models.CharField(max_length=100, primary_key= True)
-    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    job = models.CharField(max_length= 50)
-    title = models.CharField(max_length= 100)
-    review = models.TextField(max_length= 300)
-    img = models.CharField(max_length= 100)
+    name = models.CharField(max_length=100, primary_key= True, verbose_name="Nombre", help_text="Introduzca un nombre de cliente.")
+    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], verbose_name="Calificación", help_text="Introduzca una calificación entre 1 y 5.")
+    job = models.CharField(max_length= 50, verbose_name="Profesión", help_text="Introduzca la profesión del cliente.")
+    title = models.CharField(max_length= 100, verbose_name="Título", help_text="Introduzca un título.")
+    review = models.TextField(max_length= 300, verbose_name="Comentario", help_text="Introduzca un comentario.")
+    img = models.ImageField(upload_to='', default='', null=True, blank=True, verbose_name="Foto del cliente")
+    
+    class Meta:
+        verbose_name = "Reseña"
+        verbose_name_plural = "Reseñas"
+        
+    def __str__(self):
+        return f"{self.name} - {self.rating or 'Sin calificación'} - {self.job or 'Sin profesión'}"
 
 class faqModel(models.Model):
     index = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5000)], primary_key=True)
