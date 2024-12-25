@@ -23,6 +23,17 @@ class PropSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ReviewsSerializer(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        
+        image_fields = ['img']
+        
+        for field_name in image_fields:
+            if field_name in ret and ret[field_name]:
+                ret[field_name] = os.path.basename(ret[field_name])
+        
+        return ret
+    
     class Meta:
         model = reviewModel
         fields = '__all__'

@@ -6,7 +6,7 @@ class propModel(models.Model):
     title = models.CharField(max_length= 100, null=True, blank=True, verbose_name="Título", help_text="El título o nombre de la propiedad.")
     description = models.TextField(max_length=2000, null=True, blank=True, verbose_name="Descripción", help_text="La descripción de la propiedad.")
     location = models.CharField(max_length=200, null=True, blank=True, verbose_name="Ubicación", help_text="La ubicación geográfica por zona de la propiedad.")
-    surface = models.DecimalField(validators=[MinValueValidator(0), MaxValueValidator(10000)], max_digits=5,decimal_places=2, blank=True, null=True, verbose_name="Superficie", help_text="La superficie o área de la propiedad en metros cuadrados.")
+    surface = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10000)], null=True, blank=True, verbose_name="Superficie", help_text="La superficie o área de la propiedad en metros cuadrados.")
     type = models.CharField(max_length=50, null=True, blank=True, verbose_name="Tipo", help_text="El tipo de propiedad (piso, departamento, chalet, vivienda, etc.)")
     price = models.DecimalField(max_digits= 15, decimal_places= 2, null=True, blank=True, verbose_name="Precio", help_text="El precio o valor de la propiedad en euros.")
     numberOfRooms = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], null=True, blank=True, verbose_name="Habitaciones", help_text="El número de habitaciones de la propiedad.")
