@@ -29,7 +29,6 @@ function PropView(){
             document.body.style.overflow = 'unset';
         }
         
-        // Cleanup when component unmounts
         return () => {
             document.body.style.overflow = 'unset';
         };
@@ -321,28 +320,109 @@ function PropView(){
                                     </button>
                                 </div>
                             )}
-                            <div id = "carousel-content">
-                                {imgSet.map((img, index) => (
-                                    img && (
-                                        <img 
-                                            key={index}
-                                            index={index}
-                                            src={`../static/media/assets/${img}`}
-                                            alt="No image available"
-                                            onClick={() => switchImg(index)}
-                                            onError={(e) => {
-                                                e.target.onerror = null;
-                                                e.target.src = 'https://placehold.co/150x100?text=No+Image+Available';
-                                                if (index === mainImgIndex) {
-                                                    const nextValidIndex = findFirstValidImageIndex(imgSet.slice(index + 1));
-                                                    if (nextValidIndex !== -1) {
-                                                        setMainImgIndex(nextValidIndex + index + 1);
+                            <div id = "carousel-content" style={{ 
+                                position: 'relative',
+                                display: 'flex',
+                                alignItems: 'center',
+                                overflow: 'hidden',
+                                width: '100%',
+                                padding: '0 20px'
+                            }}>
+                                <button
+                                    onClick={() => {
+                                        const container = document.querySelector('#carousel-images');
+                                        const scrollAmount = container.offsetWidth * 0.8;
+                                        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                                    }}
+                                    style={{
+                                        position: 'absolute',
+                                        left: '10px',
+                                        zIndex: 2,
+                                        width: '40px',
+                                        height: '40px',
+                                        borderRadius: '50%',
+                                        backgroundColor: 'rgba(128, 128, 128, 0.7)',
+                                        border: 'none',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        cursor: 'pointer',
+                                        transition: 'background-color 0.3s'
+                                    }}
+                                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(128, 128, 128, 0.9)'}
+                                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'rgba(128, 128, 128, 0.7)'}
+                                >
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                                    </svg>
+                                </button>
+
+                                <div id="carousel-images" style={{
+                                    display: 'flex',
+                                    gap: '10px',
+                                    overflowX: 'hidden',
+                                    scrollBehavior: 'smooth',
+                                    width: '100%',
+                                    padding: '10px 0'
+                                }}>
+                                    {imgSet.map((img, index) => (
+                                        img && (
+                                            <img
+                                                key={index}
+                                                src={`../static/media/assets/${img}`}
+                                                alt="No image available"
+                                                onClick={() => switchImg(index)}
+                                                style={{
+                                                    width: '150px',
+                                                    height: '100px',
+                                                    objectFit: 'cover',
+                                                    cursor: 'pointer',
+                                                    flexShrink: 0,
+                                                    border: index === mainImgIndex ? '2px solid #FE6D36' : 'none'
+                                                }}
+                                                onError={(e) => {
+                                                    e.target.onerror = null;
+                                                    e.target.src = 'https://placehold.co/150x100?text=No+Image+Available';
+                                                    if (index === mainImgIndex) {
+                                                        const nextValidIndex = findFirstValidImageIndex(imgSet.slice(index + 1));
+                                                        if (nextValidIndex !== -1) {
+                                                            setMainImgIndex(nextValidIndex);
+                                                        }
                                                     }
-                                                }
-                                            }}
-                                        />
-                                    )
-                                ))}
+                                                }}
+                                            />
+                                        )
+                                    ))}
+                                </div>
+
+                                <button
+                                    onClick={() => {
+                                        const container = document.querySelector('#carousel-images');
+                                        const scrollAmount = container.offsetWidth * 0.8;
+                                        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                                    }}
+                                    style={{
+                                        position: 'absolute',
+                                        right: '10px',
+                                        zIndex: 2,
+                                        width: '40px',
+                                        height: '40px',
+                                        borderRadius: '50%',
+                                        backgroundColor: 'rgba(128, 128, 128, 0.7)',
+                                        border: 'none',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        cursor: 'pointer',
+                                        transition: 'background-color 0.3s'
+                                    }}
+                                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(128, 128, 128, 0.9)'}
+                                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'rgba(128, 128, 128, 0.7)'}
+                                >
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                        <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+                                    </svg>
+                                </button>
                             </div>
                         </div>
                         <div id="main-info-data">
