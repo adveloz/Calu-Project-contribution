@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate
 
 
 class PropViewSet(viewsets.ModelViewSet):
-    queryset = propModel.objects.all()
+    queryset = propModel.objects.filter(is_published=True)
     serializer_class = PropSerializer
 
 class ReviewsViewSet(viewsets.ModelViewSet):

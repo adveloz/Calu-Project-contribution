@@ -23,6 +23,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ExtSearchBar from './ExtSearchBar';
 import useStore from './store';
+import { getFirstAvailableImage } from '../utils/imageUtils';
 
 function Home(){
     const[propertys, setPropertys] = useState([]);
@@ -650,7 +651,7 @@ function Home(){
                                         <PropertyCard 
                                             id={property.id}
                                             forSaleSign={isForSale}
-                                            picture={`../static/media/assets/${property.img1}`}
+                                            picture={`../static/media/assets/${getFirstAvailableImage(property)}`}
                                             price={property.price} 
                                             title={property.title} 
                                             description={property.description}
@@ -767,9 +768,10 @@ function Home(){
                         <h2>Donde cada propiedad cuenta</h2>
                         <p>¿Listo para dar el siguiente paso?<br/> Ya sea que busques tu próximo hogar o una oportunidad de inversión, estamos aquí para ayudarte a lograr tus objetivos inmobiliarios</p>
                         <form id='quick-contact-form' action="https://formsubmit.co/info@inmobiliariacalu.com" method="POST"> 
+                            <input type="hidden" name="_captcha" value="false" />
+                            <input type="hidden" name="_next" value={window.location.href}></input>
                             <input type="text" name = "email" placeholder='Enter your mail address'/>
                             <button>Submit</button>
-                            <input type="hidden" name="_captcha" value="false" />
                         </form>
                     </div>
                 </div>

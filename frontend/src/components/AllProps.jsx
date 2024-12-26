@@ -9,6 +9,7 @@ import React, { useEffect,  useState } from 'react';
 import { Link } from 'react-router-dom';
 import useStore from './store';
 import ExtSearchBar from './ExtSearchBar'
+import { getFirstAvailableImage } from '../utils/imageUtils';
 
 function AllProps(){
 
@@ -208,7 +209,6 @@ function AllProps(){
         setFilteredPropertys(toFilterPropertys)
     }
 
-
     return(
         <>
             <style>
@@ -405,7 +405,8 @@ function AllProps(){
                     return(
                         <PropertyCard 
                             id={property.id}
-                            picture={require(`../static/media/${property.img1}`)}
+                            // picture={require(`../static/media/${property.img1}`)}
+                            picture={`../static/media/assets/${getFirstAvailableImage(property)}`}
                             forSaleSign={isForSale}
                             price={property.price} 
                             title={property.title} 

@@ -56,13 +56,14 @@ class propModel(models.Model):
     plazaGarage = models.BooleanField(default=False, verbose_name="Plaza Garaje")
     forSale = models.BooleanField(default=False, verbose_name="Para Venta")
     clientSale = models.BooleanField(default=False, verbose_name="Cliente Venta")
+    is_published = models.BooleanField(default=False, verbose_name="Publicado")
 
     class Meta:
         verbose_name = "Propiedad"
         verbose_name_plural = "Propiedades"
         
     def __str__(self):
-        return f"{self.id} - {self.title or 'Propiedad sin título'} - {self.location or 'Sin ubicación'}"
+        return f"{self.id} - {self.title or 'Propiedad sin título'} - {self.location or 'Sin ubicación'} - {'publicado' if self.is_published else 'no publicado'}"
 
 class reviewModel(models.Model):
     name = models.CharField(max_length=100, primary_key= True, verbose_name="Nombre", help_text="Introduzca un nombre de cliente.")

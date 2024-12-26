@@ -186,8 +186,8 @@ function PropView(){
                     </button>
                     <h3>Por favor completa el formulario a continuación y uno de nuestros agentes te contactará lo antes posible.</h3>
                     <form id = "form" action="https://formsubmit.co/info@inmobiliariacalu.com" method="POST">
-                        <input type="hidden" name="_redirect" value="" />
-
+                        <input type="hidden" name="_captcha" value="false" />
+                        <input type="hidden" name="_next" value={window.location.href}></input>
                         <div id='input-container'>
                             <div>
                                 <label htmlFor="name">Nombre</label>
@@ -460,7 +460,8 @@ function PropView(){
                         </div>
                         <div id="reviews-form-container">
                             <form action="https://formsubmit.co/info@inmobiliariacalu.com" method="POST">
-                                <input type="hidden" name="_redirect" value="" />
+                                <input type="hidden" name="_captcha" value="false" />
+                                <input type="hidden" name="_next" value={window.location.href}></input>
                                 <textarea name="client-review" id="client-review" placeholder="Escriba su opinión"></textarea>
                                 <input type="submit" value="Enviar" />
                             </form>
