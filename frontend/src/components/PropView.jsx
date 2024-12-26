@@ -33,39 +33,42 @@ function PropView(){
                 const response = await axios.get(`/api/v1/props/${id}/`);
                 setProperty(response.data);
 
-                setImgset([
-                            response.data.img1,
-                            response.data.img2,
-                            response.data.img3,
-                            response.data.img4,
-                            response.data.img5,
-                            response.data.img6,
-                            response.data.img7,
-                            response.data.img8,
-                            response.data.img9,
-                            response.data.img10,
-                            response.data.img11,
-                            response.data.img12,
-                            response.data.img13,
-                            response.data.img14,
-                            response.data.img15,
-                            response.data.img16,
-                            response.data.img17,
-                            response.data.img18,
-                            response.data.img19,
-                            response.data.img20,
-                            response.data.img21,
-                            response.data.img22,
-                            response.data.img23,
-                            response.data.img24,
-                            response.data.img25,
-                            response.data.img26,
-                            response.data.img27,
-                            response.data.img28,
-                            response.data.img29,
-                            response.data.img30,
-                            response.data.mapImg
-                        ])
+                const images = [
+                    response.data.img1,
+                    response.data.img2,
+                    response.data.img3,
+                    response.data.img4,
+                    response.data.img5,
+                    response.data.img6,
+                    response.data.img7,
+                    response.data.img8,
+                    response.data.img9,
+                    response.data.img10,
+                    response.data.img11,
+                    response.data.img12,
+                    response.data.img13,
+                    response.data.img14,
+                    response.data.img15,
+                    response.data.img16,
+                    response.data.img17,
+                    response.data.img18,
+                    response.data.img19,
+                    response.data.img20,
+                    response.data.img21,
+                    response.data.img22,
+                    response.data.img23,
+                    response.data.img24,
+                    response.data.img25,
+                    response.data.img26,
+                    response.data.img27,
+                    response.data.img28,
+                    response.data.img29,
+                    response.data.img30,
+                    response.data.mapImg
+                ];
+
+                setImgset(images);
+                setMainImgIndex(findFirstValidImageIndex(images));
 
                 // const getPropSet = await axios.get('http://127.0.0.1:8000/api/v1/props');
                 const getPropSet = await axios.get('/api/v1/props');
@@ -127,6 +130,15 @@ function PropView(){
           getProperty()
           
     }, [location]);
+
+    const findFirstValidImageIndex = (images) => {
+        for (let i = 0; i < images.length; i++) {
+            if (images[i]) {
+                return i;
+            }
+        }
+        return 0;
+    };
 
     const switchImg = (index)=>{
         setMainImgIndex(index)
@@ -218,38 +230,36 @@ function PropView(){
             <div id="prop-main-info-container">
                 <div id="main-info-img-container">
                         <div id="main-info-img-set">
-                            <img src={`../static/media/assets/${imgSet[mainImgIndex]}`} alt="Property"/>
+                            <img 
+                                src={`../static/media/assets/${imgSet[mainImgIndex]}`} 
+                                alt="No image available"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = 'https://placehold.co/600x400?text=No+Image+Available';
+                                }}
+                            />
                             <div id = "carousel-content">
-                                {imgSet[0] && <img index = "0" src={`../static/media/assets/${imgSet[0]}`} alt="Property" onClick = {() => switchImg(0)}/>}
-                                {imgSet[1] && <img index = "1" src={`../static/media/assets/${imgSet[1]}`} alt="Property" onClick = {() => switchImg(1)}/>}
-                                {imgSet[2] && <img index = "2" src={`../static/media/assets/${imgSet[2]}`} alt="Property" onClick = {() => switchImg(2)}/>}
-                                {imgSet[3] && <img index = "3" src={`../static/media/assets/${imgSet[3]}`} alt="Property" onClick = {() => switchImg(3)}/>}
-                                {imgSet[4] && <img index = "4" src={`../static/media/assets/${imgSet[4]}`} alt="Property" onClick = {() => switchImg(4)}/>}
-                                {imgSet[5] && <img index = "5" src={`../static/media/assets/${imgSet[5]}`} alt="Property" onClick = {() => switchImg(5)}/>}
-                                {imgSet[6] && <img index = "6" src={`../static/media/assets/${imgSet[6]}`} alt="Property" onClick = {() => switchImg(6)}/>}
-                                {imgSet[7] && <img index = "7" src={`../static/media/assets/${imgSet[7]}`} alt="Property" onClick = {() => switchImg(7)}/>}
-                                {imgSet[8] && <img index = "8" src={`../static/media/assets/${imgSet[8]}`} alt="Property" onClick = {() => switchImg(8)}/>}
-                                {imgSet[9] && <img index = "9" src={`../static/media/assets/${imgSet[9]}`} alt="Property" onClick = {() => switchImg(9)}/>}
-                                {imgSet[10] && <img index = "10" src={`../static/media/assets/${imgSet[10]}`} alt="Property" onClick = {() => switchImg(10)}/>}
-                                {imgSet[11] && <img index = "11" src={`../static/media/assets/${imgSet[11]}`} alt="Property" onClick = {() => switchImg(11)}/>}
-                                {imgSet[12] && <img index = "12" src={`../static/media/assets/${imgSet[12]}`} alt="Property" onClick = {() => switchImg(12)}/>}
-                                {imgSet[13] && <img index = "13" src={`../static/media/assets/${imgSet[13]}`} alt="Property" onClick = {() => switchImg(13)}/>}
-                                {imgSet[14] && <img index = "14" src={`../static/media/assets/${imgSet[14]}`} alt="Property" onClick = {() => switchImg(14)}/>}
-                                {imgSet[15] && <img index = "15" src={`../static/media/assets/${imgSet[15]}`} alt="Property" onClick = {() => switchImg(15)}/>}
-                                {imgSet[16] && <img index = "16" src={`../static/media/assets/${imgSet[16]}`} alt="Property" onClick = {() => switchImg(16)}/>}
-                                {imgSet[17] && <img index = "17" src={`../static/media/assets/${imgSet[17]}`} alt="Property" onClick = {() => switchImg(17)}/>}
-                                {imgSet[18] && <img index = "18" src={`../static/media/assets/${imgSet[18]}`} alt="Property" onClick = {() => switchImg(18)}/>}
-                                {imgSet[19] && <img index = "19" src={`../static/media/assets/${imgSet[19]}`} alt="Property" onClick = {() => switchImg(19)}/>}
-                                {imgSet[20] && <img index = "20" src={`../static/media/assets/${imgSet[20]}`} alt="Property" onClick = {() => switchImg(20)}/>}
-                                {imgSet[21] && <img index = "21" src={`../static/media/assets/${imgSet[21]}`} alt="Property" onClick = {() => switchImg(21)}/>}
-                                {imgSet[22] && <img index = "22" src={`../static/media/assets/${imgSet[22]}`} alt="Property" onClick = {() => switchImg(22)}/>}
-                                {imgSet[23] && <img index = "23" src={`../static/media/assets/${imgSet[23]}`} alt="Property" onClick = {() => switchImg(23)}/>}
-                                {imgSet[24] && <img index = "24" src={`../static/media/assets/${imgSet[24]}`} alt="Property" onClick = {() => switchImg(24)}/>}
-                                {imgSet[25] && <img index = "25" src={`../static/media/assets/${imgSet[25]}`} alt="Property" onClick = {() => switchImg(25)}/>}
-                                {imgSet[26] && <img index = "26" src={`../static/media/assets/${imgSet[26]}`} alt="Property" onClick = {() => switchImg(26)}/>}
-                                {imgSet[27] && <img index = "27" src={`../static/media/assets/${imgSet[27]}`} alt="Property" onClick = {() => switchImg(27)}/>}
-                                {imgSet[28] && <img index = "28" src={`../static/media/assets/${imgSet[28]}`} alt="Property" onClick = {() => switchImg(28)}/>}
-                                {imgSet[29] && <img index = "29" src={`../static/media/assets/${imgSet[29]}`} alt="Property" onClick = {() => switchImg(29)}/>}
+                                {imgSet.map((img, index) => (
+                                    img && (
+                                        <img 
+                                            key={index}
+                                            index={index}
+                                            src={`../static/media/assets/${img}`}
+                                            alt="No image available"
+                                            onClick={() => switchImg(index)}
+                                            onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src = 'https://placehold.co/150x100?text=No+Image+Available';
+                                                if (index === mainImgIndex) {
+                                                    const nextValidIndex = findFirstValidImageIndex(imgSet.slice(index + 1));
+                                                    if (nextValidIndex !== -1) {
+                                                        setMainImgIndex(nextValidIndex + index + 1);
+                                                    }
+                                                }
+                                            }}
+                                        />
+                                    )
+                                ))}
                             </div>
                         </div>
                         <div id="main-info-data">
@@ -273,7 +283,7 @@ function PropView(){
                                     >
                                     <path d="M20 9a1 1 0 001-1V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v1H9V4a1 1 0 00-1-1H4a1 1 0 00-1 1v4a1 1 0 001 1h1v6H4a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1v-1h6v1a1 1 0 001 1h4a1 1 0 001-1v-4a1 1 0 00-1-1h-1V9h1zm-3-4h2v2h-2V5zM5 5h2v2H5V5zm2 14H5v-2h2v2zm12 0h-2v-2h2v2zm-2-4h-1a1 1 0 00-1 1v1H9v-1a1 1 0 00-1-1H7V9h1a1 1 0 001-1V7h6v1a1 1 0 001 1h1v6z" />
                                 </svg>
-                                <p>{property.surface} m&sup2;</p>
+                                {property.surface && <p>{property.surface} m&sup2;</p>}
                             </div>
                             <div>   
                                 <svg
@@ -284,7 +294,7 @@ function PropView(){
                                     >
                                     <path d="M8 5c-.5 0-1 .21-1.39.6S6 6.45 6 7v3c-.53 0-1 .19-1.41.59S4 11.47 4 12v5h1.34L6 19h1l.69-2h8.67l.64 2h1l.66-2H20v-5c0-.53-.19-1-.59-1.41S18.53 10 18 10V7c0-.55-.2-1-.61-1.4S16.5 5 16 5M8 7h3v3H8m5-3h3v3h-3m-7 2h12v3H6z" />
                                 </svg>
-                                <p>{property.numberOfRooms} habitaciones</p>
+                                {property.numberOfRooms && <p>{property.numberOfRooms} Habitaciones</p>}
                             </div>
                             <div>   
                                 <svg
@@ -295,7 +305,7 @@ function PropView(){
                                     >
                                     <path d="M7 5a2 2 0 110 4c-1.11 0-2-.89-2-2s.9-2 2-2m13 8V4.83C20 3.27 18.73 2 17.17 2c-.75 0-1.47.3-2 .83l-1.25 1.25c-.16-.05-.33-.08-.51-.08-.41 0-.77.12-1.08.32l2.76 2.76c.2-.31.32-.68.32-1.08 0-.18-.03-.34-.07-.5l1.25-1.26a.828.828 0 011.41.59V13h-6.85c-.3-.21-.57-.45-.82-.72l-1.4-1.55c-.19-.23-.43-.38-.69-.5-.31-.15-.65-.23-1-.23C6 10 5 11 5 12.25V13H2v6c0 1.1.9 2 2 2 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 1.1 0 2-.9 2-2v-6h-2m0 6H4v-4h16v4z" />
                                 </svg>
-                                <p>{property.numberOfRooms} baños</p>
+                                {property.numberOfBathR && <p>{property.numberOfBathR} Baños</p>}
                             </div>
                             {property.garage &&
                                 <div>   
@@ -391,7 +401,7 @@ function PropView(){
                 </div>
                 <div id="main-info-text-container">
                         <h2>{property.title}</h2>
-                        <h3>Precio: € {property.price}</h3>
+                        {property.price && <h3>Precio: € {property.price}</h3>}
                         <p>{property.description}</p>
                         <button id="modal-pop-button" onClick = {modalPop}>Contactar</button>
                 </div>

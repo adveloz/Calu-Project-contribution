@@ -4,7 +4,15 @@ function ClientOpinion(props){
     return(
         <div className={"client-opinion-card " + `${props.is_reversed}`}>   
             <div className="client-info">
-                <img src={props.picture} alt="Client" />
+                {/* <img src={props.picture} alt="Client" /> */}
+                <img 
+                    src={props.picture} 
+                    alt="No image available" 
+                    onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = 'https://placehold.co/150x150?text=No+Image+Available';
+                    }} 
+                />
                 <div className="client-info-text">
                     <div>
                         <h5>{props.name}</h5>
