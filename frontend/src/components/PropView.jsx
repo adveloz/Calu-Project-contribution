@@ -19,8 +19,22 @@ function PropView(){
     const[globalReview, setGlobalReview] = useState([]);
     const[reviewsResume, setReviewsResume] = useState([]);
     const[globalCount, setGlobalCount] = useState();
-    
-     
+    const[showImageModal, setShowImageModal] = useState(false);
+    const[zoomLevel, setZoomLevel] = useState(1);
+
+    useEffect(() => {
+        if (showImageModal) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        
+        // Cleanup when component unmounts
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [showImageModal]);
+
     useEffect(()=>{
         const getProperty = async () => {
 
@@ -233,11 +247,80 @@ function PropView(){
                             <img 
                                 src={`../static/media/assets/${imgSet[mainImgIndex]}`} 
                                 alt="No image available"
+                                onClick={() => setShowImageModal(true)}
+                                style={{ cursor: 'pointer' }}
                                 onError={(e) => {
                                     e.target.onerror = null;
                                     e.target.src = 'https://placehold.co/600x400?text=No+Image+Available';
                                 }}
                             />
+                            {showImageModal && (
+                                <div 
+                                    style={{
+                                        position: 'fixed',
+                                        top: 0,
+                                        left: 0,
+                                        width: '100%',
+                                        height: '100%',
+                                        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        zIndex: 1000,
+                                        cursor: 'pointer',
+                                        overflow: 'hidden'
+                                    }}
+                                    onClick={() => {
+                                        setShowImageModal(false);
+                                        setZoomLevel(1); 
+                                    }}
+                                    onWheel={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        const delta = e.deltaY * -0.01;
+                                        setZoomLevel(prevZoom => {
+                                            const newZoom = prevZoom + delta;
+                                            return Math.min(Math.max(0.5, newZoom), 4);
+                                        });
+                                    }}
+                                >
+                                    <img 
+                                        src={`../static/media/assets/${imgSet[mainImgIndex]}`}
+                                        alt="No image available"
+                                        style={{
+                                            maxWidth: '90%',
+                                            maxHeight: '90%',
+                                            objectFit: 'contain',
+                                            transition: 'transform 0.1s ease',
+                                            transform: `scale(${zoomLevel})`,
+                                            cursor: 'zoom-in'
+                                        }}
+                                        onClick={(e) => e.stopPropagation()}
+                                        onError={(e) => {
+                                            e.target.onerror = null;
+                                            e.target.src = 'https://placehold.co/1200x800?text=No+Image+Available';
+                                        }}
+                                    />
+                                    <button
+                                        style={{
+                                            position: 'absolute',
+                                            top: '20px',
+                                            right: '20px',
+                                            background: 'none',
+                                            border: 'none',
+                                            color: 'white',
+                                            fontSize: '24px',
+                                            cursor: 'pointer'
+                                        }}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setShowImageModal(false);
+                                        }}
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
+                            )}
                             <div id = "carousel-content">
                                 {imgSet.map((img, index) => (
                                     img && (
