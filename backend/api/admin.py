@@ -56,8 +56,27 @@ class PublishActionAdmin(admin.ModelAdmin):
         obj.save()
         return redirect(request.META.get('HTTP_REFERER', '/admin/'))
 
+class ReviewAdmin(TooltipTextAdmin):
+    list_display = ('name', 'job', 'title', 'rating_stars')
+    list_filter = ('rating',)
+    search_fields = ('name', 'job', 'title', 'review')
+    # ordering = ('-rating', 'name')
+    
+    def rating_stars(self, obj):
+        stars = '★' * obj.rating + '☆' * (5 - obj.rating)
+        return format_html(
+            '<span style="color: #FE6D36; font-size: 1.2em;">{}</span>',
+            stars
+        )
+    rating_stars.short_description = 'Calificación'
+    rating_stars.admin_order_field = 'rating'
+
 @admin.register(propModel)        
 class Combine_Tooltip_Publish(TooltipTextAdmin, PublishActionAdmin):
     list_display = ('id', 'title', 'location', 'publish_action')
+    list_filter = ('location',)
+    search_fields = ('title', 'location')
 
-admin.site.register(reviewModel, TooltipTextAdmin)
+@admin.register(reviewModel)
+class Register_Review(ReviewAdmin):
+    pass
