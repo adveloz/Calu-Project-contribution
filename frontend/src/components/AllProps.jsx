@@ -6,15 +6,15 @@ import PropertyCard from "./PropertyCard";
 import headerPerson from "../static/media/front-view-young-female-student-white-t-shirt-grey-coat-grey-trousers-with-copybook-her-hands-smiling-pink-desk-lessons-university-college-study 1.png"
 import axios from 'axios';
 import React, { useEffect,  useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useStore from './store';
 import ExtSearchBar from './ExtSearchBar'
 import { getFirstAvailableImage } from '../utils/imageUtils';
 
 function AllProps(){
-
+    const navigate = useNavigate();
     const[propertys, setPropertys] = useState([]);
-    const { selects, setSelect, selectOptions, setSelectOptions, usableSelects, setUsableSelect, filteredPropertys, setFilteredPropertys } = useStore();
+    const { selects, setSelect, selectOptions, setSelectOptions, usableSelects, setCurrentPage, setUsableSelect, filteredPropertys, setFilteredPropertys } = useStore();
 
 
     useEffect(()=>{
@@ -244,7 +244,18 @@ function AllProps(){
                         <div id = "allprops-search-bar">
                             <ul id = "allprops-tab-bar">
                                 <li onClick={(e) => { setSelect('action', 'Comprar'); tabBarFocus(e); }}>Comprar</li>
-                                <li onClick={(e) => { setSelect('action', 'Vender'); tabBarFocus(e); }}>Vender</li>
+                                <li onClick={(e) => { 
+                                    setSelect('action', 'Vender'); 
+                                    tabBarFocus(e);
+                                    setCurrentPage("Contactos");
+                                    navigate('/contact');
+                                    setTimeout(() => {
+                                        const formElement = document.getElementById('form');
+                                        if (formElement) {
+                                            formElement.scrollIntoView({ behavior: 'smooth' });
+                                        }
+                                    }, 100);
+                                }}>Vender</li>
                                 <li>
                                     <button onClick={modalPop}>
                                         <svg

@@ -26,7 +26,7 @@ function Navbar(props){
                 linkSet[i].style.borderBottom = "2px solid #FE6D36"
             }
         }    
-    }, [location]);
+    }, [location, currentPage]);
 
     const pageMarker = (page)=>{
         setCurrentPage(page)
