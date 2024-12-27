@@ -280,8 +280,8 @@ function Home(){
                             }
                         }
                     }
-                }
-             }
+                 }
+            }
         }
     }
 
@@ -481,7 +481,7 @@ function Home(){
                                     setTimeout(() => {
                                         const formElement = document.getElementById('form');
                                         if (formElement) {
-                                            formElement.scrollIntoView({ behavior: 'smooth' });
+                                            formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                                         }
                                     }, 100);
                                 }}>Vender</li>
@@ -738,6 +738,7 @@ function Home(){
                                             title = {review.title}
                                             review = {review.review}
                                             is_reversed = "is_reversed"
+                                            rating = {review.rating}
                                         />
                                     )
                                 }
@@ -750,6 +751,7 @@ function Home(){
                                             profession = {review.job}
                                             title = {review.title}
                                             review = {review.review}
+                                            rating = {review.rating}
                                         />
                                     )
                                 }  

@@ -86,7 +86,7 @@ function Contact(){
                         </div>
                         <div>
                             <label htmlFor="mail">Email</label>
-                            <input type="text" placeholder='you@example.com' name = 'mail' id = 'mail'/>
+                            <input type="text" placeholder='correo@ejemplo.com' name = 'mail' id = 'mail'/>
                         </div>  
                     </div>
                     <div id='textarea'>
@@ -94,7 +94,6 @@ function Contact(){
                         <textarea placeholder='Escribe un mensaje' name = 'message' id = 'message'/>
                     </div>
                     <button>Enviar Mensaje</button>
-                    <input type="hidden" name="_captcha" value="false" />
                 </form>
             </div>
             <Footer/>

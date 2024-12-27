@@ -1,6 +1,7 @@
 import "../static/client-opinion-card.css"
 
 function ClientOpinion(props){
+    const stars = '★'.repeat(props.rating) + '☆'.repeat(5 - props.rating);
     return(
         <div className={"client-opinion-card " + `${props.is_reversed}`}>   
             <div className="client-info">
@@ -44,8 +45,10 @@ function ClientOpinion(props){
                             <stop offset="100%" style={{ stopColor: '#ff7e5f', stopOpacity: .5 }} />
                         </linearGradient>
                     </defs>
-                    <circle cx="80%" cy="20%" r="30%" fill="url(#gradient)" />
+                    {/* This stupid circle is anoying, always in the middle, also it looks like a piece of shit */}
+                    {/* <circle cx="80%" cy="20%" r="30%" fill="url(#gradient)" /> */}
                 </svg>
+                <h2 style={{ color: '#fff' }}>{stars}</h2>
                 <h3>{props.title}</h3>
                 <p>{props.review}</p>
             </div>
