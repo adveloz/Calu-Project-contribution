@@ -81,6 +81,13 @@ class reviewModel(models.Model):
         return f"{self.name} - {self.rating or 'Sin calificación'} - {self.job or 'Sin profesión'}"
 
 class faqModel(models.Model):
-    index = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5000)], primary_key=True)
-    question = models.CharField(max_length=300)
-    answer = models.TextField(max_length=2000)
+    index = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5000)], primary_key=True, verbose_name="Índice", help_text="Introduzca un índice.")
+    question = models.CharField(max_length=300, verbose_name="Pregunta", help_text="Introduzca una pregunta.")
+    answer = models.TextField(max_length=2000, verbose_name="Respuesta", help_text="Introduzca una respuesta.")
+
+    class Meta:
+        verbose_name = "Pregunta Frecuente"
+        verbose_name_plural = "Preguntas Frecuentes"
+        
+    def __str__(self):
+        return f"{self.index} - {self.question}"

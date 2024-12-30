@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.urls import path
 from django.utils.html import format_html
 from django.shortcuts import redirect, get_object_or_404
-from .models import propModel, reviewModel
+from .models import propModel, reviewModel, faqModel
 
 class TooltipTextAdmin(admin.ModelAdmin):
     def get_form(self, request, obj=None, **kwargs):
@@ -70,6 +70,11 @@ class ReviewAdmin(TooltipTextAdmin):
         )
     rating_stars.short_description = 'Calificación'
     rating_stars.admin_order_field = 'rating'
+    
+class FaqAdmin(TooltipTextAdmin):
+    list_display = ('index', 'question', 'answer')
+    list_filter = ('question',)
+    search_fields = ('question', 'answer')
 
 @admin.register(propModel)        
 class Combine_Tooltip_Publish(TooltipTextAdmin, PublishActionAdmin):
@@ -79,4 +84,8 @@ class Combine_Tooltip_Publish(TooltipTextAdmin, PublishActionAdmin):
 
 @admin.register(reviewModel)
 class Register_Review(ReviewAdmin):
+    pass
+
+@admin.register(faqModel)
+class Register_Faq(FaqAdmin):
     pass

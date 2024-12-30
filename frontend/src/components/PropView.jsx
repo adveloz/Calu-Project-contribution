@@ -365,7 +365,7 @@ function PropView(){
                                     width: '100%',
                                     padding: '10px 0'
                                 }}>
-                                    {imgSet.map((img, index) => (
+                                    {imgSet.slice(0, -1).map((img, index) => (
                                         img && (
                                             <img
                                                 key={index}
@@ -466,9 +466,53 @@ function PropView(){
                                     height="1.5em"
                                     width="1.5em"
                                     >
+                                    <path d="M8 5c-.5 0-1 .21-1.39.6S6 6.45 6 7v3c-.53 0-1 .19-1.41.59S4 11.47 4 12v5h1.34L6 19h1l.69-2h8.67l.64 2h1l.66-2H20v-5c0-.53-.19-1-.59-1.41S18.53 10 18 10V7c0-.55-.2-1-.61-1.4S16.5 5 16 5M8 7h3v3H8m5-3h3v3h-3m-7 2h12v3H6z" />
+                                </svg>
+                                {property.doubleBedRooms && <p>{property.doubleBedRooms} Habitaciones dobles</p>}
+                            </div>
+                            <div>   
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="#FE6D36"
+                                    height="1.5em"
+                                    width="1.5em"
+                                    >
+                                    <path d="M8 5c-.5 0-1 .21-1.39.6S6 6.45 6 7v3c-.53 0-1 .19-1.41.59S4 11.47 4 12v5h1.34L6 19h1l.69-2h8.67l.64 2h1l.66-2H20v-5c0-.53-.19-1-.59-1.41S18.53 10 18 10V7c0-.55-.2-1-.61-1.4S16.5 5 16 5M8 7h3v3H8m5-3h3v3h-3m-7 2h12v3H6z" />
+                                </svg>
+                                {property.simpleBedRooms && <p>{property.simpleBedRooms} Habitaciones simples</p>}
+                            </div>
+                            <div>   
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="#FE6D36"
+                                    height="1.5em"
+                                    width="1.5em"
+                                    >
                                     <path d="M7 5a2 2 0 110 4c-1.11 0-2-.89-2-2s.9-2 2-2m13 8V4.83C20 3.27 18.73 2 17.17 2c-.75 0-1.47.3-2 .83l-1.25 1.25c-.16-.05-.33-.08-.51-.08-.41 0-.77.12-1.08.32l2.76 2.76c.2-.31.32-.68.32-1.08 0-.18-.03-.34-.07-.5l1.25-1.26a.828.828 0 011.41.59V13h-6.85c-.3-.21-.57-.45-.82-.72l-1.4-1.55c-.19-.23-.43-.38-.69-.5-.31-.15-.65-.23-1-.23C6 10 5 11 5 12.25V13H2v6c0 1.1.9 2 2 2 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 1.1 0 2-.9 2-2v-6h-2m0 6H4v-4h16v4z" />
                                 </svg>
                                 {property.numberOfBathR && <p>{property.numberOfBathR} Baños</p>}
+                            </div>
+                            <div>   
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="#FE6D36"
+                                    height="1.5em"
+                                    width="1.5em"
+                                    >
+                                    <path d="M7 5a2 2 0 110 4c-1.11 0-2-.89-2-2s.9-2 2-2m13 8V4.83C20 3.27 18.73 2 17.17 2c-.75 0-1.47.3-2 .83l-1.25 1.25c-.16-.05-.33-.08-.51-.08-.41 0-.77.12-1.08.32l2.76 2.76c.2-.31.32-.68.32-1.08 0-.18-.03-.34-.07-.5l1.25-1.26a.828.828 0 011.41.59V13h-6.85c-.3-.21-.57-.45-.82-.72l-1.4-1.55c-.19-.23-.43-.38-.69-.5-.31-.15-.65-.23-1-.23C6 10 5 11 5 12.25V13H2v6c0 1.1.9 2 2 2 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 1.1 0 2-.9 2-2v-6h-2m0 6H4v-4h16v4z" />
+                                </svg>
+                                {property.fullBathrooms && <p>{property.fullBathrooms} Baños completos</p>}
+                            </div>
+                            <div>   
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="#FE6D36"
+                                    height="1.5em"
+                                    width="1.5em"
+                                    >
+                                    <path d="M7 5a2 2 0 110 4c-1.11 0-2-.89-2-2s.9-2 2-2m13 8V4.83C20 3.27 18.73 2 17.17 2c-.75 0-1.47.3-2 .83l-1.25 1.25c-.16-.05-.33-.08-.51-.08-.41 0-.77.12-1.08.32l2.76 2.76c.2-.31.32-.68.32-1.08 0-.18-.03-.34-.07-.5l1.25-1.26a.828.828 0 011.41.59V13h-6.85c-.3-.21-.57-.45-.82-.72l-1.4-1.55c-.19-.23-.43-.38-.69-.5-.31-.15-.65-.23-1-.23C6 10 5 11 5 12.25V13H2v6c0 1.1.9 2 2 2 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 1.1 0 2-.9 2-2v-6h-2m0 6H4v-4h16v4z" />
+                                </svg>
+                                {property.simpleBathrooms && <p>{property.simpleBathrooms} Baños simples</p>}
                             </div>
                             {property.garage &&
                                 <div>   
