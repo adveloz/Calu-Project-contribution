@@ -11,14 +11,14 @@ import ExtSearchBar from './ExtSearchBar'
 
 function PropView(){
     const location = useLocation();
-    const[property, setProperty] = useState([]);
+    const[property, setProperty] = useState(null);
     const[imgSet, setImgset] = useState([]);
-    const[nextProp, setNextProp] = useState();
-    const[mainImgIndex, setMainImgIndex] = useState(0);
-    const[previousProp, setPreviousProp] = useState();
+    const[nextProp, setNextProp] = useState(null);
+    const[mainImgIndex, setMainImgIndex] = useState(-1);
+    const[previousProp, setPreviousProp] = useState(null);
     const[globalReview, setGlobalReview] = useState([]);
     const[reviewsResume, setReviewsResume] = useState([]);
-    const[globalCount, setGlobalCount] = useState();
+    const[globalCount, setGlobalCount] = useState(0);
     const[showImageModal, setShowImageModal] = useState(false);
     const[zoomLevel, setZoomLevel] = useState(1);
 
@@ -426,7 +426,8 @@ function PropView(){
                             </div>
                         </div>
                         <div id="main-info-data">
-                            <div>   
+                            {property && property.type && (
+                                <div>   
                                     <svg
                                         fill="#FE6D36"
                                         viewBox="0 0 16 16"
@@ -435,86 +436,101 @@ function PropView(){
                                         >
                                         <path d="M8.354 1.146a.5.5 0 00-.708 0l-6 6A.5.5 0 001.5 7.5v7a.5.5 0 00.5.5h4.5a.5.5 0 00.5-.5v-4h2v4a.5.5 0 00.5.5H14a.5.5 0 00.5-.5v-7a.5.5 0 00-.146-.354L13 5.793V2.5a.5.5 0 00-.5-.5h-1a.5.5 0 00-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 00-.5-.5h-3a.5.5 0 00-.5.5v4H2.5z" />
                                     </svg>
-                                <p>{property.type}</p>
-                            </div>
-                            <div>   
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="#FE6D36"
-                                    height="1.5em"
-                                    width="1.5em"
-                                    >
-                                    <path d="M20 9a1 1 0 001-1V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v1H9V4a1 1 0 00-1-1H4a1 1 0 00-1 1v4a1 1 0 001 1h1v6H4a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1v-1h6v1a1 1 0 001 1h4a1 1 0 001-1v-4a1 1 0 00-1-1h-1V9h1zm-3-4h2v2h-2V5zM5 5h2v2H5V5zm2 14H5v-2h2v2zm12 0h-2v-2h2v2zm-2-4h-1a1 1 0 00-1 1v1H9v-1a1 1 0 00-1-1H7V9h1a1 1 0 001-1V7h6v1a1 1 0 001 1h1v6z" />
-                                </svg>
-                                {property.surface && <p>{property.surface} m&sup2;</p>}
-                            </div>
-                            <div>   
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="#FE6D36"
-                                    height="1.5em"
-                                    width="1.5em"
-                                    >
-                                    <path d="M8 5c-.5 0-1 .21-1.39.6S6 6.45 6 7v3c-.53 0-1 .19-1.41.59S4 11.47 4 12v5h1.34L6 19h1l.69-2h8.67l.64 2h1l.66-2H20v-5c0-.53-.19-1-.59-1.41S18.53 10 18 10V7c0-.55-.2-1-.61-1.4S16.5 5 16 5M8 7h3v3H8m5-3h3v3h-3m-7 2h12v3H6z" />
-                                </svg>
-                                {property.numberOfRooms && <p>{property.numberOfRooms} Habitaciones</p>}
-                            </div>
-                            <div>   
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="#FE6D36"
-                                    height="1.5em"
-                                    width="1.5em"
-                                    >
-                                    <path d="M8 5c-.5 0-1 .21-1.39.6S6 6.45 6 7v3c-.53 0-1 .19-1.41.59S4 11.47 4 12v5h1.34L6 19h1l.69-2h8.67l.64 2h1l.66-2H20v-5c0-.53-.19-1-.59-1.41S18.53 10 18 10V7c0-.55-.2-1-.61-1.4S16.5 5 16 5M8 7h3v3H8m5-3h3v3h-3m-7 2h12v3H6z" />
-                                </svg>
-                                {property.doubleBedRooms && <p>{property.doubleBedRooms} Habitaciones dobles</p>}
-                            </div>
-                            <div>   
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="#FE6D36"
-                                    height="1.5em"
-                                    width="1.5em"
-                                    >
-                                    <path d="M8 5c-.5 0-1 .21-1.39.6S6 6.45 6 7v3c-.53 0-1 .19-1.41.59S4 11.47 4 12v5h1.34L6 19h1l.69-2h8.67l.64 2h1l.66-2H20v-5c0-.53-.19-1-.59-1.41S18.53 10 18 10V7c0-.55-.2-1-.61-1.4S16.5 5 16 5M8 7h3v3H8m5-3h3v3h-3m-7 2h12v3H6z" />
-                                </svg>
-                                {property.simpleBedRooms && <p>{property.simpleBedRooms} Habitaciones simples</p>}
-                            </div>
-                            <div>   
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="#FE6D36"
-                                    height="1.5em"
-                                    width="1.5em"
-                                    >
-                                    <path d="M7 5a2 2 0 110 4c-1.11 0-2-.89-2-2s.9-2 2-2m13 8V4.83C20 3.27 18.73 2 17.17 2c-.75 0-1.47.3-2 .83l-1.25 1.25c-.16-.05-.33-.08-.51-.08-.41 0-.77.12-1.08.32l2.76 2.76c.2-.31.32-.68.32-1.08 0-.18-.03-.34-.07-.5l1.25-1.26a.828.828 0 011.41.59V13h-6.85c-.3-.21-.57-.45-.82-.72l-1.4-1.55c-.19-.23-.43-.38-.69-.5-.31-.15-.65-.23-1-.23C6 10 5 11 5 12.25V13H2v6c0 1.1.9 2 2 2 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 1.1 0 2-.9 2-2v-6h-2m0 6H4v-4h16v4z" />
-                                </svg>
-                                {property.numberOfBathR && <p>{property.numberOfBathR} Baños</p>}
-                            </div>
-                            <div>   
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="#FE6D36"
-                                    height="1.5em"
-                                    width="1.5em"
-                                    >
-                                    <path d="M7 5a2 2 0 110 4c-1.11 0-2-.89-2-2s.9-2 2-2m13 8V4.83C20 3.27 18.73 2 17.17 2c-.75 0-1.47.3-2 .83l-1.25 1.25c-.16-.05-.33-.08-.51-.08-.41 0-.77.12-1.08.32l2.76 2.76c.2-.31.32-.68.32-1.08 0-.18-.03-.34-.07-.5l1.25-1.26a.828.828 0 011.41.59V13h-6.85c-.3-.21-.57-.45-.82-.72l-1.4-1.55c-.19-.23-.43-.38-.69-.5-.31-.15-.65-.23-1-.23C6 10 5 11 5 12.25V13H2v6c0 1.1.9 2 2 2 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 1.1 0 2-.9 2-2v-6h-2m0 6H4v-4h16v4z" />
-                                </svg>
-                                {property.fullBathrooms && <p>{property.fullBathrooms} Baños completos</p>}
-                            </div>
-                            <div>   
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="#FE6D36"
-                                    height="1.5em"
-                                    width="1.5em"
-                                    >
-                                    <path d="M7 5a2 2 0 110 4c-1.11 0-2-.89-2-2s.9-2 2-2m13 8V4.83C20 3.27 18.73 2 17.17 2c-.75 0-1.47.3-2 .83l-1.25 1.25c-.16-.05-.33-.08-.51-.08-.41 0-.77.12-1.08.32l2.76 2.76c.2-.31.32-.68.32-1.08 0-.18-.03-.34-.07-.5l1.25-1.26a.828.828 0 011.41.59V13h-6.85c-.3-.21-.57-.45-.82-.72l-1.4-1.55c-.19-.23-.43-.38-.69-.5-.31-.15-.65-.23-1-.23C6 10 5 11 5 12.25V13H2v6c0 1.1.9 2 2 2 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 1.1 0 2-.9 2-2v-6h-2m0 6H4v-4h16v4z" />
-                                </svg>
-                                {property.simpleBathrooms && <p>{property.simpleBathrooms} Baños simples</p>}
-                            </div>
-                            {property.garage &&
+                                    <p>{property.type}</p>
+                                </div>
+                            )}
+                            {property && property.surface && (
+                                <div>   
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="#FE6D36"
+                                        height="1.5em"
+                                        width="1.5em"
+                                        >
+                                        <path d="M20 9a1 1 0 001-1V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v1H9V4a1 1 0 00-1-1H4a1 1 0 00-1 1v4a1 1 0 001 1h1v6H4a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1v-1h6v1a1 1 0 001 1h4a1 1 0 001-1v-4a1 1 0 00-1-1h-1V9h1zm-3-4h2v2h-2V5zM5 5h2v2H5V5zm2 14H5v-2h2v2zm12 0h-2v-2h2v2zm-2-4h-1a1 1 0 00-1 1v1H9v-1a1 1 0 00-1-1H7V9h1a1 1 0 001-1V7h6v1a1 1 0 001 1h1v6z" />
+                                    </svg>
+                                    <p>{property.surface} m&sup2;</p>
+                                </div>
+                            )}
+                            {property && property.numberOfRooms && (
+                                <div>   
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="#FE6D36"
+                                        height="1.5em"
+                                        width="1.5em"
+                                        >
+                                        <path d="M8 5c-.5 0-1 .21-1.39.6S6 6.45 6 7v3c-.53 0-1 .19-1.41.59S4 11.47 4 12v5h1.34L6 19h1l.69-2h8.67l.64 2h1l.66-2H20v-5c0-.53-.19-1-.59-1.41S18.53 10 18 10V7c0-.55-.2-1-.61-1.4S16.5 5 16 5M8 7h3v3H8m5-3h3v3h-3m-7 2h12v3H6z" />
+                                    </svg>
+                                    <p>{property.numberOfRooms} Habitacion(es)</p>
+                                </div>
+                            )}
+                            {property && property.doubleBedRooms && (
+                                <div>   
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="#FE6D36"
+                                        height="1.5em"
+                                        width="1.5em"
+                                        >
+                                        <path d="M8 5c-.5 0-1 .21-1.39.6S6 6.45 6 7v3c-.53 0-1 .19-1.41.59S4 11.47 4 12v5h1.34L6 19h1l.69-2h8.67l.64 2h1l.66-2H20v-5c0-.53-.19-1-.59-1.41S18.53 10 18 10V7c0-.55-.2-1-.61-1.4S16.5 5 16 5M8 7h3v3H8m5-3h3v3h-3m-7 2h12v3H6z" />
+                                    </svg>
+                                    <p>{property.doubleBedRooms} Habitacion(es) doble(s)</p>
+                                </div>
+                            )}
+                            {property && property.simpleBedRooms && (
+                                <div>   
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="#FE6D36"
+                                        height="1.5em"
+                                        width="1.5em"
+                                        >
+                                        <path d="M8 5c-.5 0-1 .21-1.39.6S6 6.45 6 7v3c-.53 0-1 .19-1.41.59S4 11.47 4 12v5h1.34L6 19h1l.69-2h8.67l.64 2h1l.66-2H20v-5c0-.53-.19-1-.59-1.41S18.53 10 18 10V7c0-.55-.2-1-.61-1.4S16.5 5 16 5M8 7h3v3H8m5-3h3v3h-3m-7 2h12v3H6z" />
+                                    </svg>
+                                    <p>{property.simpleBedRooms} Habitacion(es) simpl(es)</p>
+                                </div>
+                            )}
+                            {property && property.numberOfBathR && (
+                                <div>   
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="#FE6D36"
+                                        height="1.5em"
+                                        width="1.5em"
+                                        >
+                                        <path d="M7 5a2 2 0 110 4c-1.11 0-2-.89-2-2s.9-2 2-2m13 8V4.83C20 3.27 18.73 2 17.17 2c-.75 0-1.47.3-2 .83l-1.25 1.25c-.16-.05-.33-.08-.51-.08-.41 0-.77.12-1.08.32l2.76 2.76c.2-.31.32-.68.32-1.08 0-.18-.03-.34-.07-.5l1.25-1.26a.828.828 0 011.41.59V13h-6.85c-.3-.21-.57-.45-.82-.72l-1.4-1.55c-.19-.23-.43-.38-.69-.5-.31-.15-.65-.23-1-.23C6 10 5 11 5 12.25V13H2v6c0 1.1.9 2 2 2 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 1.1 0 2-.9 2-2v-6h-2m0 6H4v-4h16v4z" />
+                                    </svg>
+                                    <p>{property.numberOfBathR} Baño(s)</p>
+                                </div>
+                            )}
+                            {property && property.fullBathrooms && (
+                                <div>   
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="#FE6D36"
+                                        height="1.5em"
+                                        width="1.5em"
+                                        >
+                                        <path d="M7 5a2 2 0 110 4c-1.11 0-2-.89-2-2s.9-2 2-2m13 8V4.83C20 3.27 18.73 2 17.17 2c-.75 0-1.47.3-2 .83l-1.25 1.25c-.16-.05-.33-.08-.51-.08-.41 0-.77.12-1.08.32l2.76 2.76c.2-.31.32-.68.32-1.08 0-.18-.03-.34-.07-.5l1.25-1.26a.828.828 0 011.41.59V13h-6.85c-.3-.21-.57-.45-.82-.72l-1.4-1.55c-.19-.23-.43-.38-.69-.5-.31-.15-.65-.23-1-.23C6 10 5 11 5 12.25V13H2v6c0 1.1.9 2 2 2 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 1.1 0 2-.9 2-2v-6h-2m0 6H4v-4h16v4z" />
+                                    </svg>
+                                    <p>{property.fullBathrooms} Baño(s) completo(s)</p>
+                                </div>
+                            )}
+                            {property && property.simpleBathrooms && (
+                                <div>   
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="#FE6D36"
+                                        height="1.5em"
+                                        width="1.5em"
+                                        >
+                                        <path d="M7 5a2 2 0 110 4c-1.11 0-2-.89-2-2s.9-2 2-2m13 8V4.83C20 3.27 18.73 2 17.17 2c-.75 0-1.47.3-2 .83l-1.25 1.25c-.16-.05-.33-.08-.51-.08-.41 0-.77.12-1.08.32l2.76 2.76c.2-.31.32-.68.32-1.08 0-.18-.03-.34-.07-.5l1.25-1.26a.828.828 0 011.41.59V13h-6.85c-.3-.21-.57-.45-.82-.72l-1.4-1.55c-.19-.23-.43-.38-.69-.5-.31-.15-.65-.23-1-.23C6 10 5 11 5 12.25V13H2v6c0 1.1.9 2 2 2 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 1.1 0 2-.9 2-2v-6h-2m0 6H4v-4h16v4z" />
+                                    </svg>
+                                    <p>{property.simpleBathrooms} Baño(s) simple(s)</p>
+                                </div>
+                            )}
+                            {property && property.garage && (
                                 <div>   
                                         <svg
                                             viewBox="0 0 24 24"
@@ -527,8 +543,8 @@ function PropView(){
                                         </svg>
                                     <p>Garage</p>
                                 </div>
-                            }
-                            {property.elevator &&
+                            )}
+                            {property && property.elevator && (
                                 <div>   
                                         <svg
                                         viewBox="0 0 24 24"
@@ -540,8 +556,8 @@ function PropView(){
                                         </svg>
                                     <p>Ascensor</p>
                                 </div>
-                            }
-                            {property.pool && 
+                            )}
+                            {property && property.pool && 
                                 <div>   
                                         <svg
                                         viewBox="0 0 24 24"
@@ -554,7 +570,25 @@ function PropView(){
                                     <p>Piscina</p>
                                 </div>
                             }
-                            {property.garden &&
+                            {property && property.balcon && 
+                                <div>   
+                                    <svg
+                                    fill="none"
+                                    stroke="#FE6D36"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    viewBox="0 0 24 24"
+                                    height="1.3em"
+                                    width="1.3em"
+                                    >
+                                    <path d="M22 8.35V20a2 2 0 01-2 2H4a2 2 0 01-2-2V8.35A2 2 0 013.26 6.5l8-3.2a2 2 0 011.48 0l8 3.2A2 2 0 0122 8.35zM6 18h12M6 14h12" />
+                                    <path d="M6 10h12v12H6z" />
+                                    </svg>
+                                    <p>Balcón</p>
+                            </div>
+                            }
+                            {property && property.garden && 
                                 <div>   
                                     <svg
                                     fill="none"
@@ -573,7 +607,7 @@ function PropView(){
                                     <p>Jardín</p>
                                 </div>
                             }
-                            {property.trastero &&
+                            {property && property.trastero && 
                                 <div>   
                                     <svg
                                     fill="none"
@@ -591,7 +625,7 @@ function PropView(){
                                     <p>Trastero</p>
                             </div>
                             }
-                            {property.terraza && 
+                            {property && property.terraza && 
                                 <div>   
                                         <svg
                                         viewBox="0 0 576 512"
@@ -607,9 +641,9 @@ function PropView(){
                         </div>
                 </div>
                 <div id="main-info-text-container">
-                        <h2>{property.title}</h2>
-                        {property.price && <h3>Precio: € {property.price}</h3>}
-                        <p>{property.description}</p>
+                        <h2>{property && property.title}</h2>
+                        {property && property.price && <h3>Precio: € {property.price}</h3>}
+                        {property && <p>{property.description}</p>}
                         <button id="modal-pop-button" onClick = {modalPop}>Contactar</button>
                 </div>
             </div>
@@ -656,14 +690,16 @@ function PropView(){
                 <img src={background} alt="City Background" id="background"/>
                 <div id="reviews-cards-scroll">
                     <div id = "reviews-cards-container">
-                        {globalReview.map((review) => {
+                        {globalReview && globalReview.length > 0 && globalReview.map((review) => {
+                            if (!review) return null;
                             return(
                             <RatedReviews
-                                img = {`../static/media/assets${review.img}`}
-                                name = {review.name}
-                                text = {review.review}
-                                rating = {review.rating}
-                                />
+                                key={review.id}
+                                img={review.img ? `../static/media/assets/${review.img}` : 'https://placehold.co/400x300?text=No+Review+Image'}
+                                name={review.name || 'Anonymous'}
+                                text={review.review || ''}
+                                rating={review.rating || 0}
+                            />
                             )  
                         })}
                     </div>

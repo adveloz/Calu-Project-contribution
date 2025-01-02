@@ -11,9 +11,9 @@ function Footer(){
     return(
         <div id="footer">
             <div id = "footer-logo-container">
-                <Link to= "/login">
-                    <img src={logo} alt="CalJ Logo" id="footer-logo"/>
-                </Link>
+                {/* <Link to= "/login"> */}
+                <img src={logo} alt="CalJ Logo" id="footer-logo"/>
+                {/* </Link> */}
                 <h5>© 2024CalJ. All rights reserved.</h5>
             </div>
             <div id= "footer-links-container">

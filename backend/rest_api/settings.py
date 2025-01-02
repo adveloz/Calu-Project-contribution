@@ -115,8 +115,6 @@ CSRF_USE_SESSIONS = False
 CSRF_COOKIE_SAMESITE = 'Lax'
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://172.16.238.5",
-    "https://172.16.238.5:82",
     "http://127.0.0.1:82",
     "http://localhost:82",
     "http://inmobiliariacalu.com",

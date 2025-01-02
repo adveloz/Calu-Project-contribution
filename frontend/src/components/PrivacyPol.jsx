@@ -88,8 +88,8 @@ function PrivacyPol(){
                         <h3>Contacto</h3>
                         <p>Si tienes preguntas sobre nuestra Política de Privacidad o sobre cómo manejamos tu información personal, no dudes en contactarnos en:</p>
                         <ul>
-                            <li>Correo Electrónico: privacidad@inmobiliariaejemplo.com</li>
-                            <li>Teléfono: +123 456 7890</li>
+                            <li>Correo Electrónico: info@inmobiliariacalu.com</li>
+                            <li>Teléfono: +34 647 66 28 40</li>
                         </ul>
                     </div>
                 </div>

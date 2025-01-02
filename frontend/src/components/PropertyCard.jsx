@@ -23,7 +23,7 @@ function PropertyCard(props){
             <p>
                 {props.description}
             </p>
-            <Link to={`/property/${props.id}`}>
+            <Link to={`/property/${props.id}`} onClick={() => window.scrollTo(0, 0)}>
                 <button>
                     Ver detalles
                 </button>

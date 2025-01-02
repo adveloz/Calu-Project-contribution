@@ -133,22 +133,22 @@ function Navbar(props){
                 </svg>
                 <div id = "nav-bar-link-list">
                     <ul>
-                        <Link to="/" onClick = {()=>pageMarker("Inicio")}>
+                        <Link to="/" onClick = {()=>{pageMarker("Inicio"); window.scrollTo(0, 0);}}>
                             <li>Inicio</li>
                         </Link>
-                        <Link to="/#service-section-title" onClick = {()=>pageMarker("Servicios")}>
+                        <Link to="/#service-section-title" onClick = {()=>{pageMarker("Servicios"); window.scrollTo(0, 0);}}>
                             <li>Servicios</li>
                         </Link>
-                        <Link to="/props" onClick = {()=>pageMarker("Todas las propiedades")}>
+                        <Link to="/props" onClick = {()=>{pageMarker("Todas las propiedades"); window.scrollTo(0, 0);}}>
                             <li>Todas las propiedades</li>
                         </Link>
-                        <Link to="/about" onClick = {()=>pageMarker("Sobre nosotros")}>
+                        <Link to="/about" onClick = {()=>{pageMarker("Sobre nosotros"); window.scrollTo(0, 0);}}>
                             <li>Sobre nosotros</li>
                         </Link>
-                        <Link to="/contact" onClick = {()=>pageMarker("Contactos")}>
+                        <Link to="/contact" onClick = {()=>{pageMarker("Contactos"); window.scrollTo(0, 0);}}>
                             <li>Contactos</li>
                         </Link>
-                        <Link to="/faq" onClick = {()=>pageMarker("Preguntas frecuentes")}>
+                        <Link to="/faq" onClick = {()=>{pageMarker("Preguntas frecuentes"); window.scrollTo(0, 0);}}>
                             <li>Preguntas frecuentes</li>
                         </Link>
                     </ul>
