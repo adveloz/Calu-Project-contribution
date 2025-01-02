@@ -320,7 +320,7 @@ function ExtSearchBar(){
                                             )
                                         })}
                                     </select>
-                                    Superficie
+                                    Superficie m&sup2;
                                 </li>
                                 <li>
                                     <svg

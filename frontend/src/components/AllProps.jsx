@@ -337,7 +337,7 @@ function AllProps(){
                                             )
                                         })}
                                     </select>
-                                    Superficie
+                                    Superficie m&sup2;
                                 </li>
                                 <li>
                                     <svg
@@ -411,7 +411,7 @@ function AllProps(){
                         isForSale = "Para rentar"
                     }
                     else{
-                        isForSale = "Para vender"
+                        isForSale = "En Venta"
                     }
                     return(
                         <PropertyCard 

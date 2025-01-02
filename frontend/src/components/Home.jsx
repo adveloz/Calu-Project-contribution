@@ -566,7 +566,7 @@ function Home(){
                                             )
                                         })}
                                     </select>
-                                    Superficie
+                                    Superficie m&sup2;
                                 </li>
                                 <li>
                                     <svg
@@ -657,7 +657,7 @@ function Home(){
                                         isForSale = "Para rentar"
                                     }
                                     else{
-                                        isForSale = "Para vender"
+                                        isForSale = "En Venta"
                                     }
                                     return(
                                         <PropertyCard 

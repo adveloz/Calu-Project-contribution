@@ -14,7 +14,7 @@ function Footer(){
                 {/* <Link to= "/login"> */}
                 <img src={logo} alt="CalJ Logo" id="footer-logo"/>
                 {/* </Link> */}
-                <h5>© 2024CalJ. All rights reserved.</h5>
+                <h5>© 2025CalJ. All rights reserved.</h5>
             </div>
             <div id= "footer-links-container">
                 <ul id = "pages-links">
@@ -37,7 +37,7 @@ function Footer(){
                 <li><img src={linkedin} alt="LinkedIn" /></li>
                 <li><img src={youtube} alt="YouTube" /></li>
             </ul>
-            <h5 id = "copyright-tablet">© 2024CalJ. All rights reserved.</h5>
+            <h5 id = "copyright-tablet">© 2025CalJ. All rights reserved.</h5>
         </div>
     );
 }

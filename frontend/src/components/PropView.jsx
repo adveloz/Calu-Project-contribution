@@ -462,7 +462,7 @@ function PropView(){
                                         >
                                         <path d="M8 5c-.5 0-1 .21-1.39.6S6 6.45 6 7v3c-.53 0-1 .19-1.41.59S4 11.47 4 12v5h1.34L6 19h1l.69-2h8.67l.64 2h1l.66-2H20v-5c0-.53-.19-1-.59-1.41S18.53 10 18 10V7c0-.55-.2-1-.61-1.4S16.5 5 16 5M8 7h3v3H8m5-3h3v3h-3m-7 2h12v3H6z" />
                                     </svg>
-                                    <p>{property.numberOfRooms} Habitacion(es)</p>
+                                    <p>{property.numberOfRooms} {property.numberOfRooms === 1 ? 'Habitación' : 'Habitaciones'}</p>
                                 </div>
                             )}
                             {property && property.doubleBedRooms && (
@@ -475,7 +475,7 @@ function PropView(){
                                         >
                                         <path d="M8 5c-.5 0-1 .21-1.39.6S6 6.45 6 7v3c-.53 0-1 .19-1.41.59S4 11.47 4 12v5h1.34L6 19h1l.69-2h8.67l.64 2h1l.66-2H20v-5c0-.53-.19-1-.59-1.41S18.53 10 18 10V7c0-.55-.2-1-.61-1.4S16.5 5 16 5M8 7h3v3H8m5-3h3v3h-3m-7 2h12v3H6z" />
                                     </svg>
-                                    <p>{property.doubleBedRooms} Habitacion(es) doble(s)</p>
+                                    <p>{property.doubleBedRooms} {property.doubleBedRooms === 1 ? 'Habitación doble' : 'Habitaciones dobles'}</p>
                                 </div>
                             )}
                             {property && property.simpleBedRooms && (
@@ -488,7 +488,7 @@ function PropView(){
                                         >
                                         <path d="M8 5c-.5 0-1 .21-1.39.6S6 6.45 6 7v3c-.53 0-1 .19-1.41.59S4 11.47 4 12v5h1.34L6 19h1l.69-2h8.67l.64 2h1l.66-2H20v-5c0-.53-.19-1-.59-1.41S18.53 10 18 10V7c0-.55-.2-1-.61-1.4S16.5 5 16 5M8 7h3v3H8m5-3h3v3h-3m-7 2h12v3H6z" />
                                     </svg>
-                                    <p>{property.simpleBedRooms} Habitacion(es) simpl(es)</p>
+                                    <p>{property.simpleBedRooms} {property.simpleBedRooms === 1 ? 'Habitación simple' : 'Habitaciones simples'}</p>
                                 </div>
                             )}
                             {property && property.numberOfBathR && (
@@ -501,7 +501,7 @@ function PropView(){
                                         >
                                         <path d="M7 5a2 2 0 110 4c-1.11 0-2-.89-2-2s.9-2 2-2m13 8V4.83C20 3.27 18.73 2 17.17 2c-.75 0-1.47.3-2 .83l-1.25 1.25c-.16-.05-.33-.08-.51-.08-.41 0-.77.12-1.08.32l2.76 2.76c.2-.31.32-.68.32-1.08 0-.18-.03-.34-.07-.5l1.25-1.26a.828.828 0 011.41.59V13h-6.85c-.3-.21-.57-.45-.82-.72l-1.4-1.55c-.19-.23-.43-.38-.69-.5-.31-.15-.65-.23-1-.23C6 10 5 11 5 12.25V13H2v6c0 1.1.9 2 2 2 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 1.1 0 2-.9 2-2v-6h-2m0 6H4v-4h16v4z" />
                                     </svg>
-                                    <p>{property.numberOfBathR} Baño(s)</p>
+                                    <p>{property.numberOfBathR} {property.numberOfBathR === 1 ? 'Baño' : 'Baños'}</p>
                                 </div>
                             )}
                             {property && property.fullBathrooms && (
@@ -514,7 +514,7 @@ function PropView(){
                                         >
                                         <path d="M7 5a2 2 0 110 4c-1.11 0-2-.89-2-2s.9-2 2-2m13 8V4.83C20 3.27 18.73 2 17.17 2c-.75 0-1.47.3-2 .83l-1.25 1.25c-.16-.05-.33-.08-.51-.08-.41 0-.77.12-1.08.32l2.76 2.76c.2-.31.32-.68.32-1.08 0-.18-.03-.34-.07-.5l1.25-1.26a.828.828 0 011.41.59V13h-6.85c-.3-.21-.57-.45-.82-.72l-1.4-1.55c-.19-.23-.43-.38-.69-.5-.31-.15-.65-.23-1-.23C6 10 5 11 5 12.25V13H2v6c0 1.1.9 2 2 2 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 1.1 0 2-.9 2-2v-6h-2m0 6H4v-4h16v4z" />
                                     </svg>
-                                    <p>{property.fullBathrooms} Baño(s) completo(s)</p>
+                                    <p>{property.fullBathrooms} {property.fullBathrooms === 1 ? 'Baño completo' : 'Baños completos'}</p>
                                 </div>
                             )}
                             {property && property.simpleBathrooms && (
@@ -527,7 +527,7 @@ function PropView(){
                                         >
                                         <path d="M7 5a2 2 0 110 4c-1.11 0-2-.89-2-2s.9-2 2-2m13 8V4.83C20 3.27 18.73 2 17.17 2c-.75 0-1.47.3-2 .83l-1.25 1.25c-.16-.05-.33-.08-.51-.08-.41 0-.77.12-1.08.32l2.76 2.76c.2-.31.32-.68.32-1.08 0-.18-.03-.34-.07-.5l1.25-1.26a.828.828 0 011.41.59V13h-6.85c-.3-.21-.57-.45-.82-.72l-1.4-1.55c-.19-.23-.43-.38-.69-.5-.31-.15-.65-.23-1-.23C6 10 5 11 5 12.25V13H2v6c0 1.1.9 2 2 2 0 .55.45 1 1 1h14c.55 0 1-.45 1-1 1.1 0 2-.9 2-2v-6h-2m0 6H4v-4h16v4z" />
                                     </svg>
-                                    <p>{property.simpleBathrooms} Baño(s) simple(s)</p>
+                                    <p>{property.simpleBathrooms} {property.simpleBathrooms === 1 ? 'Baño simple' : 'Baños simples'}</p>
                                 </div>
                             )}
                             {property && property.garage && (
@@ -542,6 +542,20 @@ function PropView(){
                                             <path d="M22 7.388V5.279l-9.684-3.228a.996.996 0 00-.658.009L2 5.572V7.7l10.015-3.642L22 7.388z" />
                                         </svg>
                                     <p>Garage</p>
+                                </div>
+                            )}
+                            {property && property.plazaGarage && (
+                                <div>   
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            fill="#FE6D36"
+                                            height="1.3em"
+                                            width="1.3em"
+                                            >
+                                            <path d="M3 19.723V21a1 1 0 001 1h1a1 1 0 001-1v-1h12v1a1 1 0 001 1h1a1 1 0 001-1v-1.277A1.99 1.99 0 0022 18v-3c0-.831-.507-1.542-1.228-1.845l-1.368-4.104A2.995 2.995 0 0016.559 7H7.441a2.995 2.995 0 00-2.845 2.051l-1.368 4.104A2.001 2.001 0 002 15v3c0 .738.404 1.376 1 1.723zM5.5 18a1.5 1.5 0 11.001-3.001A1.5 1.5 0 015.5 18zm13 0a1.5 1.5 0 11.001-3.001A1.5 1.5 0 0118.5 18zM7.441 9h9.117a1 1 0 01.949.684L18.613 13H5.387l1.105-3.316c.137-.409.519-.684.949-.684z" />
+                                            <path d="M22 7.388V5.279l-9.684-3.228a.996.996 0 00-.658.009L2 5.572V7.7l10.015-3.642L22 7.388z" />
+                                        </svg>
+                                    <p>Plaza Garage</p>
                                 </div>
                             )}
                             {property && property.elevator && (
