@@ -8,6 +8,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import ExtSearchBar from './ExtSearchBar'
+import WhatsAppButton from "./WhatsAppButton";
 
 function PropView(){
     const location = useLocation();
@@ -735,8 +736,8 @@ function PropView(){
                         </div>
                 </div>
             </div>
-            
             <Footer/>
+            <WhatsAppButton />
         </>
     );
 }

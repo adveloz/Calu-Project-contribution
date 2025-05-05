@@ -5,6 +5,7 @@ import headerImg1 from "../static/media/Group 35022.png"
 import headerImg2 from "../static/media/christina-wocintechchat-com-UTw3j_aoIKM-unsplash.png"
 import headerImg3 from "../static/media/Group 35023.png"
 import ExtSearchBar from "./ExtSearchBar"
+import WhatsAppButton from "./WhatsAppButton"
 
 function PrivacyPol(){
     return(
@@ -94,6 +95,7 @@ function PrivacyPol(){
                     </div>
                 </div>
             <Footer/>
+            <WhatsAppButton />
         </>
     );
 }

@@ -52,9 +52,9 @@ function Home(){
                 }
                 setReviews(clientReviews);
                 
-                // const response = await axios.get('http://127.0.0.1:8000/api/v1/props/');
+                const response = await axios.get('http://127.0.0.1:8000/api/v1/props/');
                 // Get properties
-                const response = await axios.get('/api/v1/props/');
+                // const response = await axios.get('/api/v1/props/');
                 console.log('Properties response:', response.data);
                 
                 // Ensure we have valid property data
@@ -539,14 +539,23 @@ function Home(){
                                     >
                                     <path d="M19.2 17.41A6 6 0 0114.46 20c-2.68 0-5-2-6-5H14a1 1 0 000-2H8.05c0-.33-.05-.67-.05-1s0-.67.05-1H14a1 1 0 000-2H8.47c1-3 3.31-5 6-5a6 6 0 014.73 2.59 1 1 0 101.6-1.18A7.92 7.92 0 0014.46 2c-3.76 0-7 2.84-8.07 7H4a1 1 0 000 2h2.05v2H4a1 1 0 000 2h2.39c1.09 4.16 4.31 7 8.07 7a7.92 7.92 0 006.34-3.41 1 1 0 00-1.6-1.18z" />
                                     </svg>
-                                    <select name="price" id="searchPrice" onChange={(e) => setSelect('price', e.target.value)}>
-                                        <option value="all" selected>Todos los precios</option>
-                                        {selectOptions.prices.map((price) => {
-                                            return(
-                                                <option value={price}>{price}</option>
-                                            )
-                                        })}
-                                    </select>
+                                    <div className="range-container">
+                                        <div className="range-inputs">
+                                            <input 
+                                                type="number" 
+                                                placeholder="Mínimo" 
+                                                onChange={(e) => setSelect('minPrice', e.target.value)}
+                                                className="range-min"
+                                            />
+                                            <span>-</span>
+                                            <input 
+                                                type="number" 
+                                                placeholder="Máximo" 
+                                                onChange={(e) => setSelect('maxPrice', e.target.value)}
+                                                className="range-max"
+                                            />
+                                        </div>
+                                    </div>
                                     Precio
                                 </li>
                                 <li>
@@ -558,14 +567,23 @@ function Home(){
                                         >
                                         <path d="M20 9a1 1 0 001-1V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v1H9V4a1 1 0 00-1-1H4a1 1 0 00-1 1v4a1 1 0 001 1h1v6H4a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1v-1h6v1a1 1 0 001 1h4a1 1 0 001-1v-4a1 1 0 00-1-1h-1V9h1zm-3-4h2v2h-2V5zM5 5h2v2H5V5zm2 14H5v-2h2v2zm12 0h-2v-2h2v2zm-2-4h-1a1 1 0 00-1 1v1H9v-1a1 1 0 00-1-1H7V9h1a1 1 0 001-1V7h6v1a1 1 0 001 1h1v6z" />
                                     </svg>
-                                    <select name="surface" id="surface" onChange={(e) => setSelect('surface', e.target.value)}>
-                                        <option value="all" selected>Todas las superficies</option>
-                                        {selectOptions.surface.map((surface) => {
-                                            return(
-                                                <option value={surface}>{surface}</option>
-                                            )
-                                        })}
-                                    </select>
+                                    <div className="range-container">
+                                        <div className="range-inputs">
+                                            <input 
+                                                type="number" 
+                                                placeholder="Mínimo" 
+                                                onChange={(e) => setSelect('minSurface', e.target.value)}
+                                                className="range-min"
+                                            />
+                                            <span>-</span>
+                                            <input 
+                                                type="number" 
+                                                placeholder="Máximo" 
+                                                onChange={(e) => setSelect('maxSurface', e.target.value)}
+                                                className="range-max"
+                                            />
+                                        </div>
+                                    </div>
                                     Superficie m&sup2;
                                 </li>
                                 <li>
