@@ -10,6 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import useStore from './store';
 import ExtSearchBar from './ExtSearchBar'
 import { getFirstAvailableImage } from '../utils/imageUtils';
+import WhatsAppButton from "./WhatsAppButton";
 
 function AllProps(){
     const navigate = useNavigate();
@@ -427,6 +428,7 @@ function AllProps(){
                 })}
             </div>
             <Footer/>
+            <WhatsAppButton />
         </>
     );
 }

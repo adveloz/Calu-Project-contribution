@@ -23,6 +23,7 @@ import teamCard2 from '../static/media/Leonardo_Phoenix_A_professionally_dressed
 import teamCard3 from '../static/media/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.png';
 import teamCard4 from '../static/media/Leonardo_Phoenix_A_highquality_professionally_lit_photograph_o_0.png';
 import ExtSearchBar from './ExtSearchBar'
+import WhatsAppButton from "./WhatsAppButton";
 function About(){
 
     const changePage = (e) =>{
@@ -174,6 +175,7 @@ function About(){
                     </div>
             </div>
             <Footer/>
+            <WhatsAppButton />
         </>
     );
 }

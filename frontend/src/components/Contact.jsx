@@ -9,6 +9,7 @@ import { UilPhone } from '@iconscout/react-unicons'
 import { UilEnvelope } from '@iconscout/react-unicons'
 import '@fontsource/montserrat';
 import ExtSearchBar from './ExtSearchBar'
+import WhatsAppButton from './WhatsAppButton';
 function Contact(){
     return(
         <>
@@ -97,6 +98,7 @@ function Contact(){
                 </form>
             </div>
             <Footer/>
+            <WhatsAppButton />
         </>
     );
 }

@@ -8,6 +8,7 @@ import headerImg3 from "../static/media/jason-briscoe-AQl-J19ocWE-unsplash.png"
 import ExtSearchBar from './ExtSearchBar'
 import React, { useEffect,  useState } from 'react';
 import axios from "axios";
+import WhatsAppButton from "./WhatsAppButton";
 function FAQ(){
     const [faqSet, setFaqSet] = useState([]);
     useEffect(()=>{
@@ -78,6 +79,7 @@ function FAQ(){
                     </div>
             </div>           
             <Footer/>
+            <WhatsAppButton />
         </>
     );
 }
