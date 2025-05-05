@@ -11,8 +11,10 @@ import useStore from './store';
 import ExtSearchBar from './ExtSearchBar'
 import { getFirstAvailableImage } from '../utils/imageUtils';
 import WhatsAppButton from "./WhatsAppButton";
+import { useTranslation } from 'react-i18next';
 
 function AllProps(){
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const[propertys, setPropertys] = useState([]);
     const { selects, setSelect, selectOptions, setSelectOptions, usableSelects, setCurrentPage, setUsableSelect, filteredPropertys, setFilteredPropertys } = useStore();
@@ -239,12 +241,12 @@ function AllProps(){
             <div id = "allprops-search-section">
                     <div id = "allprops-search-container">
                         <div id = "allprops-search-container-text">
-                            <h1>Tu futuro hogar comienza aquí</h1>
-                            <p>Desde modernos apartamentos hasta amplias casas familiares, te ayudamos a encontrar el lugar donde tus sueños se hacen realidad.</p>
+                            <h1>{t('home.title')}</h1>
+                            <p>{t('home.description')}</p>
                         </div>
                         <div id = "allprops-search-bar">
                             <ul id = "allprops-tab-bar">
-                                <li onClick={(e) => { setSelect('action', 'Comprar'); tabBarFocus(e); }}>Comprar</li>
+                                <li onClick={(e) => { setSelect('action', 'Comprar'); tabBarFocus(e); }}>{t('home.tab.buy')}</li>
                                 <li onClick={(e) => { 
                                     setSelect('action', 'Vender'); 
                                     tabBarFocus(e);
@@ -256,7 +258,7 @@ function AllProps(){
                                             formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                                         }
                                     }, 100);
-                                }}>Vender</li>
+                                }}>{t('home.tab.sell')}</li>
                                 <li>
                                     <button onClick={modalPop}>
                                         <svg
@@ -292,9 +294,9 @@ function AllProps(){
                                     >
                                     <path d="M5.64 16.36a9 9 0 1112.72 0l-5.65 5.66a1 1 0 01-1.42 0l-5.65-5.66zm11.31-1.41a7 7 0 10-9.9 0L12 19.9l4.95-4.95zM12 14a4 4 0 110-8 4 4 0 010 8zm0-2a2 2 0 100-4 2 2 0 000 4z" />
                                     </svg>
-                                    Ubicación
+                                    {t('home.search.location')}
                                     <select name="location" id="location" onChange={(e) => setSelect('location', e.target.value)}>
-                                        <option value="all" selected>Todas las ubicaciones</option>
+                                        <option value="all" selected>{t('home.search.allLocations')}</option>
                                         {selectOptions.location.map((location) => {
                                             return(
                                                 <option value={location}>{location}</option>
@@ -312,14 +314,14 @@ function AllProps(){
                                     <path d="M19.2 17.41A6 6 0 0114.46 20c-2.68 0-5-2-6-5H14a1 1 0 000-2H8.05c0-.33-.05-.67-.05-1s0-.67.05-1H14a1 1 0 000-2H8.47c1-3 3.31-5 6-5a6 6 0 014.73 2.59 1 1 0 101.6-1.18A7.92 7.92 0 0014.46 2c-3.76 0-7 2.84-8.07 7H4a1 1 0 000 2h2.05v2H4a1 1 0 000 2h2.39c1.09 4.16 4.31 7 8.07 7a7.92 7.92 0 006.34-3.41 1 1 0 00-1.6-1.18z" />
                                     </svg>
                                     <select name="price" id="searchPrice" onChange={(e) => setSelect('price', e.target.value)}>
-                                        <option value="all" selected>Todos los precios</option>
+                                        <option value="all" selected>{t('home.search.allPrices')}</option>
                                         {selectOptions.prices.map((price) => {
                                             return(
                                                 <option value={price}>{price}</option>
                                             )
                                         })}
                                     </select>
-                                    Precio
+                                    {t('home.search.price')}
                                 </li>
                                 <li>
                                      <svg
@@ -331,14 +333,14 @@ function AllProps(){
                                         <path d="M20 9a1 1 0 001-1V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v1H9V4a1 1 0 00-1-1H4a1 1 0 00-1 1v4a1 1 0 001 1h1v6H4a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1v-1h6v1a1 1 0 001 1h4a1 1 0 001-1v-4a1 1 0 00-1-1h-1V9h1zm-3-4h2v2h-2V5zM5 5h2v2H5V5zm2 14H5v-2h2v2zm12 0h-2v-2h2v2zm-2-4h-1a1 1 0 00-1 1v1H9v-1a1 1 0 00-1-1H7V9h1a1 1 0 001-1V7h6v1a1 1 0 001 1h1v6z" />
                                     </svg>
                                     <select name="surface" id="surface" onChange={(e) => setSelect('surface', e.target.value)}>
-                                        <option value="all" selected>Todas las superficies</option>
+                                        <option value="all" selected>{t('home.search.allSurfaces')}</option>
                                         {selectOptions.surface.map((surface) => {
                                             return(
                                                 <option value={surface}>{surface}</option>
                                             )
                                         })}
                                     </select>
-                                    Superficie m&sup2;
+                                    {t('home.search.surface')}
                                 </li>
                                 <li>
                                     <svg
@@ -350,38 +352,14 @@ function AllProps(){
                                         <path d="M8.354 1.146a.5.5 0 00-.708 0l-6 6A.5.5 0 001.5 7.5v7a.5.5 0 00.5.5h4.5a.5.5 0 00.5-.5v-4h2v4a.5.5 0 00.5.5H14a.5.5 0 00.5-.5v-7a.5.5 0 00-.146-.354L13 5.793V2.5a.5.5 0 00-.5-.5h-1a.5.5 0 00-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 00-.5-.5h-3a.5.5 0 00-.5.5v4H2.5z" />
                                     </svg>
                                     <select name="type" id="type" onChange={(e) => setSelect('type', e.target.value)}>
-                                        <option value="all" selected>Todos los tipos</option>
+                                        <option value="all" selected>{t('home.search.allTypes')}</option>
                                         {selectOptions.type.map((type) => {
                                             return(
                                                 <option value={type}>{type}</option>
                                             )
                                         })}
                                     </select>
-                                    Tipo de propiedad
-                                </li>
-                                <li>
-                                    <button onClick={modalPop}>
-                                        <svg
-                                            fill="#fff"
-                                            viewBox="0 0 16 16"
-                                            height="1.6em"
-                                            width="1.6em"
-                                            >
-                                            <path d="M8 4a.5.5 0 01.5.5v3h3a.5.5 0 010 1h-3v3a.5.5 0 01-1 0v-3h-3a.5.5 0 010-1h3v-3A.5.5 0 018 4z" />
-                                        </svg>
-                                    </button>
-                                    <Link onClick={transformSelect}>
-                                        <button>
-                                            <svg
-                                                    viewBox="0 0 24 24"
-                                                    fill="#fff"
-                                                    height="1.4em"
-                                                    width="1.4em"
-                                                    >
-                                                    <path d="M16.32 14.9l5.39 5.4a1 1 0 01-1.42 1.4l-5.38-5.38a8 8 0 111.41-1.41zM10 16a6 6 0 100-12 6 6 0 000 12z" />
-                                            </svg>
-                                        </button>
-                                    </Link>
+                                    {t('home.search.propertyType')}
                                 </li>
                             </ul>
                         </div>
@@ -389,7 +367,7 @@ function AllProps(){
                     </div>
             </div>
             <div id="search-results">
-                    <p>Resultados de búsqueda:</p>
+                    <p>{t('allProps.searchResults')}</p>
                     <div id="search-results-container">
                         {usableSelects.map((searchResult) =>{
                             if(searchResult !== "all"){
@@ -406,13 +384,13 @@ function AllProps(){
                 {filteredPropertys.map((property) => {
                     var isForSale = ""
                     if(property.forSale === true){
-                        isForSale = "Para comprar"
+                        isForSale = t('allProps.forSale')
                     }
                     else if(property.forRent === true){
-                        isForSale = "Para rentar"
+                        isForSale = t('allProps.forRent')
                     }
                     else{
-                        isForSale = "En Venta"
+                        isForSale = t('allProps.onSale')
                     }
                     return(
                         <PropertyCard 

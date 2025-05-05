@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import FAQItem from "./FAQItem";
@@ -9,11 +10,13 @@ import ExtSearchBar from './ExtSearchBar'
 import React, { useEffect,  useState } from 'react';
 import axios from "axios";
 import WhatsAppButton from "./WhatsAppButton";
+
 function FAQ(){
+    const { t } = useTranslation();
     const [faqSet, setFaqSet] = useState([]);
+
     useEffect(()=>{
         const getPropertys = async () => {
-
             try {
                 // const response = await axios.get('http://127.0.0.1:8000/api/v1/faq/');
                 const response = await axios.get('/api/v1/faq/');
@@ -26,6 +29,7 @@ function FAQ(){
       
           getPropertys()
     }, []);
+
     return(
         <>
             <ExtSearchBar/>
@@ -56,8 +60,8 @@ function FAQ(){
                 <div id = "header-faq-img-container">   
                 </div>
                 <div id = "header-faq-text-container">
-                    <h2>Preguntas Frecuentes</h2>
-                    <p>Sabemos que el proceso de compra, venta o alquiler de una propiedad puede generar muchas preguntas. Para facilitarte el camino, hemos recopilado algunas de las preguntas más comunes que recibimos de nuestros clientes. </p>
+                    <h2>{t('faq.title')}</h2>
+                    <p>{t('faq.description')}</p>
                 </div>
             </div>
             <div id="faq-container">
@@ -70,9 +74,10 @@ function FAQ(){
                         {faqSet.map((faq, index) =>{
                             return(
                                 <FAQItem
-                                    index = {index}
-                                    question = {faq.question}
-                                    answer = {faq.answer}
+                                    key={index}
+                                    index={index}
+                                    question={faq.question}
+                                    answer={faq.answer}
                                 />
                             )
                         })}

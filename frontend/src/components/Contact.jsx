@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import Navbar from './Navbar';
 import Footer from './Footer'
 import "../static/contact.css"
@@ -10,7 +11,10 @@ import { UilEnvelope } from '@iconscout/react-unicons'
 import '@fontsource/montserrat';
 import ExtSearchBar from './ExtSearchBar'
 import WhatsAppButton from './WhatsAppButton';
+
 function Contact(){
+    const { t } = useTranslation();
+
     return(
         <>
         <ExtSearchBar/>
@@ -41,8 +45,8 @@ function Contact(){
                 <div id = "header-img-container">   
                 </div>
                 <div id = "header-text-container">
-                    <h2>Contáctanos</h2>
-                    <p>¿Buscas tu nuevo hogar o necesitas vender una propiedad? Estamos aquí para ayudarte a encontrar la mejor opción. ¡Contáctanos hoy y haremos que tu experiencia inmobiliaria sea fácil y exitosa!</p>
+                    <h2>{t('contact.title')}</h2>
+                    <p>{t('contact.description')}</p>
                 </div>
             </div>
             <div id='form-container'>
@@ -55,46 +59,46 @@ function Contact(){
                     <div className = "info-sector">
                         <div className='info-icon'><UilPhone color = "#fff" size = "2vw"/></div>
                         <h4>+34 647 662 840</h4>
-                        <h5>Teléfono</h5>
+                        <h5>{t('contact.phone')}</h5>
                     </div>
                     <div className = "info-sector">
                         <div className='info-icon'><UilMapPinAlt color = "#fff" size = "2vw"/></div>
-                        <h4> Calle Treinta de Mayo 11 <br/>CP: 38670, Adeje, Santa Cruz de Tenerife, España</h4>
-                        <h5>Dirección</h5>
+                        <h4>{t('contact.address')}</h4>
+                        <h5>{t('contact.address.label')}</h5>
                     </div>
                     <div className = "info-sector">
                         <div className='info-icon'><UilEnvelope color = "#fff" size = "2vw"/></div>
                         <h4>info@inmobiliariacalu.com</h4>
-                        <h5>Correo Electrónico</h5>
+                        <h5>{t('contact.email')}</h5>
                     </div>
                 </div>
-                <h3>Por favor completa el formulario a continuación y uno de nuestros agentes te contactará lo antes posible.</h3>
+                <h3>{t('contact.form.description')}</h3>
                 <form id = "form" action="https://formsubmit.co/info@inmobiliariacalu.com" method="POST">
                     <input type="hidden" name="_captcha" value="false" />
                     <input type="hidden" name="_next" value={window.location.href}></input>
                     <div id='input-container'>
                         <div>
-                            <label htmlFor="name">Nombre</label>
-                            <input type="text" placeholder='Introduce tu nombre' name = 'name' id = 'name'/>
+                            <label htmlFor="name">{t('form.name')}</label>
+                            <input type="text" placeholder={t('form.name.placeholder')} name = 'name' id = 'name'/>
                         </div>
                         <div>
-                            <label htmlFor="lastname">Apellidos</label>
-                            <input type="text" placeholder='Introduce tu apellido' name = 'lastname' id = 'lastname'/>
+                            <label htmlFor="lastname">{t('form.lastname')}</label>
+                            <input type="text" placeholder={t('form.lastname.placeholder')} name = 'lastname' id = 'lastname'/>
                         </div>
                         <div>
-                            <label htmlFor="phone">Teléfono</label>
-                            <input type="text" placeholder='Número de teléfono' name = 'phone' id = 'phone'/>
+                            <label htmlFor="phone">{t('form.phone')}</label>
+                            <input type="text" placeholder={t('form.phone.placeholder')} name = 'phone' id = 'phone'/>
                         </div>
                         <div>
-                            <label htmlFor="mail">Email</label>
-                            <input type="text" placeholder='correo@ejemplo.com' name = 'mail' id = 'mail'/>
+                            <label htmlFor="mail">{t('form.email')}</label>
+                            <input type="text" placeholder={t('form.email.placeholder')} name = 'mail' id = 'mail'/>
                         </div>  
                     </div>
                     <div id='textarea'>
-                        <label htmlFor="message">Mensaje</label>
-                        <textarea placeholder='Escribe un mensaje' name = 'message' id = 'message'/>
+                        <label htmlFor="message">{t('form.message')}</label>
+                        <textarea placeholder={t('form.message.placeholder')} name = 'message' id = 'message'/>
                     </div>
-                    <button>Enviar Mensaje</button>
+                    <button>{t('form.submit')}</button>
                 </form>
             </div>
             <Footer/>
