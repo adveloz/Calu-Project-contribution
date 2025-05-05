@@ -2,13 +2,17 @@ import "../static/navbar.css"
 import colorLogo from "../static/media/color-logo.png"
 import logo from "../static/media/logo.svg"
 import { Link } from 'react-router-dom';
-import useStore from './store';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import useStore from './store';
 
-function Navbar(props){
-    const { currentPage, setCurrentPage } = useStore();
+const Navbar = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const { t, i18n } = useTranslation();
     const location = useLocation();
+    const { currentPage, setCurrentPage } = useStore();
+
     useEffect(() => {
         if (location.hash) {
             const element = document.getElementById(location.hash.substring(1));
@@ -31,6 +35,9 @@ function Navbar(props){
     const pageMarker = (page)=>{
         setCurrentPage(page)
     }
+    const handleLanguageChange = (e) => {
+        i18n.changeLanguage(e.target.value);
+    };
     const scrollEvent = (e)=>{
         if(window.location.pathname === "/"){
             const navbar = document.getElementById("nav-bar");
@@ -73,7 +80,12 @@ function Navbar(props){
         sideBar.style.left = "-200vw";
     }
     window.addEventListener('scroll', scrollEvent);
-    return(
+
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
+
+    return (
         <div id="nav-bar-container">
             <div id="mobile-nav-bar">
                     <svg
@@ -93,37 +105,43 @@ function Navbar(props){
                     <div id = "mobile-nav-bar-link-list">
                         <ul>
                             <Link to="/">
-                                <li>Inicio</li>
+                                <li>{t('nav.home')}</li>
                             </Link>
                             <a href="#services-section">
-                                <li>Servicios</li>
+                                <li>{t('nav.services')}</li>
                             </a>
                             <Link to="/props">
-                                <li>Todas las propiedades</li>
+                                <li>{t('nav.properties')}</li>
                             </Link>
                             <Link to="/about">
-                                <li>Sobre nosotros</li>
+                                <li>{t('nav.about')}</li>
                             </Link>
                             <Link to="/contact">
-                                <li>Contactos</li>
+                                <li>{t('nav.contact')}</li>
                             </Link>
                             <Link to="/faq">
-                                <li>Preguntas frecuentes</li>
+                                <li>{t('nav.faq')}</li>
                             </Link>
                             <Link to= "/privacy">
-                                <li>Políticas de Privacidad</li>
+                                <li>{t('nav.privacy')}</li>
                             </Link>
                             <Link to= "/conditions">
-                                <li>Términos y condiciones</li>
+                                <li>{t('nav.conditions')}</li>
                             </Link>
                         </ul>
                     </div>
+                       {/* Idioma switcher en mobile */}
+                <div className="language-switcher">
+                    <button onClick={() => handleLanguageChange({ target: { value: 'es' } })}>🇪🇸</button>
+                    <button onClick={() => handleLanguageChange({ target: { value: 'en' } })}>🇬🇧</button>
+                    <button onClick={() => handleLanguageChange({ target: { value: 'it' } })}>🇮🇹</button>
+                </div>
             </div>
             <div id = "nav-bar">
-                <div id = "nav-bar-logo"><img src= {logo} alt="CalJ Logo" id = "white-logo"/><img src= {colorLogo} alt="CalJ Logo" id = "color-logo"/><h4>Soluciones inmobiliarias a tu medida!</h4></div>
+                <div id = "nav-bar-logo"><img src= {logo} alt="CalJ Logo" id = "white-logo"/><img src= {colorLogo} alt="CalJ Logo" id = "color-logo"/><h4>{t('nav.slogan')}</h4></div>
                 <svg
                         viewBox="0 0 448 512"
-                        fill={props.barsColor}
+                        fill="#fff"
                         height="6vw"
                         width="6vw"
                         id="bars"
@@ -134,24 +152,30 @@ function Navbar(props){
                 <div id = "nav-bar-link-list">
                     <ul>
                         <Link to="/" onClick = {()=>{pageMarker("Inicio"); window.scrollTo(0, 0);}}>
-                            <li>Inicio</li>
+                            <li>{t('nav.home')}</li>
                         </Link>
                         <Link to="/#service-section-title" onClick = {()=>{pageMarker("Servicios"); window.scrollTo(0, 0);}}>
-                            <li>Servicios</li>
+                            <li>{t('nav.services')}</li>
                         </Link>
                         <Link to="/props" onClick = {()=>{pageMarker("Todas las propiedades"); window.scrollTo(0, 0);}}>
-                            <li>Todas las propiedades</li>
+                            <li>{t('nav.properties')}</li>
                         </Link>
                         <Link to="/about" onClick = {()=>{pageMarker("Sobre nosotros"); window.scrollTo(0, 0);}}>
-                            <li>Sobre nosotros</li>
+                            <li>{t('nav.about')}</li>
                         </Link>
                         <Link to="/contact" onClick = {()=>{pageMarker("Contactos"); window.scrollTo(0, 0);}}>
-                            <li>Contactos</li>
+                            <li>{t('nav.contact')}</li>
                         </Link>
                         <Link to="/faq" onClick = {()=>{pageMarker("Preguntas frecuentes"); window.scrollTo(0, 0);}}>
-                            <li>Preguntas frecuentes</li>
+                            <li>{t('nav.faq')}</li>
                         </Link>
                     </ul>
+                </div>
+                 {/* Idioma switcher en desktop */}
+                 <div className="language-switcher">
+                    <button onClick={() => handleLanguageChange({ target: { value: 'es' } })}>🇪🇸</button>
+                    <button onClick={() => handleLanguageChange({ target: { value: 'en' } })}>🇬🇧</button>
+                    <button onClick={() => handleLanguageChange({ target: { value: 'it' } })}>🇮🇹</button>
                 </div>
             </div>
         </div>
