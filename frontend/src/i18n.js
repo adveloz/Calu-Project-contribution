@@ -517,7 +517,11 @@ const resources = {
                     allTypes: 'Tutti i tipi',
                     price: 'Prezzo',
                     surface: 'Superficie m²',
-                    propertyType: 'Tipo di proprietà'
+                    propertyType: 'Tipo di proprietà',
+                    minPrice: 'minimo',
+                    maxPrice: 'massimo',
+                    minSurface: 'minima',
+                    maxSurface: 'massima'
                 },
                 services: {
                     title: 'I nostri servizi',
