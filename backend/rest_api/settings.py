@@ -156,10 +156,10 @@ WSGI_APPLICATION = "rest_api.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': get_env_variable('DB_NAME'),
-        'USER': get_env_variable('DB_USER'),
-        'PASSWORD': get_env_variable('DB_PASSWORD'),
-        'HOST': 'postgres', # Service name for docker compose
+        'NAME': 'caluDB',
+        'USER': 'postgres',
+        'PASSWORD': 'kikekike*4202',
+        'HOST': 'localhost', # Service name for docker compose
         'PORT': '5432',
     }
 }
