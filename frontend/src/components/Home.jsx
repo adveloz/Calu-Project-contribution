@@ -326,6 +326,9 @@ function Home(){
             const propertyPrice = parseInt(property.price);
             const minPrice = parseInt(selects.minPrice) || 0;
             const maxPrice = parseInt(selects.maxPrice) || 10000000;
+            const propertySurface = parseInt(property.price);
+            const minSurface = parseInt(selects.minSurface) || 0;
+            const maxSurface = parseInt(selects.maxSurface) || 10000000;
             for(const key in selects){
                 if(selects[key] !== "all"){
                     console.log(selects)
@@ -347,20 +350,26 @@ function Home(){
                         toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
                         break
                     }
-                    if(key === "surface" && selects[key] !== property.surface){
-                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
-                        break
-                    }
-                    if(key === "price" && parseInt(selects[key]) !== parseInt(property.price)){
-                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
-                        break
-                    }
+                    // if(key === "surface" && selects[key] !== property.surface){
+                    //     toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                    //     break
+                    // }
+                    // if(key === "price" && parseInt(selects[key]) !== parseInt(property.price)){
+                    //     toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                    //     break
+                    // }
                     // Filtrado por rango de precio
                     if (selects.minPrice !== "all" || selects.maxPrice !== "all") {
                         console.log(propertyPrice)
                         console.log(minPrice)
                         console.log(maxPrice)
                         if (propertyPrice < minPrice || propertyPrice > maxPrice) {
+                            console.log("entreakiiii")
+                            toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        }
+                    }
+                    if (selects.minSurface !== "all" || selects.maxSurface !== "all") {
+                        if (propertySurface < minSurface || propertySurface > maxSurface) {
                             console.log("entreakiiii")
                             toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
                         }

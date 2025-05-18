@@ -42,9 +42,9 @@ function PropView(){
                 const urlActual = location.pathname;
                 const indiceUltimoSlash = urlActual.lastIndexOf('/');   
                 let id = urlActual.substring(indiceUltimoSlash + 1)
-
-                // const response = await axios.get('http://127.0.0.1:8000/api/v1/props/${id}/');
-                const response = await axios.get(`/api/v1/props/${id}/`);
+                console.log(id)
+                const response = await axios.get(`http://127.0.0.1:8000/api/props/${id}/`);
+                // const response = await axios.get(`/api/v1/props/${id}/`);
                 setProperty(response.data);
 
                 const images = [

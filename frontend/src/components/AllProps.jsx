@@ -24,8 +24,8 @@ function AllProps(){
         const getPropertys = async () => {
 
             try {
-            //   const response = await axios.get('http://127.0.0.1:8000/api/v1/props/');
-              const response = await axios.get('/api/v1/props/');
+              const response = await axios.get('http://127.0.0.1:8000/api/props/');
+            //   const response = await axios.get('/api/v1/props/');
               setPropertys(response.data);
               console.log(filteredPropertys)
               setFilteredPropertys(filteredPropertys)
@@ -171,10 +171,18 @@ function AllProps(){
         }
         setUsableSelect(transformedSelects);
         let toFilterPropertys = propertys;
-
+        console.log(propertys)
+        console.log(selects)
         propertys.map((property) =>{
+            const propertyPrice = parseInt(property.price);
+            const minPrice = parseInt(selects.minPrice) || 0;
+            const maxPrice = parseInt(selects.maxPrice) || 10000000;
+            const propertySurface = parseInt(property.price);
+            const minSurface = parseInt(selects.minSurface) || 0;
+            const maxSurface = parseInt(selects.maxSurface) || 10000000;
             for(const key in selects){
                 if(selects[key] !== "all"){
+                    console.log(selects)
                     if(key === "action"){
                         if(selects[key] === "Comprar"){
                             if(!property.forSale){
@@ -193,22 +201,40 @@ function AllProps(){
                         toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
                         break
                     }
-                    if(key === "surface" && selects[key] !== property.surface){
-                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
-                        break
+                    // if(key === "surface" && selects[key] !== property.surface){
+                    //     toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                    //     break
+                    // }
+                    // if(key === "price" && parseInt(selects[key]) !== parseInt(property.price)){
+                    //     toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                    //     break
+                    // }
+                    // Filtrado por rango de precio
+                    if (selects.minPrice !== "all" || selects.maxPrice !== "all") {
+                        console.log(propertyPrice)
+                        console.log(minPrice)
+                        console.log(maxPrice)
+                        if (propertyPrice < minPrice || propertyPrice > maxPrice) {
+                            console.log("entreakiiii")
+                            toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        }
                     }
-                    if(key === "price" && parseInt(selects[key]) !== parseInt(property.price)){
-                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
-                        break
+                    if (selects.minSurface !== "all" || selects.maxSurface !== "all") {
+                        if (propertySurface < minSurface || propertySurface > maxSurface) {
+                            console.log("entreakiiii")
+                            toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        }
                     }
                     if(key === "type" && selects[key] !== property.type){
                         toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
                         break
                     }
+                    console.log(toFilterPropertys, "lina 370")
                 }
             }
-            return(toFilterPropertys)
+            return(null)
         })
+        console.log(toFilterPropertys, "linea 377")
         setFilteredPropertys(toFilterPropertys)
     }
 
@@ -305,24 +331,45 @@ function AllProps(){
                                     </select>
                                 </li>
                                 <li>
-                                    <svg
-                                    viewBox="0 0 24 24"
-                                    fill="currentColor"
-                                    height="1.3em"
-                                    width="1.3em"
-                                    >
-                                    <path d="M19.2 17.41A6 6 0 0114.46 20c-2.68 0-5-2-6-5H14a1 1 0 000-2H8.05c0-.33-.05-.67-.05-1s0-.67.05-1H14a1 1 0 000-2H8.47c1-3 3.31-5 6-5a6 6 0 014.73 2.59 1 1 0 101.6-1.18A7.92 7.92 0 0014.46 2c-3.76 0-7 2.84-8.07 7H4a1 1 0 000 2h2.05v2H4a1 1 0 000 2h2.39c1.09 4.16 4.31 7 8.07 7a7.92 7.92 0 006.34-3.41 1 1 0 00-1.6-1.18z" />
-                                    </svg>
-                                    <select name="price" id="searchPrice" onChange={(e) => setSelect('price', e.target.value)}>
-                                        <option value="all" selected>{t('home.search.allPrices')}</option>
-                                        {selectOptions.prices.map((price) => {
-                                            return(
-                                                <option value={price}>{price}</option>
-                                            )
-                                        })}
-                                    </select>
-                                    {t('home.search.price')}
-                                </li>
+    <svg
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        height="1.3em"
+        width="1.3em"
+    >
+        <path d="M19.2 17.41A6 6 0 0114.46 20c-2.68 0-5-2-6-5H14a1 1 0 000-2H8.05c0-.33-.05-.67-.05-1s0-.67.05-1H14a1 1 0 000-2H8.47c1-3 3.31-5 6-5a6 6 0 014.73 2.59 1 1 0 101.6-1.18A7.92 7.92 0 0014.46 2c-3.76 0-7 2.84-8.07 7H4a1 1 0 000 2h2.05v2H4a1 1 0 000 2h2.39c1.09 4.16 4.31 7 8.07 7a7.92 7.92 0 006.34-3.41 1 1 0 00-1.6-1.18z" />
+    </svg>
+    <div className="range-container">
+        <div className="range-inputs">
+            <input 
+                type="number" 
+                placeholder={t('home.search.minPrice')} 
+                onChange={(e) => {
+                    const value = Math.max(1, Math.min(10000000, Number(e.target.value) || 1));
+                    e.target.value = value;
+                    setSelect('minPrice', value);
+                }}
+                min="1"
+                max="10000000"
+                className="range-min"
+            />
+            <span>-</span>
+            <input 
+                type="number" 
+                placeholder={t('home.search.maxPrice')} 
+                onChange={(e) => {
+                    const value = Math.max(1, Math.min(10000000, Number(e.target.value) || 10000000));
+                    e.target.value = value;
+                    setSelect('maxPrice', value);
+                }}
+                min="1"
+                max="10000000"
+                className="range-max"
+            />
+        </div>
+    </div>
+    {t('home.search.price')}
+</li>
                                 <li>
                                      <svg
                                         viewBox="0 0 24 24"
@@ -332,14 +379,23 @@ function AllProps(){
                                         >
                                         <path d="M20 9a1 1 0 001-1V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v1H9V4a1 1 0 00-1-1H4a1 1 0 00-1 1v4a1 1 0 001 1h1v6H4a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1v-1h6v1a1 1 0 001 1h4a1 1 0 001-1v-4a1 1 0 00-1-1h-1V9h1zm-3-4h2v2h-2V5zM5 5h2v2H5V5zm2 14H5v-2h2v2zm12 0h-2v-2h2v2zm-2-4h-1a1 1 0 00-1 1v1H9v-1a1 1 0 00-1-1H7V9h1a1 1 0 001-1V7h6v1a1 1 0 001 1h1v6z" />
                                     </svg>
-                                    <select name="surface" id="surface" onChange={(e) => setSelect('surface', e.target.value)}>
-                                        <option value="all" selected>{t('home.search.allSurfaces')}</option>
-                                        {selectOptions.surface.map((surface) => {
-                                            return(
-                                                <option value={surface}>{surface}</option>
-                                            )
-                                        })}
-                                    </select>
+                                    <div className="range-container">
+                                        <div className="range-inputs">
+                                            <input 
+                                                type="number" 
+                                                placeholder={t('home.search.minSurface')} 
+                                                onChange={(e) => setSelect('minSurface', e.target.value)}
+                                                className="range-min"
+                                            />
+                                            <span>-</span>
+                                            <input 
+                                                type="number" 
+                                                placeholder={t('home.search.maxSurface')} 
+                                                onChange={(e) => setSelect('maxSurface', e.target.value)}
+                                                className="range-max"
+                                            />
+                                        </div>
+                                    </div>
                                     {t('home.search.surface')}
                                 </li>
                                 <li>
