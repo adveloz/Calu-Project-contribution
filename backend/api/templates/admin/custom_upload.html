@@ -240,6 +240,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function uploadFile(file) {
         const formData = new FormData();
         formData.append('file', file);
+        formData.append('prop_id', '{{ original.id }}');
         
         // Crear elemento para mostrar la imagen
         const fileItem = document.createElement('div');
@@ -276,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data.success) {
                 // Guardar la referencia del archivo
-                const fieldName = getNextAvailableField();
+                const fieldName = data.field_name;
                 if (fieldName) {
                     uploadedFiles[fieldName] = data.file_path;
                     document.getElementById(fieldName).value = data.file_path;

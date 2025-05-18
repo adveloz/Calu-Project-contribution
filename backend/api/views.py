@@ -40,12 +40,42 @@ class LoginView(APIView):
 def admin_upload_file(request):
     if request.method == 'POST' and request.FILES.get('file'):
         file = request.FILES['file']
-        # Guardar el archivo en la carpeta media
-        file_path = default_storage.save(f'uploads/{file.name}', file)
-        return JsonResponse({
-            'success': True,
-            'file_path': file_path
-        })
+        prop_id = request.POST.get('prop_id')  # Obtener el ID de la propiedad
+        
+        if not prop_id:
+            return JsonResponse({
+                'success': False,
+                'error': 'No se proporcionó el ID de la propiedad'
+            }, status=400)
+            
+        try:
+            # Obtener la propiedad
+            prop = propModel.objects.get(id=prop_id)
+            
+            # Encontrar el primer campo de imagen vacío
+            for i in range(1, 31):
+                field_name = f'img{i}'
+                if not getattr(prop, field_name):
+                    # Guardar el archivo en el campo correspondiente
+                    setattr(prop, field_name, file)
+                    prop.save()
+                    return JsonResponse({
+                        'success': True,
+                        'file_path': getattr(prop, field_name).url,
+                        'field_name': field_name
+                    })
+            
+            return JsonResponse({
+                'success': False,
+                'error': 'No hay más campos de imagen disponibles'
+            }, status=400)
+            
+        except propModel.DoesNotExist:
+            return JsonResponse({
+                'success': False,
+                'error': 'Propiedad no encontrada'
+            }, status=404)
+            
     return JsonResponse({
         'success': False,
         'error': 'No se recibió ningún archivo'

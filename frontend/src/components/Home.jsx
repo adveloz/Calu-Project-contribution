@@ -36,11 +36,12 @@ function Home(){
     const { selects, setSelect, selectOptions, setSelectOptions, usableSelects, setCurrentPage, setUsableSelect, filteredPropertys, setFilteredPropertys } = useStore();
 
     useEffect(()=>{
+        console.log("entreeeeee")
         const getPropertys = async () => {
             try {
-                // const clientReviewsResponse = await axios.get('http://127.0.0.1:8000/api/v1/reviews/');
+                const clientReviewsResponse = await axios.get('http://127.0.0.1:8000/api/reviews/');
                 // Get reviews
-                const clientReviewsResponse = await axios.get('/api/v1/reviews/');
+                // const clientReviewsResponse = await axios.get('/api/v1/reviews/');
                 const clientReviews = [];
                 
                 // Safely handle reviews data
@@ -54,9 +55,9 @@ function Home(){
                 }
                 setReviews(clientReviews);
                 
-                //const response = await axios.get('http://127.0.0.1:8000/api/v1/props/');
+                const response = await axios.get('http://127.0.0.1:8000/api/props/');
                 // Get properties
-                const response = await axios.get('/api/v1/props/');
+                // const response = await axios.get('/api/v1/props/');
                 console.log('Properties response:', response.data);
                 
                 // Ensure we have valid property data
@@ -319,10 +320,15 @@ function Home(){
         }
         setUsableSelect(transformedSelects);
         let toFilterPropertys = propertys;
-
+        console.log(propertys)
+        console.log(selects)
         propertys.map((property) =>{
+            const propertyPrice = parseInt(property.price);
+            const minPrice = parseInt(selects.minPrice) || 0;
+            const maxPrice = parseInt(selects.maxPrice) || 10000000;
             for(const key in selects){
                 if(selects[key] !== "all"){
+                    console.log(selects)
                     if(key === "action"){
                         if(selects[key] === "Comprar"){
                             if(!property.forSale){
@@ -349,14 +355,26 @@ function Home(){
                         toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
                         break
                     }
+                    // Filtrado por rango de precio
+                    if (selects.minPrice !== "all" || selects.maxPrice !== "all") {
+                        console.log(propertyPrice)
+                        console.log(minPrice)
+                        console.log(maxPrice)
+                        if (propertyPrice < minPrice || propertyPrice > maxPrice) {
+                            console.log("entreakiiii")
+                            toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        }
+                    }
                     if(key === "type" && selects[key] !== property.type){
                         toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
                         break
                     }
+                    console.log(toFilterPropertys, "lina 370")
                 }
             }
             return(null)
         })
+        console.log(toFilterPropertys, "linea 377")
         setFilteredPropertys(toFilterPropertys)
     }
 
@@ -533,33 +551,45 @@ function Home(){
                                     </select>
                                 </li>
                                 <li>
-                                    <svg
-                                    viewBox="0 0 24 24"
-                                    fill="currentColor"
-                                    height="1.3em"
-                                    width="1.3em"
-                                    >
-                                    <path d="M19.2 17.41A6 6 0 0114.46 20c-2.68 0-5-2-6-5H14a1 1 0 000-2H8.05c0-.33-.05-.67-.05-1s0-.67.05-1H14a1 1 0 000-2H8.47c1-3 3.31-5 6-5a6 6 0 014.73 2.59 1 1 0 101.6-1.18A7.92 7.92 0 0014.46 2c-3.76 0-7 2.84-8.07 7H4a1 1 0 000 2h2.05v2H4a1 1 0 000 2h2.39c1.09 4.16 4.31 7 8.07 7a7.92 7.92 0 006.34-3.41 1 1 0 00-1.6-1.18z" />
-                                    </svg>
-                                    <div className="range-container">
-                                        <div className="range-inputs">
-                                            <input 
-                                                type="number" 
-                                                placeholder={t('home.search.minPrice')} 
-                                                onChange={(e) => setSelect('minPrice', e.target.value)}
-                                                className="range-min"
-                                            />
-                                            <span>-</span>
-                                            <input 
-                                                type="number" 
-                                                placeholder={t('home.search.maxPrice')} 
-                                                onChange={(e) => setSelect('maxPrice', e.target.value)}
-                                                className="range-max"
-                                            />
-                                        </div>
-                                    </div>
-                                    {t('home.search.price')}
-                                </li>
+    <svg
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        height="1.3em"
+        width="1.3em"
+    >
+        <path d="M19.2 17.41A6 6 0 0114.46 20c-2.68 0-5-2-6-5H14a1 1 0 000-2H8.05c0-.33-.05-.67-.05-1s0-.67.05-1H14a1 1 0 000-2H8.47c1-3 3.31-5 6-5a6 6 0 014.73 2.59 1 1 0 101.6-1.18A7.92 7.92 0 0014.46 2c-3.76 0-7 2.84-8.07 7H4a1 1 0 000 2h2.05v2H4a1 1 0 000 2h2.39c1.09 4.16 4.31 7 8.07 7a7.92 7.92 0 006.34-3.41 1 1 0 00-1.6-1.18z" />
+    </svg>
+    <div className="range-container">
+        <div className="range-inputs">
+            <input 
+                type="number" 
+                placeholder={t('home.search.minPrice')} 
+                onChange={(e) => {
+                    const value = Math.max(1, Math.min(10000000, Number(e.target.value) || 1));
+                    e.target.value = value;
+                    setSelect('minPrice', value);
+                }}
+                min="1"
+                max="10000000"
+                className="range-min"
+            />
+            <span>-</span>
+            <input 
+                type="number" 
+                placeholder={t('home.search.maxPrice')} 
+                onChange={(e) => {
+                    const value = Math.max(1, Math.min(10000000, Number(e.target.value) || 10000000));
+                    e.target.value = value;
+                    setSelect('maxPrice', value);
+                }}
+                min="1"
+                max="10000000"
+                className="range-max"
+            />
+        </div>
+    </div>
+    {t('home.search.price')}
+</li>
                                 <li>
                                      <svg
                                         viewBox="0 0 24 24"
