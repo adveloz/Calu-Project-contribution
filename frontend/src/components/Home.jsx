@@ -54,9 +54,9 @@ function Home(){
                 }
                 setReviews(clientReviews);
                 
-                const response = await axios.get('http://127.0.0.1:8000/api/v1/props/');
+                //const response = await axios.get('http://127.0.0.1:8000/api/v1/props/');
                 // Get properties
-                // const response = await axios.get('/api/v1/props/');
+                const response = await axios.get('/api/v1/props/');
                 console.log('Properties response:', response.data);
                 
                 // Ensure we have valid property data

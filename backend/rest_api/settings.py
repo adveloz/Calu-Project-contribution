@@ -15,7 +15,7 @@ def get_env_variable(var_name):
         raise ImproperlyConfigured(f"Set the {var_name} environment variable")
     return value
 
-SECRET_KEY = get_env_variable('DJANGO_SECRET_KEY')
+SECRET_KEY = "get_env_variable('DJANGO_SECRET_KEY')"
 
 DEBUG = os.getenv('DEBUG', '0') == '1'
 
@@ -51,32 +51,17 @@ ALLOWED_HOSTS = [
 ]
 
 # CORS settings
-# CORS_ALLOW_ALL_ORIGINS = True  # to True for testing
-# If you need to allow cookies to be sent with requests
-# CORS_ALLOW_CREDENTIALS = False  # To False for testing
+CORS_ALLOW_ALL_ORIGINS = True  # Para desarrollo
+CORS_ALLOW_CREDENTIALS = True
+
+# Si prefieres especificar los orígenes permitidos, descomenta y usa esta configuración:
 # CORS_ALLOWED_ORIGINS = [
-    # Access api though nginx localhost
-    # "http://localhost:82",
-    # "http://127.0.0.1:82",
-    
-    # Access api though django localhost 
-    # "http://localhost:8000",
-    # "http://127.0.0.1:8000",
-    
-    # React localhost
-    # "http://localhost:3000",
-    # "http://127.0.0.1:3000",
-    
-    # localhost
-    # "http://localhost",
-    # "http://127.0.0.1",
-    # "http://172.16.238.4",
-     
-    # "https://inmobiliariacalu.com",
-    # "https://www.inmobiliariacalu.com",
-    # "http://inmobiliariacalu.com",
-    # "http://www.inmobiliariacalu.com",
-    
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000",
+#     "http://localhost:82",
+#     "http://127.0.0.1:82",
+#     "https://inmobiliariacalu.com",
+#     "https://www.inmobiliariacalu.com",
 # ]
 
 # Application definition
@@ -89,11 +74,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'rest_framework',
     "api",
-    # 'corsheaders',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
-    # 'corsheaders.middleware.CorsMiddleware',  
+    'corsheaders.middleware.CorsMiddleware',  
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -156,9 +141,9 @@ WSGI_APPLICATION = "rest_api.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'caluDB',
+        'NAME': 'mydatabase',
         'USER': 'postgres',
-        'PASSWORD': 'kikekike*4202',
+        'PASSWORD': 'jabs025*',
         'HOST': 'localhost', # Service name for docker compose
         'PORT': '5432',
     }

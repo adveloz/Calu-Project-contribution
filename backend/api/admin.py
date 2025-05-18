@@ -4,6 +4,7 @@ from django.urls import path
 from django.utils.html import format_html
 from django.shortcuts import redirect, get_object_or_404
 from .models import propModel, reviewModel, faqModel
+from .views import admin_upload_file
 
 class TooltipTextAdmin(admin.ModelAdmin):
     def get_form(self, request, obj=None, **kwargs):
@@ -11,7 +12,6 @@ class TooltipTextAdmin(admin.ModelAdmin):
         for field in form.base_fields:
             if form.base_fields[field].help_text:
                 form.base_fields[field].widget.attrs.update({'title': form.base_fields[field].help_text})
-                # Let's remove the help text from below
                 form.base_fields[field].help_text = ''  
         return form
     
@@ -76,16 +76,25 @@ class FaqAdmin(TooltipTextAdmin):
     list_filter = ('question',)
     search_fields = ('question', 'answer')
 
-@admin.register(propModel)        
+class CustomAdminSite(admin.AdminSite):
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path('api/upload/', self.admin_view(admin_upload_file), name='admin-upload-file'),
+        ]
+        return custom_urls + urls
+
+# Crear una instancia del admin site personalizado
+admin_site = CustomAdminSite(name='admin')
+
+# Registrar los modelos con el admin site personalizado
 class Combine_Tooltip_Publish(TooltipTextAdmin, PublishActionAdmin):
     list_display = ('id', 'title', 'location', 'publish_action')
     list_filter = ('location',)
     search_fields = ('title', 'location')
+    change_form_template = 'admin/custom_upload.html'
 
-@admin.register(reviewModel)
-class Register_Review(ReviewAdmin):
-    pass
-
-@admin.register(faqModel)
-class Register_Faq(FaqAdmin):
-    pass
+# Registrar los modelos
+admin_site.register(propModel, Combine_Tooltip_Publish)
+admin_site.register(reviewModel, ReviewAdmin)
+admin_site.register(faqModel, FaqAdmin)
