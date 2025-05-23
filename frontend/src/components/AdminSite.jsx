@@ -135,8 +135,8 @@ function AdminSite(){
 
         }
         try {
-            // const response = await axios.post('http://127.0.0.1:8000/api/v1/props/', propData);
-            const response = await axios.post('/api/v1/props/', propData);
+            const response = await axios.post('http://127.0.0.1:8000/api/props/', propData);
+            // const response = await axios.post('/api/v1/props/', propData);
             console.log('Datos enviados:', response.data);
             alert("Los datos fueron guardados")
         } catch (error) {
