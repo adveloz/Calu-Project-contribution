@@ -4,6 +4,7 @@
 {% block extrastyle %}
 {{ block.super }}
 <style>
+    /* Mantener los estilos originales */
     .drop-zone {
         border: 2px dashed #007bff;
         border-radius: 5px;
@@ -79,9 +80,9 @@
 </div>
 <div class="hidden-inputs" id="hiddenInputs">
     {% for i in "123456789012345678901234567890"|make_list %}
-    <input type="hidden" name="img{{ forloop.counter }}" id="img{{ forloop.counter }}" value="{% if original %}{{ original.img1|default:'' }}{% endif %}">
+    <input type="file" name="img{{ forloop.counter }}" id="img{{ forloop.counter }}" style="display: none;">
     {% endfor %}
-    <input type="hidden" name="mapImg" id="mapImg" value="{% if original %}{{ original.mapImg|default:'' }}{% endif %}">
+    <input type="file" name="mapImg" id="mapImg" style="display: none;">
 </div>
 
 <script>
@@ -92,115 +93,111 @@ document.addEventListener('DOMContentLoaded', function() {
     const hiddenInputs = document.getElementById('hiddenInputs');
     const errorMessage = document.getElementById('errorMessage');
     const imageCount = document.getElementById('imageCount');
-    let uploadedFiles = {};
     const MAX_IMAGES = 30;
+    let currentIndex = 0;
 
-    // Cargar imágenes existentes
-    function loadExistingImages() {
-        let count = 0;
+    // Obtener siguiente campo disponible
+    function getNextAvailableField() {
         for (let i = 1; i <= MAX_IMAGES; i++) {
-            const fieldName = `img${i}`;
-            const input = document.getElementById(fieldName);
-            if (input && input.value) {
-                const fileName = input.value.split('/').pop();
-                uploadedFiles[fieldName] = fileName;
-                addImageToGrid(fileName, fieldName, true);
-                count++;
-            }
+            const input = document.getElementById(`img${i}`);
+            if (input.files.length === 0) return input;
         }
-        updateImageCount();
-        updateDropZoneState();
+        return null;
     }
 
-    function updateImageCount() {
-        const count = Object.keys(uploadedFiles).length;
-        imageCount.textContent = count;
-        updateDropZoneState();
-    }
-
-    function updateDropZoneState() {
-        const count = Object.keys(uploadedFiles).length;
-        if (count >= MAX_IMAGES) {
-            dropZone.classList.add('disabled');
-            dropZone.style.cursor = 'not-allowed';
-        } else {
-            dropZone.classList.remove('disabled');
-            dropZone.style.cursor = 'pointer';
-        }
-    }
-
-    // Prevenir comportamiento por defecto
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-        dropZone.addEventListener(eventName, preventDefaults, false);
-        document.body.addEventListener(eventName, preventDefaults, false);
-    });
-
-    // Efectos visuales durante el drag
-    ['dragenter', 'dragover'].forEach(eventName => {
-        dropZone.addEventListener(eventName, highlight, false);
-    });
-
-    ['dragleave', 'drop'].forEach(eventName => {
-        dropZone.addEventListener(eventName, unhighlight, false);
-    });
-
-    // Manejar archivos soltados
-    dropZone.addEventListener('drop', handleDrop, false);
-    
-    // Click para seleccionar archivos
-    dropZone.addEventListener('click', () => {
-        if (Object.keys(uploadedFiles).length < MAX_IMAGES) {
-            fileInput.click();
-        } else {
-            showError('Has alcanzado el límite de 30 imágenes');
-        }
-    });
-    fileInput.addEventListener('change', handleFiles);
-
-    function preventDefaults(e) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
-
-    function highlight(e) {
-        if (Object.keys(uploadedFiles).length < MAX_IMAGES) {
-            dropZone.classList.add('dragover');
-        }
-    }
-
-    function unhighlight(e) {
-        dropZone.classList.remove('dragover');
-    }
-
-    function handleDrop(e) {
-        if (Object.keys(uploadedFiles).length >= MAX_IMAGES) {
-            showError('Has alcanzado el límite de 30 imágenes');
-            return;
-        }
-        const dt = e.dataTransfer;
-        const files = dt.files;
-        handleFiles({ target: { files: files } });
-    }
-
-    function handleFiles(e) {
-        const files = [...e.target.files];
-        const remainingSlots = MAX_IMAGES - Object.keys(uploadedFiles).length;
+    // Manejar archivos seleccionados
+    function handleFiles(files) {
+        const availableFields = MAX_IMAGES - currentIndex;
         
-        if (files.length > remainingSlots) {
-            showError(`Solo puedes subir ${remainingSlots} imagen(es) más`);
-            files.splice(remainingSlots);
+        if (files.length > availableFields) {
+            showError(`Límite excedido. Solo puedes subir ${availableFields} más.`);
+            files = files.slice(0, availableFields);
         }
 
-        const validFiles = files.filter(file => {
-            if (!file.type.startsWith('image/')) {
-                showError('Por favor, sube solo archivos de imagen');
-                return false;
-            }
-            return true;
+        Array.from(files).forEach(file => {
+            if (currentIndex >= MAX_IMAGES) return;
+            
+            const field = getNextAvailableField();
+            if (!field) return;
+
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            field.files = dataTransfer.files;
+            
+            addImagePreview(file, field.id);
+            currentIndex++;
         });
-        validFiles.forEach(uploadFile);
+        
+        updateImageCount();
     }
 
+    // Añadir vista previa
+    function addImagePreview(file, fieldId) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.dataset.field = fieldId;
+            
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            fileItem.appendChild(img);
+
+            const fileName = document.createElement('div');
+            fileName.textContent = file.name;
+            fileItem.appendChild(fileName);
+
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-btn';
+            removeBtn.innerHTML = '×';
+            removeBtn.onclick = () => removeImage(fileItem);
+            fileItem.appendChild(removeBtn);
+
+            fileList.appendChild(fileItem);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // Eliminar imagen
+    function removeImage(fileItem) {
+        const field = document.getElementById(fileItem.dataset.field);
+        field.value = '';
+        fileItem.remove();
+        currentIndex--;
+        updateImageCount();
+    }
+
+    // Actualizar contador
+    function updateImageCount() {
+        imageCount.textContent = currentIndex;
+    }
+
+    // Eventos
+    dropZone.addEventListener('click', () => {
+        if (currentIndex < MAX_IMAGES) fileInput.click();
+    });
+
+    fileInput.addEventListener('change', (e) => {
+        handleFiles(e.target.files);
+        e.target.value = '';
+    });
+
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('dragover');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        handleFiles(e.dataTransfer.files);
+    });
+
+    // Mostrar errores
     function showError(message) {
         errorMessage.textContent = message;
         errorMessage.style.display = 'block';
@@ -208,142 +205,6 @@ document.addEventListener('DOMContentLoaded', function() {
             errorMessage.style.display = 'none';
         }, 3000);
     }
-
-    function addImageToGrid(fileName, fieldName, isExisting = false) {
-        const fileItem = document.createElement('div');
-        fileItem.className = 'file-item';
-        
-        // Crear vista previa de la imagen
-        const img = document.createElement('img');
-        if (isExisting) {
-            img.src = `/static/media/${fileName}`;
-        } else {
-            img.src = URL.createObjectURL(file);
-        }
-        fileItem.appendChild(img);
-
-        // Agregar botón de eliminar
-        const removeBtn = document.createElement('button');
-        removeBtn.className = 'remove-btn';
-        removeBtn.innerHTML = '×';
-        removeBtn.onclick = () => removeFile(fileItem, fileName, fieldName);
-        fileItem.appendChild(removeBtn);
-
-        // Agregar nombre del archivo
-        const fileNameDiv = document.createElement('div');
-        fileNameDiv.textContent = fileName;
-        fileItem.appendChild(fileNameDiv);
-
-        fileList.appendChild(fileItem);
-    }
-
-    function uploadFile(file) {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('prop_id', '{{ original.id }}');
-        
-        // Crear elemento para mostrar la imagen
-        const fileItem = document.createElement('div');
-        fileItem.className = 'file-item';
-        
-        // Crear vista previa de la imagen
-        const img = document.createElement('img');
-        img.src = URL.createObjectURL(file);
-        fileItem.appendChild(img);
-
-        // Agregar botón de eliminar
-        const removeBtn = document.createElement('button');
-        removeBtn.className = 'remove-btn';
-        removeBtn.innerHTML = '×';
-        removeBtn.onclick = () => removeFile(fileItem, file.name);
-        fileItem.appendChild(removeBtn);
-
-        // Agregar nombre del archivo
-        const fileName = document.createElement('div');
-        fileName.textContent = file.name;
-        fileItem.appendChild(fileName);
-
-        fileList.appendChild(fileItem);
-
-        // Enviar el archivo al servidor
-        fetch('/admin/api/upload/', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': getCookie('csrftoken')
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Guardar la referencia del archivo
-                const fieldName = data.field_name;
-                if (fieldName) {
-                    uploadedFiles[fieldName] = data.file_path;
-                    document.getElementById(fieldName).value = data.file_path;
-                    updateImageCount();
-                } else {
-                    showError('No hay más campos disponibles para imágenes');
-                }
-                fileItem.style.borderColor = 'green';
-            } else {
-                fileItem.style.borderColor = 'red';
-                showError(data.error || 'Error al subir la imagen');
-            }
-        })
-        .catch(error => {
-            fileItem.style.borderColor = 'red';
-            showError('Error al subir la imagen');
-            console.error('Error:', error);
-        });
-    }
-
-    function removeFile(fileItem, fileName, fieldName = null) {
-        if (!fieldName) {
-            // Encontrar el campo correspondiente
-            for (let field in uploadedFiles) {
-                if (uploadedFiles[field] === fileName) {
-                    fieldName = field;
-                    break;
-                }
-            }
-        }
-        
-        if (fieldName) {
-            document.getElementById(fieldName).value = '';
-            delete uploadedFiles[fieldName];
-            updateImageCount();
-        }
-        fileItem.remove();
-    }
-
-    function getNextAvailableField() {
-        for (let i = 1; i <= MAX_IMAGES; i++) {
-            const fieldName = `img${i}`;
-            if (!uploadedFiles[fieldName]) {
-                return fieldName;
-            }
-        }
-        return null;
-    }
-
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-
-    // Cargar imágenes existentes al iniciar
-    loadExistingImages();
 });
 </script>
-{% endblock %} 
+{% endblock %}
