@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import useStore from './store';
-import GoogleTranslate from "./GoogleTranslate";
+import GoogleTranslate from "./GoogleTranslate";       
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -173,6 +173,7 @@ const Navbar = () => {
                         </Link>
                     </ul>
                 </div>
+                <GoogleTranslate/>
                  {/* Idioma switcher en desktop */}
                  {/* <div className="language-switcher">
                     <button onClick={() => handleLanguageChange({ target: { value: 'es' } })}>🇪🇸</button>
