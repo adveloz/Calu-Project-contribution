@@ -1,4 +1,5 @@
 import Navbar from "./Navbar";
+import TranslatedDescription from "./TranslatedDescription";
 import Footer from "./Footer";
 import "../static/prop-view.css";
 import RatedReviews from "./RatedReviews";
@@ -660,6 +661,8 @@ function PropView(){
                         <h2>{property && property.title}</h2>
                         {property && property.price && <h3>Precio: € {property.price}</h3>}
                         {property && <p>{property.description}</p>}
+                        {/* {property && <TranslatedDescription text={property.description} />} */}
+
                         <button id="modal-pop-button" onClick = {modalPop}>Contactar</button>
                 </div>
             </div>

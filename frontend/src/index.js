@@ -14,10 +14,12 @@ import PropView from './components/PropView';
 import AdminSite from './components/AdminSite';
 import Login from './components/Login';
 import './i18n';
+import GoogleTranslate from './components/GoogleTranslate';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <GoogleTranslate/>
     <Router>
       <Routes>
         <Route path="/" element={<App />} />

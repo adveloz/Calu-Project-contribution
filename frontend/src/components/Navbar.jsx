@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import useStore from './store';
+import GoogleTranslate from "./GoogleTranslate";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -131,11 +132,12 @@ const Navbar = () => {
                         </ul>
                     </div>
                        {/* Idioma switcher en mobile */}
-                <div className="language-switcher">
+                {/* <div className="language-switcher">
                     <button onClick={() => handleLanguageChange({ target: { value: 'es' } })}>🇪🇸</button>
                     <button onClick={() => handleLanguageChange({ target: { value: 'en' } })}>🇬🇧</button>
                     <button onClick={() => handleLanguageChange({ target: { value: 'it' } })}>🇮🇹</button>
-                </div>
+                </div> */}
+                {/* <GoogleTranslate/> */}
             </div>
             <div id = "nav-bar">
                 <div id = "nav-bar-logo"><img src= {logo} alt="CalJ Logo" id = "white-logo"/><img src= {colorLogo} alt="CalJ Logo" id = "color-logo"/><h4>{t('nav.slogan')}</h4></div>
@@ -172,11 +174,12 @@ const Navbar = () => {
                     </ul>
                 </div>
                  {/* Idioma switcher en desktop */}
-                 <div className="language-switcher">
+                 {/* <div className="language-switcher">
                     <button onClick={() => handleLanguageChange({ target: { value: 'es' } })}>🇪🇸</button>
                     <button onClick={() => handleLanguageChange({ target: { value: 'en' } })}>🇬🇧</button>
                     <button onClick={() => handleLanguageChange({ target: { value: 'it' } })}>🇮🇹</button>
-                </div>
+                </div> */}
+                 {/* <GoogleTranslate/> */}
             </div>
         </div>
     );
