@@ -34,6 +34,15 @@
     background-repeat: no-repeat;
     z-index: 0;
 }
+.search-clear-all {
+    transition: all 0.3s ease;
+    border: 1px solid #FE6D36;
+  }
+  
+  .search-clear-all:hover {
+    background-color: #e65a2b !important;
+    transform: scale(1.05);
+  }
 #allprops-search-container-text{
     color: #fff;
     width: 60%;
@@ -56,7 +65,16 @@
     z-index: 100;
 }
 #allprops-tab-bar button{
-    display: none;
+    /* display: none; */
+    margin-left: .5vw;
+    background-color: #FE6D36;
+    border: 0;
+    border-radius: 2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left: -1vw;
 }
 #allprops-search-parameters-list button{
     margin-left: .5vw;
