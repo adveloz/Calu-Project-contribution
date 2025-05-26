@@ -39,9 +39,9 @@ function Home(){
         console.log("entreeeeee")
         const getPropertys = async () => {
             try {
-                const clientReviewsResponse = await axios.get('http://127.0.0.1:8000/api/reviews/');
+                // const clientReviewsResponse = await axios.get('http://127.0.0.1:8000/api/reviews/');
                 // Get reviews
-                // const clientReviewsResponse = await axios.get('/api/v1/reviews/');
+                const clientReviewsResponse = await axios.get('/api/v1/reviews/');
                 const clientReviews = [];
                 
                 // Safely handle reviews data
@@ -55,9 +55,9 @@ function Home(){
                 }
                 setReviews(clientReviews);
                 
-                const response = await axios.get('http://127.0.0.1:8000/api/props/');
+                // const response = await axios.get('http://127.0.0.1:8000/api/props/');
                 // Get properties
-                // const response = await axios.get('/api/v1/props/');
+                const response = await axios.get('/api/v1/props/');
                 console.log('Properties response:', response.data);
                 
                 // Ensure we have valid property data

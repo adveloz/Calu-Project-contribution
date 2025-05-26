@@ -44,8 +44,8 @@ function PropView(){
                 const indiceUltimoSlash = urlActual.lastIndexOf('/');   
                 let id = urlActual.substring(indiceUltimoSlash + 1)
                 console.log(id)
-                const response = await axios.get(`http://127.0.0.1:8000/api/props/${id}/`);
-                // const response = await axios.get(`/api/v1/props/${id}/`);
+                // const response = await axios.get(`http://127.0.0.1:8000/api/props/${id}/`);
+                const response = await axios.get(`/api/v1/props/${id}/`);
                 setProperty(response.data);
 
                 const images = [
@@ -85,9 +85,9 @@ function PropView(){
                 setImgset(images);
                 setMainImgIndex(findFirstValidImageIndex(images));
 
-                const getPropSet = await axios.get('http://127.0.0.1:8000/api/props');
+                // const getPropSet = await axios.get('http://127.0.0.1:8000/api/props');
                 console.log(getPropSet)
-                // const getPropSet = await axios.get('/api/v1/props');
+                const getPropSet = await axios.get('/api/v1/props');
                 const propSet = getPropSet.data;
 
                 for (let i = 0; i < propSet.length; i++){
@@ -107,8 +107,8 @@ function PropView(){
                         }
                    }
                 }
-                const reviewsResponse = await axios.get('http://127.0.0.1:8000/api/reviews/');
-                // const reviewsResponse = await axios.get('/api/v1/reviews/');
+                // const reviewsResponse = await axios.get('http://127.0.0.1:8000/api/reviews/');
+                const reviewsResponse = await axios.get('/api/v1/reviews/');
                 let reviewArr = []
                 for(let i = 0; i < 4 ; i++){
                     reviewArr.push(reviewsResponse.data[i])
