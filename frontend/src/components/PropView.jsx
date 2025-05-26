@@ -172,6 +172,11 @@ function PropView(){
         body.style.overflowY = "scroll";
         modal.style.display = "none";
     }
+    // Función para construir el enlace a Google Maps
+    const googleMapsLink = property && property.latitude && property.longitude
+        ? `https://www.google.com/maps/search/?api=1&query=${property.latitude},${property.longitude}`
+        : null;
+    console.log(googleMapsLink)
     return(
         <>
             <ExtSearchBar/>
@@ -244,6 +249,28 @@ function PropView(){
             </div>
             <Navbar barsColor = "#FE6D36"/>
             <div id="prop-main-info-container">
+                {/* ENLACE A GOOGLE MAPS */}
+                {googleMapsLink && (
+                  <div style={{margin: '20px 0', padding: '10px', background: '#f8f9fa', borderRadius: '8px', textAlign: 'center'}}>
+                    <a
+                      href={googleMapsLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        color: '#1976d2',
+                        textDecoration: 'none',
+                        fontWeight: 'bold',
+                        fontSize: '1.1em',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                      }}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#1976d2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                      Ver ubicación en Google Maps
+                    </a>
+                  </div>
+                )}
                 <div id="main-info-img-container">
                         <div id="main-info-img-set">
                             <img 

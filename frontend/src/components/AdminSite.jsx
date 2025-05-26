@@ -1,7 +1,8 @@
 import {useState, useEffect} from "react";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import ExtSearchBar from './ExtSearchBar'
+import ExtSearchBar from './ExtSearchBar';
+
 
 // Configure axios defaults
 axios.defaults.xsrfCookieName = 'csrftoken';
@@ -33,7 +34,9 @@ function AdminSite(){
     const [plazaGarage, setPlazaGarage] = useState();
     const [forSale, setForSale] = useState();
     const [clientSale, setClientSale] = useState();
-    
+    // Estado para lat/lon
+    const [latitude, setLatitude] = useState("");
+    const [longitude, setLongitude] = useState("");
 
     const handleDrop = (event) => {
         event.preventDefault();
@@ -132,8 +135,10 @@ function AdminSite(){
             img29: fileNames[28],
             img30: fileNames[29],
             mapImg: mapNames[0],
-
-        }
+            latitude: latitude,
+            longitude: longitude
+        };
+        
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/props/', propData);
             // const response = await axios.post('/api/v1/props/', propData);
@@ -147,6 +152,25 @@ function AdminSite(){
     return(
        <section style={{width: '100vw', display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
         <ExtSearchBar/>
+        <div style={{width: '60vw', margin: '16px 0'}}>
+          <label style={{marginRight: '8px'}}>Latitud:</label>
+          <input
+            type="text"
+            value={latitude}
+            onChange={e => setLatitude(e.target.value)}
+            placeholder="Ej: 40.7128"
+            style={{marginRight: '24px', width: '120px'}}
+          />
+          <label style={{marginRight: '8px'}}>Longitud:</label>
+          <input
+            type="text"
+            value={longitude}
+            onChange={e => setLongitude(e.target.value)}
+            placeholder="Ej: -74.0060"
+            style={{width: '120px'}}
+          />
+        </div>
+
        <style>
                     {`
                     div{
@@ -199,6 +223,24 @@ function AdminSite(){
             <label htmlFor="location">Localización</label>
             <input type="text" id="location" name="location" onChange = {(e)=> setLocation(e.target.value)}/>
         </div>
+        <div>
+            <label htmlFor="latitude">Latitud</label>
+            <input type="number" id="latitude" name="latitude" value={latitude || ''} onChange={(e) => setLatitude(Number(e.target.value))} step="any" />
+        </div>
+        <div>
+            <label htmlFor="longitude">Longitud</label>
+            <input type="number" id="longitude" name="longitude" value={longitude || ''} onChange={(e) => setLongitude(Number(e.target.value))} step="any" />
+        </div>
+        {/* <div style={{ width: '60vw', height: '300px', margin: '20px 0' }}>
+            <MapContainer center={[28.1235, -15.4363]} zoom={12} style={{ height: '100%', width: '100%' }}>
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <LocationMarker />
+            </MapContainer>
+            <small>Haz clic en el mapa para seleccionar la ubicación de la propiedad.</small>
+        </div> */}
         <div>
             <label htmlFor="surface">Superficie</label>
             <input type="text" id="surface" name="surface" onChange = {(e)=> setSurface(e.target.value)}/>

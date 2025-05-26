@@ -78,6 +78,15 @@
     <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
     <div class="file-list" id="fileList"></div>
 </div>
+<!-- Selector de Latitud y Longitud con Leaflet -->
+<div style="margin: 30px 0;">
+    <!-- <label for="latitude"><strong>Latitud:</strong></label>
+    <input type="number" id="latitude" name="latitude" step="any">
+    <label for="longitude" style="margin-left: 15px;"><strong>Longitud:</strong></label>
+    <input type="number" id="longitude" name="longitude" step="any"> -->
+    <!-- <div id="leaflet-map" style="height: 300px; width: 100%; margin-top: 10px;"></div>
+    <small>Haz clic en el mapa para seleccionar la ubicación de la propiedad.</small>    -->
+</div>
 <div class="hidden-inputs" id="hiddenInputs">
     {% for i in "123456789012345678901234567890"|make_list %}
     <input type="file" name="img{{ forloop.counter }}" id="img{{ forloop.counter }}" style="display: none;">
@@ -264,5 +273,28 @@ document.addEventListener('DOMContentLoaded', async function() {
         handleFiles(e.dataTransfer.files);
     });
 });
+// --- LEAFLET MAP PARA LAT/LON ---
+const leafletScript = document.createElement('script');
+leafletScript.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+leafletScript.onload = function() {
+    const map = L.map('leaflet-map').setView([28.1235, -15.4363], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    let marker;
+    map.on('click', function(e) {
+        const lat = e.latlng.lat.toFixed(6);
+        const lng = e.latlng.lng.toFixed(6);
+        document.getElementById('latitude').value = lat;
+        document.getElementById('longitude').value = lng;
+        if (marker) {
+            marker.setLatLng(e.latlng);
+        } else {
+            marker = L.marker(e.latlng).addTo(map);
+        }
+    });
+};
+document.head.appendChild(leafletScript);
+// --- FIN LEAFLET MAP ---
 </script>
 {% endblock %}
