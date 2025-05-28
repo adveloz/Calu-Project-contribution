@@ -8,6 +8,7 @@ import headerImg4 from "../static/media/Group 35023.png"
 import headerImg5 from "../static/media/brooke-cagle-uWVWQ8gF8PE-unsplash (1).png"
 import ExtSearchBar from './ExtSearchBar'
 import {Link} from 'react-router-dom'
+import WhatsAppButton from "./WhatsAppButton";
 function Conditions(){
 
     return(
@@ -78,6 +79,7 @@ function Conditions(){
                     </div>
             </div>
             <Footer/>
+            <WhatsAppButton />
         </>
     );
 

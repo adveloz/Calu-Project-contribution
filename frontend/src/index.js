@@ -13,23 +13,28 @@ import AllProps from './components/AllProps';
 import PropView from './components/PropView';
 import AdminSite from './components/AdminSite';
 import Login from './components/Login';
+import './i18n';
+// import GoogleTranslate from './components/GoogleTranslate';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Router>
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/privacy" element={<PrivacyPol />} />
-      <Route path="/conditions" element={<Conditions />} />
-      <Route path="/faq" element={<FAQ />} />
-      <Route path="/props" element={<AllProps />} />
-      <Route path={`/property/:id`} element={<PropView />} />
-      <Route path={`/admin`} element={<AdminSite />} />
-      <Route path={`/login`} element={<Login/>} />
-    </Routes>
-  </Router>,
+  <React.StrictMode>
+    {/* <GoogleTranslate/> */}
+    <Router>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/privacy" element={<PrivacyPol />} />
+        <Route path="/conditions" element={<Conditions />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/props" element={<AllProps />} />
+        <Route path={`/property/:id`} element={<PropView />} />
+        <Route path={`/admin`} element={<AdminSite />} />
+        <Route path={`/login`} element={<Login/>} />
+      </Routes>
+    </Router>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

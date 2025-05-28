@@ -1,0 +1,300 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    /* Mantener los estilos originales */
+    .drop-zone {
+        border: 2px dashed #007bff;
+        border-radius: 5px;
+        padding: 20px;
+        text-align: center;
+        margin: 20px 0;
+        background-color: #f8f9fa;
+    }
+    .drop-zone.dragover {
+        background-color: #e9ecef;
+        border-color: #0056b3;
+    }
+    .file-list {
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 10px;
+        padding: 10px;
+    }
+    .file-item {
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 3px;
+        position: relative;
+    }
+    .file-item img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 5px;
+    }
+    .file-item .remove-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: red;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+    .hidden-inputs {
+        display: none;
+    }
+    .error-message {
+        color: red;
+        margin-top: 5px;
+        font-size: 0.9em;
+    }
+    .image-counter {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #666;
+    }
+    .drop-zone.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+</style>
+{% endblock %}
+
+{% block after_field_sets %}
+{{ block.super }}
+<div class="drop-zone" id="dropZone">
+    <h2>Arrastra y suelta las imágenes de la propiedad aquí</h2>
+    <p>o haz clic para seleccionar imágenes</p>
+    <p class="image-counter">Imágenes: <span id="imageCount">0</span>/30</p>
+    <p class="error-message" id="errorMessage" style="display: none;"></p>
+    <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+    <div class="file-list" id="fileList"></div>
+</div>
+<!-- Selector de Latitud y Longitud con Leaflet -->
+<div style="margin: 30px 0;">
+    <!-- <label for="latitude"><strong>Latitud:</strong></label>
+    <input type="number" id="latitude" name="latitude" step="any">
+    <label for="longitude" style="margin-left: 15px;"><strong>Longitud:</strong></label>
+    <input type="number" id="longitude" name="longitude" step="any"> -->
+    <!-- <div id="leaflet-map" style="height: 300px; width: 100%; margin-top: 10px;"></div>
+    <small>Haz clic en el mapa para seleccionar la ubicación de la propiedad.</small>    -->
+</div>
+<div class="hidden-inputs" id="hiddenInputs">
+    {% for i in "123456789012345678901234567890"|make_list %}
+    <input type="file" name="img{{ forloop.counter }}" id="img{{ forloop.counter }}" style="display: none;">
+    {% endfor %}
+    <input type="file" name="mapImg" id="mapImg" style="display: none;">
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const fileList = document.getElementById('fileList');
+    const hiddenInputs = document.getElementById('hiddenInputs');
+    const errorMessage = document.getElementById('errorMessage');
+    const imageCount = document.getElementById('imageCount');
+    const MAX_IMAGES = 29;
+    let currentIndex = 0;
+    let usedIndexes = [];
+
+    // Inicializar los índices ocupados al cargar la página
+    async function initializeUsedIndexes() {
+        usedIndexes = await getUsedImgIndexes();
+        currentIndex = usedIndexes.length;
+        updateImageCount();
+    }
+
+    // Función para obtener los índices de imágenes ocupadas
+    async function getUsedImgIndexes() {
+        const path = window.location.pathname;
+        const matches = path.match(/propmodel\/(\d+)\/change\/?$/);
+        console.log('Path:', path);
+        console.log('Matches:', matches);
+        
+        if (!matches) return [];
+        
+        const id = matches[1];
+        try {
+            const response = await fetch(`/api/props/${id}/`);
+            if (!response.ok) {
+                throw new Error('Error al obtener la propiedad');
+            }
+            const prop = await response.json();
+            
+            // Crear array con los índices de las imágenes ocupadas
+            const usedIndexes = [];
+            for (let i = 1; i <= MAX_IMAGES; i++) {
+                if (prop[`img${i}`]) {
+                    // Guardamos i-1 para que el array empiece en 0
+                    usedIndexes.push(i - 1);
+                }
+            }
+            console.log('Índices ocupados:', usedIndexes);
+            return usedIndexes;
+            
+        } catch (error) {
+            console.error('Error:', error);
+            return [];
+        }
+    }
+
+    // Obtener siguiente campo disponible
+    function getNextAvailableField() {
+        // Encontrar el primer índice que no esté en usedIndexes
+        for (let i = 0; i < MAX_IMAGES; i++) {
+            if (!usedIndexes.includes(i)) {
+                usedIndexes.push(i);
+                // Sumamos 1 porque los campos en el DOM empiezan en 1
+                return document.getElementById(`img${i + 1}`);
+            }
+        }
+        return null;
+    }
+
+    // Manejar archivos seleccionados
+    function handleFiles(files) {
+        const availableSlots = MAX_IMAGES - usedIndexes.length;
+        
+        if (files.length > availableSlots) {
+            showError(`Límite excedido. Solo puedes subir ${availableSlots} más.`);
+            files = Array.from(files).slice(0, availableSlots);
+        }
+
+        Array.from(files).forEach(file => {
+            if (currentIndex >= MAX_IMAGES) return;
+            
+            const field = getNextAvailableField();
+            if (!field) {
+                showError('No hay más campos disponibles');
+                return;
+            }
+
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            field.files = dataTransfer.files;
+            
+            addImagePreview(file, field.id);
+            currentIndex++;
+        });
+        
+        updateImageCount();
+    }
+
+    // Añadir vista previa
+    function addImagePreview(file, fieldId) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.dataset.field = fieldId;
+            
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            fileItem.appendChild(img);
+
+            const fileName = document.createElement('div');
+            fileName.textContent = file.name;
+            fileItem.appendChild(fileName);
+
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-btn';
+            removeBtn.innerHTML = '×';
+            removeBtn.onclick = () => removeImage(fileItem);
+            fileItem.appendChild(removeBtn);
+
+            fileList.appendChild(fileItem);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // Eliminar imagen
+    function removeImage(fileItem) {
+        const fieldId = fileItem.dataset.field;
+        const field = document.getElementById(fieldId);
+        field.value = '';
+        fileItem.remove();
+        currentIndex--;
+        
+        // Eliminar el índice del array de usados
+        const index = parseInt(fieldId.replace('img', '')) - 1;
+        usedIndexes = usedIndexes.filter(i => i !== index);
+        
+        updateImageCount();
+    }
+
+    // Actualizar contador
+    function updateImageCount() {
+        imageCount.textContent = currentIndex;
+    }
+
+    // Mostrar errores
+    function showError(message) {
+        errorMessage.textContent = message;
+        errorMessage.style.display = 'block';
+        setTimeout(() => {
+            errorMessage.style.display = 'none';
+        }, 3000);
+    }
+
+    // Inicializar los índices ocupados al cargar la página
+    await initializeUsedIndexes();
+
+    // Eventos
+    dropZone.addEventListener('click', () => {
+        if (currentIndex < MAX_IMAGES) fileInput.click();
+    });
+
+    fileInput.addEventListener('change', (e) => {
+        handleFiles(e.target.files);
+        e.target.value = '';
+    });
+
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('dragover');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        handleFiles(e.dataTransfer.files);
+    });
+});
+// --- LEAFLET MAP PARA LAT/LON ---
+const leafletScript = document.createElement('script');
+leafletScript.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+leafletScript.onload = function() {
+    const map = L.map('leaflet-map').setView([28.1235, -15.4363], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    let marker;
+    map.on('click', function(e) {
+        const lat = e.latlng.lat.toFixed(6);
+        const lng = e.latlng.lng.toFixed(6);
+        document.getElementById('latitude').value = lat;
+        document.getElementById('longitude').value = lng;
+        if (marker) {
+            marker.setLatLng(e.latlng);
+        } else {
+            marker = L.marker(e.latlng).addTo(map);
+        }
+    });
+};
+document.head.appendChild(leafletScript);
+// --- FIN LEAFLET MAP ---
+</script>
+{% endblock %}

@@ -1,4 +1,5 @@
 import Navbar from "./Navbar";
+import TranslatedDescription from "./TranslatedDescription";
 import Footer from "./Footer";
 import "../static/prop-view.css";
 import RatedReviews from "./RatedReviews";
@@ -8,6 +9,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import ExtSearchBar from './ExtSearchBar'
+import WhatsAppButton from "./WhatsAppButton";
 
 function PropView(){
     const location = useLocation();
@@ -41,8 +43,8 @@ function PropView(){
                 const urlActual = location.pathname;
                 const indiceUltimoSlash = urlActual.lastIndexOf('/');   
                 let id = urlActual.substring(indiceUltimoSlash + 1)
-
-                // const response = await axios.get('http://127.0.0.1:8000/api/v1/props/${id}/');
+                console.log(id)
+                // const response = await axios.get(`http://127.0.0.1:8000/api/props/${id}/`);
                 const response = await axios.get(`/api/v1/props/${id}/`);
                 setProperty(response.data);
 
@@ -83,7 +85,8 @@ function PropView(){
                 setImgset(images);
                 setMainImgIndex(findFirstValidImageIndex(images));
 
-                // const getPropSet = await axios.get('http://127.0.0.1:8000/api/v1/props');
+                // const getPropSet = await axios.get('http://127.0.0.1:8000/api/props');
+                console.log(getPropSet)
                 const getPropSet = await axios.get('/api/v1/props');
                 const propSet = getPropSet.data;
 
@@ -104,7 +107,7 @@ function PropView(){
                         }
                    }
                 }
-                // const reviewsResponse = await axios.get('http://127.0.0.1:8000/api/v1/reviews/');
+                // const reviewsResponse = await axios.get('http://127.0.0.1:8000/api/reviews/');
                 const reviewsResponse = await axios.get('/api/v1/reviews/');
                 let reviewArr = []
                 for(let i = 0; i < 4 ; i++){
@@ -169,6 +172,11 @@ function PropView(){
         body.style.overflowY = "scroll";
         modal.style.display = "none";
     }
+    // Función para construir el enlace a Google Maps
+    const googleMapsLink = property && property.latitude && property.longitude
+        ? `https://www.google.com/maps/search/?api=1&query=${property.latitude},${property.longitude}`
+        : null;
+    console.log(googleMapsLink)
     return(
         <>
             <ExtSearchBar/>
@@ -241,6 +249,28 @@ function PropView(){
             </div>
             <Navbar barsColor = "#FE6D36"/>
             <div id="prop-main-info-container">
+                {/* ENLACE A GOOGLE MAPS */}
+                {googleMapsLink && (
+                  <div style={{margin: '20px 0', padding: '10px', background: '#f8f9fa', borderRadius: '8px', textAlign: 'center'}}>
+                    <a
+                      href={googleMapsLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        color: '#1976d2',
+                        textDecoration: 'none',
+                        fontWeight: 'bold',
+                        fontSize: '1.1em',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                      }}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#1976d2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                      Ver ubicación en Google Maps
+                    </a>
+                  </div>
+                )}
                 <div id="main-info-img-container">
                         <div id="main-info-img-set">
                             <img 
@@ -658,6 +688,8 @@ function PropView(){
                         <h2>{property && property.title}</h2>
                         {property && property.price && <h3>Precio: € {property.price}</h3>}
                         {property && <p>{property.description}</p>}
+                        {/* {property && <TranslatedDescription text={property.description} />} */}
+
                         <button id="modal-pop-button" onClick = {modalPop}>Contactar</button>
                 </div>
             </div>
@@ -735,8 +767,8 @@ function PropView(){
                         </div>
                 </div>
             </div>
-            
             <Footer/>
+            <WhatsAppButton />
         </>
     );
 }

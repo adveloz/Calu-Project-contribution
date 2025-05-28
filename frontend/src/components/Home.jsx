@@ -24,8 +24,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import ExtSearchBar from './ExtSearchBar';
 import useStore from './store';
 import { getFirstAvailableImage } from '../utils/imageUtils';
+import { useTranslation } from 'react-i18next';
 
 function Home(){
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const[propertys, setPropertys] = useState([]);
     const[reviews, setReviews] = useState([]);
@@ -34,9 +36,10 @@ function Home(){
     const { selects, setSelect, selectOptions, setSelectOptions, usableSelects, setCurrentPage, setUsableSelect, filteredPropertys, setFilteredPropertys } = useStore();
 
     useEffect(()=>{
+        console.log("entreeeeee")
         const getPropertys = async () => {
             try {
-                // const clientReviewsResponse = await axios.get('http://127.0.0.1:8000/api/v1/reviews/');
+                // const clientReviewsResponse = await axios.get('http://127.0.0.1:8000/api/reviews/');
                 // Get reviews
                 const clientReviewsResponse = await axios.get('/api/v1/reviews/');
                 const clientReviews = [];
@@ -52,7 +55,7 @@ function Home(){
                 }
                 setReviews(clientReviews);
                 
-                // const response = await axios.get('http://127.0.0.1:8000/api/v1/props/');
+                // const response = await axios.get('http://127.0.0.1:8000/api/props/');
                 // Get properties
                 const response = await axios.get('/api/v1/props/');
                 console.log('Properties response:', response.data);
@@ -317,10 +320,18 @@ function Home(){
         }
         setUsableSelect(transformedSelects);
         let toFilterPropertys = propertys;
-
+        console.log(propertys)
+        console.log(selects)
         propertys.map((property) =>{
+            const propertyPrice = parseInt(property.price);
+            const minPrice = parseInt(selects.minPrice) || 0;
+            const maxPrice = parseInt(selects.maxPrice) || 10000000;
+            const propertySurface = parseInt(property.price);
+            const minSurface = parseInt(selects.minSurface) || 0;
+            const maxSurface = parseInt(selects.maxSurface) || 10000000;
             for(const key in selects){
                 if(selects[key] !== "all"){
+                    console.log(selects)
                     if(key === "action"){
                         if(selects[key] === "Comprar"){
                             if(!property.forSale){
@@ -339,22 +350,40 @@ function Home(){
                         toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
                         break
                     }
-                    if(key === "surface" && selects[key] !== property.surface){
-                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
-                        break
+                    // if(key === "surface" && selects[key] !== property.surface){
+                    //     toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                    //     break
+                    // }
+                    // if(key === "price" && parseInt(selects[key]) !== parseInt(property.price)){
+                    //     toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                    //     break
+                    // }
+                    // Filtrado por rango de precio
+                    if (selects.minPrice !== "all" || selects.maxPrice !== "all") {
+                        console.log(propertyPrice)
+                        console.log(minPrice)
+                        console.log(maxPrice)
+                        if (propertyPrice < minPrice || propertyPrice > maxPrice) {
+                            console.log("entreakiiii")
+                            toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        }
                     }
-                    if(key === "price" && parseInt(selects[key]) !== parseInt(property.price)){
-                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
-                        break
+                    if (selects.minSurface !== "all" || selects.maxSurface !== "all") {
+                        if (propertySurface < minSurface || propertySurface > maxSurface) {
+                            console.log("entreakiiii")
+                            toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                        }
                     }
                     if(key === "type" && selects[key] !== property.type){
                         toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
                         break
                     }
+                    console.log(toFilterPropertys, "lina 370")
                 }
             }
             return(null)
         })
+        console.log(toFilterPropertys, "linea 377")
         setFilteredPropertys(toFilterPropertys)
     }
 
@@ -467,12 +496,12 @@ function Home(){
                 <div id = "search-section">
                     <div id = "search-container">
                         <div id = "search-container-text">
-                            <h1>Tu futuro hogar comienza aquí</h1>
-                            <p>Desde modernos apartamentos hasta amplias casas familiares, te ayudamos a encontrar el lugar donde tus sueños se hacen realidad.</p>
+                            <h1>{t('home.title')}</h1>
+                            <p>{t('home.description')}</p>
                         </div>
                         <div id = "search-bar">
                             <ul id = "tab-bar">
-                                <li onClick={(e) => { setSelect('action', 'Comprar'); tabBarFocus(e); }}>Comprar</li>
+                                <li onClick={(e) => { setSelect('action', 'Comprar'); tabBarFocus(e); }}>{t('home.tab.buy')}</li>
                                 <li onClick={(e) => { 
                                     setSelect('action', 'Vender'); 
                                     tabBarFocus(e);
@@ -484,7 +513,7 @@ function Home(){
                                             formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                                         }
                                     }, 100);
-                                }}>Vender</li>
+                                }}>{t('home.tab.sell')}</li>
                                 <li>
                                     <button onClick={modalPop}>
                                         <svg
@@ -520,9 +549,9 @@ function Home(){
                                     >
                                     <path d="M5.64 16.36a9 9 0 1112.72 0l-5.65 5.66a1 1 0 01-1.42 0l-5.65-5.66zm11.31-1.41a7 7 0 10-9.9 0L12 19.9l4.95-4.95zM12 14a4 4 0 110-8 4 4 0 010 8zm0-2a2 2 0 100-4 2 2 0 000 4z" />
                                     </svg>
-                                    Ubicación
+                                    {t('home.search.location')}
                                     <select name="location" id="location" onChange={(e) => setSelect('location', e.target.value)}>
-                                        <option value="all" selected>Todas las ubicaciones</option>
+                                        <option value="all" selected>{t('home.search.allLocations')}</option>
                                         {selectOptions.location.map((location) => {
                                             return(
                                                 <option value={location}>{location}</option>
@@ -531,24 +560,45 @@ function Home(){
                                     </select>
                                 </li>
                                 <li>
-                                    <svg
-                                    viewBox="0 0 24 24"
-                                    fill="currentColor"
-                                    height="1.3em"
-                                    width="1.3em"
-                                    >
-                                    <path d="M19.2 17.41A6 6 0 0114.46 20c-2.68 0-5-2-6-5H14a1 1 0 000-2H8.05c0-.33-.05-.67-.05-1s0-.67.05-1H14a1 1 0 000-2H8.47c1-3 3.31-5 6-5a6 6 0 014.73 2.59 1 1 0 101.6-1.18A7.92 7.92 0 0014.46 2c-3.76 0-7 2.84-8.07 7H4a1 1 0 000 2h2.05v2H4a1 1 0 000 2h2.39c1.09 4.16 4.31 7 8.07 7a7.92 7.92 0 006.34-3.41 1 1 0 00-1.6-1.18z" />
-                                    </svg>
-                                    <select name="price" id="searchPrice" onChange={(e) => setSelect('price', e.target.value)}>
-                                        <option value="all" selected>Todos los precios</option>
-                                        {selectOptions.prices.map((price) => {
-                                            return(
-                                                <option value={price}>{price}</option>
-                                            )
-                                        })}
-                                    </select>
-                                    Precio
-                                </li>
+    <svg
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        height="1.3em"
+        width="1.3em"
+    >
+        <path d="M19.2 17.41A6 6 0 0114.46 20c-2.68 0-5-2-6-5H14a1 1 0 000-2H8.05c0-.33-.05-.67-.05-1s0-.67.05-1H14a1 1 0 000-2H8.47c1-3 3.31-5 6-5a6 6 0 014.73 2.59 1 1 0 101.6-1.18A7.92 7.92 0 0014.46 2c-3.76 0-7 2.84-8.07 7H4a1 1 0 000 2h2.05v2H4a1 1 0 000 2h2.39c1.09 4.16 4.31 7 8.07 7a7.92 7.92 0 006.34-3.41 1 1 0 00-1.6-1.18z" />
+    </svg>
+    <div className="range-container">
+        <div className="range-inputs">
+            <input 
+                type="number" 
+                placeholder={t('home.search.minPrice')} 
+                onChange={(e) => {
+                    const value = Math.max(1, Math.min(10000000, Number(e.target.value) || 1));
+                    e.target.value = value;
+                    setSelect('minPrice', value);
+                }}
+                min="1"
+                max="10000000"
+                className="range-min"
+            />
+            <span>-</span>
+            <input 
+                type="number" 
+                placeholder={t('home.search.maxPrice')} 
+                onChange={(e) => {
+                    const value = Math.max(1, Math.min(10000000, Number(e.target.value) || 10000000));
+                    e.target.value = value;
+                    setSelect('maxPrice', value);
+                }}
+                min="1"
+                max="10000000"
+                className="range-max"
+            />
+        </div>
+    </div>
+    {t('home.search.price')}
+</li>
                                 <li>
                                      <svg
                                         viewBox="0 0 24 24"
@@ -558,15 +608,24 @@ function Home(){
                                         >
                                         <path d="M20 9a1 1 0 001-1V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v1H9V4a1 1 0 00-1-1H4a1 1 0 00-1 1v4a1 1 0 001 1h1v6H4a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1v-1h6v1a1 1 0 001 1h4a1 1 0 001-1v-4a1 1 0 00-1-1h-1V9h1zm-3-4h2v2h-2V5zM5 5h2v2H5V5zm2 14H5v-2h2v2zm12 0h-2v-2h2v2zm-2-4h-1a1 1 0 00-1 1v1H9v-1a1 1 0 00-1-1H7V9h1a1 1 0 001-1V7h6v1a1 1 0 001 1h1v6z" />
                                     </svg>
-                                    <select name="surface" id="surface" onChange={(e) => setSelect('surface', e.target.value)}>
-                                        <option value="all" selected>Todas las superficies</option>
-                                        {selectOptions.surface.map((surface) => {
-                                            return(
-                                                <option value={surface}>{surface}</option>
-                                            )
-                                        })}
-                                    </select>
-                                    Superficie m&sup2;
+                                    <div className="range-container">
+                                        <div className="range-inputs">
+                                            <input 
+                                                type="number" 
+                                                placeholder={t('home.search.minSurface')} 
+                                                onChange={(e) => setSelect('minSurface', e.target.value)}
+                                                className="range-min"
+                                            />
+                                            <span>-</span>
+                                            <input 
+                                                type="number" 
+                                                placeholder={t('home.search.maxSurface')} 
+                                                onChange={(e) => setSelect('maxSurface', e.target.value)}
+                                                className="range-max"
+                                            />
+                                        </div>
+                                    </div>
+                                    {t('home.search.surface')}
                                 </li>
                                 <li>
                                     <svg
@@ -578,14 +637,14 @@ function Home(){
                                         <path d="M8.354 1.146a.5.5 0 00-.708 0l-6 6A.5.5 0 001.5 7.5v7a.5.5 0 00.5.5h4.5a.5.5 0 00.5-.5v-4h2v4a.5.5 0 00.5.5H14a.5.5 0 00.5-.5v-7a.5.5 0 00-.146-.354L13 5.793V2.5a.5.5 0 00-.5-.5h-1a.5.5 0 00-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 00-.5-.5h-3a.5.5 0 00-.5.5v4H2.5z" />
                                     </svg>
                                     <select name="types" id="types" onChange={(e) => setSelect('types', e.target.value)}>
-                                        <option value="all" selected>Todos los tipos</option>
+                                        <option value="all" selected>{t('home.search.allTypes')}</option>
                                         {selectOptions.type.map((type) => {
                                             return(
                                                 <option value={type}>{type}</option>
                                             )
                                         })}
                                     </select>
-                                    Tipo de propiedad
+                                    {t('home.search.propertyType')}
                                 </li>
                                 <li>
                                     <button onClick={modalPop}>
@@ -677,28 +736,28 @@ function Home(){
             </header>
             <article>
             <section id = "services-section">
-                    <h2 id = "service-section-title">Nuestros Servicios</h2>
-                    <p id = "service-section-text">Ya sea que estés buscando comprar, vender o invertir, ofrecemos una amplia gama de servicios que cubren todas las etapas del proceso inmobiliario. Desde la búsqueda de la propiedad ideal hasta el cierre de la venta, estamos contigo en cada paso del camino.</p>
+                    <h2 id = "service-section-title">{t('home.services.title')}</h2>
+                    <p id = "service-section-text">{t('home.services.description')}</p>
                     <div className = 'services-container'>
                         <Service
                         icon = {Vector2}
-                        text = "Asesoramiento personalizado para compradores y vendedores, facilitando la búsqueda, negociación y cierre de transacciones inmobiliarias."
-                        title = "Compra y venta de propiedades"
+                        text = {t('home.services.buySell.text')}
+                        title = {t('home.services.buySell.title')}
                         />
                         <Service
                         icon = {Vector3}
-                        text = "Asesoramiento para inversores interesados en adquirir propiedades con potencial de rentabilidad, ayudándolos a tomar decisiones estratégicas."
-                        title = "Consultoría en inversiones inmobiliarias"
+                        text = {t('home.services.investment.text')}
+                        title = {t('home.services.investment.title')}
                         />
                         <Service
                         icon = {Vector4}
-                        text = "Determinación del valor de mercado de inmuebles, tanto para la venta como para fines hipotecarios o de inversión"
-                        title = "Valoración y tasación de propiedades"
+                        text = {t('home.services.valuation.text')}
+                        title = {t('home.services.valuation.title')}
                         />
                         <Service
                         icon = {Vector1}
-                        text = "Ofrecemos  la posibilidad de asistencia a nuestros clientes que necesitan hipoteca."
-                        title = "Asesoramiento Financiero"
+                        text = {t('home.services.financial.text')}
+                        title = {t('home.services.financial.title')}
                         />
                     </div>
                     <div id = "service-section-pictures">
@@ -724,7 +783,7 @@ function Home(){
                 </section>
                 <div id='client-reviews-container'>
                     <img src={background} alt="City Background" id='client-reviews-background'/>
-                    <h2>Opiniones de nuestros clientes</h2>
+                    <h2>{t('home.reviews.title')}</h2>
                     <div id='client-cards-scroller'>
                         <div id='client-cards-container'>
                             {reviews.map((review, index) =>{
@@ -779,13 +838,13 @@ function Home(){
                             <ShineItem radius = ".3vw" id = "sparkle07" posX= "2vw" posY= "0" />
                             <ShineItem radius = ".2vw" id = "sparkle08" posX= "18vw" posY= "1vw" />
                         </div>
-                        <h2>Donde cada propiedad cuenta</h2>
-                        <p>¿Listo para dar el siguiente paso?<br/> Ya sea que busques tu próximo hogar o una oportunidad de inversión, estamos aquí para ayudarte a lograr tus objetivos inmobiliarios</p>
+                        <h2>{t('home.contact.title')}</h2>
+                        <p>{t('home.contact.description')}</p>
                         <form id='quick-contact-form' action="https://formsubmit.co/info@inmobiliariacalu.com" method="POST"> 
                             <input type="hidden" name="_captcha" value="false" />
                             <input type="hidden" name="_next" value={window.location.href}></input>
-                            <input type="text" name = "email" placeholder='Enter your mail address'/>
-                            <button>Submit</button>
+                            <input type="text" name = "email" placeholder={t('home.contact.emailPlaceholder')}/>
+                            <button>{t('home.contact.submit')}</button>
                         </form>
                     </div>
                 </div>

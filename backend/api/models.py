@@ -57,6 +57,8 @@ class propModel(models.Model):
     forSale = models.BooleanField(default=False, verbose_name="Para Venta")
     clientSale = models.BooleanField(default=False, verbose_name="Cliente Venta")
     is_published = models.BooleanField(default=False, verbose_name="Publicado")
+    latitude = models.FloatField(null=True, blank=True, verbose_name="Latitud")
+    longitude = models.FloatField(null=True, blank=True, verbose_name="Longitud")
 
     class Meta:
         verbose_name = "Propiedad"

@@ -17,9 +17,17 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+from api.views import PropViewSet, ReviewsViewSet, FaqViewSet, LoginView
+from api.admin import admin_site  # Importar el admin site personalizado
+
+router = routers.DefaultRouter()
+router.register(r'props', PropViewSet)
+router.register(r'reviews', ReviewsViewSet)
+router.register(r'faqs', FaqViewSet)
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("api/v1/", include("api.urls")),
-    path('api/', include('api.urls')),
+    path('admin/', admin_site.urls),  # Usar el admin site personalizado
+    path('api/', include(router.urls)),
+    path('api/login/', LoginView.as_view(), name='login'),
 ]

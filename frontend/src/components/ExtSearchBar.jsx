@@ -11,10 +11,11 @@ function ExtSearchBar(){
         const getPropertys = async () => {
 
             try {
-            //   const response = await axios.get('http://127.0.0.1:8000/api/v1/props/');
+            //   const response = await axios.get('http://127.0.0.1:8000/api/props/');
               const response = await axios.get('/api/v1/props/');
               setPropertys(response.data);
               setFilteredPropertys(response.data);
+              console.log(propertys)
             } catch (error) {
               console.error('Error al obtener los datos:', error);
             }
@@ -228,13 +229,31 @@ function ExtSearchBar(){
                             break
                         }
                     }
-                    if(key === "minPrice" && parseInt(selects[key]) !== parseInt(property.price)){
-                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
-                        break
+                    // Filtrado de precio mínimo/máximo global
+                    if (key === "minPrice" && selects["minPrice"] !== "all") {
+                        if (parseInt(property.price) < parseInt(selects["minPrice"])) {
+                            toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                            break;
+                        }
                     }
-                    if(key === "maxPrice" && parseInt(selects[key]) !== parseInt(property.price)){
-                        toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
-                        break
+                    if (key === "maxPrice" && selects["maxPrice"] !== "all") {
+                        if (parseInt(property.price) > parseInt(selects["maxPrice"])) {
+                            toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                            break;
+                        }
+                    }
+                    // Filtrado de superficie mínima/máxima global
+                    if (key === "minSurface" && selects["minSurface"] !== "all") {
+                        if (parseInt(property.surface) < parseInt(selects["minSurface"])) {
+                            toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                            break;
+                        }
+                    }
+                    if (key === "maxSurface" && selects["maxSurface"] !== "all") {
+                        if (parseInt(property.surface) > parseInt(selects["maxSurface"])) {
+                            toFilterPropertys = toFilterPropertys.filter(p => p.id !== property.id);
+                            break;
+                        }
                     }
                 }
             }
@@ -284,7 +303,7 @@ function ExtSearchBar(){
                                     </select>
                                     Ubicación
                                 </li>
-                                <li>
+                                {/* <li>
                                 <svg
                                     viewBox="0 0 24 24"
                                     fill="currentColor"
@@ -302,8 +321,8 @@ function ExtSearchBar(){
                                         })}
                                     </select>
                                     Precio
-                                </li>
-                                <li>
+                                </li> */}
+                                {/* <li>
                                      <svg
                                         viewBox="0 0 24 24"
                                         fill="currentColor"
@@ -321,15 +340,15 @@ function ExtSearchBar(){
                                         })}
                                     </select>
                                     Superficie m&sup2;
-                                </li>
+                                </li> */}
                                 <li>
                                     <svg
+                                        viewBox="0 0 24 24"
                                         fill="currentColor"
-                                        viewBox="0 0 16 16"
                                         height="1.3em"
                                         width="1.3em"
                                         >
-                                        <path d="M8.354 1.146a.5.5 0 00-.708 0l-6 6A.5.5 0 001.5 7.5v7a.5.5 0 00.5.5h4.5a.5.5 0 00.5-.5v-4h2v4a.5.5 0 00.5.5H14a.5.5 0 00.5-.5v-7a.5.5 0 00-.146-.354L13 5.793V2.5a.5.5 0 00-.5-.5h-1a.5.5 0 00-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 00-.5-.5h-3a.5.5 0 00-.5.5v4H2.5z" />
+                                        <path d="M17.42 22.5H5.33C3.5 22.5 2 21 2 19.17v-6.09c0-.9.36-1.75 1-2.37l5.63-5.54s1.03 1.05 1.04 1.08a.985.985 0 01.11 1.16C9.77 7.44 8 10 8 10h10.67a1.25 1.25 0 010 2.5h-5.84v.83h7.92a1.25 1.25 0 010 2.5h-7.92v.84h7.09a1.25 1.25 0 010 2.5h-7.09V20h4.59a1.25 1.25 0 010 2.5M13.5 4.8S12 6.46 12 7.5c0 2 3 2 3 0 0-1.04-1.5-2.7-1.5-2.7m5-3.8S16 3.76 16 5.5c0 3.33 5 3.33 5 0C21 3.76 18.5 1 18.5 1z" />
                                     </svg>
                                     <select name="types" id="types" onChange={(e) => setSelect('types', e.target.value)}>
                                         <option value="all" selected>Todos los tipos</option>
@@ -343,13 +362,12 @@ function ExtSearchBar(){
                                 </li>
                                 <li>
                                     <svg
-                                        viewBox="0 0 24 24"
-                                        fill="currentColor"
-                                        height="1.3em"
-                                        width="1.3em"
-                                        >
-                                        <path d="M3 19.723V21a1 1 0 001 1h1a1 1 0 001-1v-1h12v1a1 1 0 001 1h1a1 1 0 001-1v-1.277A1.99 1.99 0 0022 18v-3c0-.831-.507-1.542-1.228-1.845l-1.368-4.104A2.995 2.995 0 0016.559 7H7.441a2.995 2.995 0 00-2.845 2.051l-1.368 4.104A2.001 2.001 0 002 15v3c0 .738.404 1.376 1 1.723zM5.5 18a1.5 1.5 0 11.001-3.001A1.5 1.5 0 015.5 18zm13 0a1.5 1.5 0 11.001-3.001A1.5 1.5 0 0118.5 18zM7.441 9h9.117a1 1 0 01.949.684L18.613 13H5.387l1.105-3.316c.137-.409.519-.684.949-.684z" />
-                                        <path d="M22 7.388V5.279l-9.684-3.228a.996.996 0 00-.658.009L2 5.572V7.7l10.015-3.642L22 7.388z" />
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    height="1.3em"
+                                    width="1.3em"
+                                    >
+                                    <path d="M3 19.723V21a1 1 0 001 1h1a1 1 0 001-1v-1h12v1a1 1 0 001 1h1a1 1 0 001-1v-1.277A1.99 1.99 0 0022 18v-3c0-.831-.507-1.542-1.228-1.845l-1.368-4.104A2.995 2.995 0 0016.559 7H7.441a2.995 2.995 0 00-2.845 2.051l-1.368 4.104A2.001 2.001 0 002 15v3c0 .738.404 1.376 1 1.723zM5.5 18a1.5 1.5 0 11.001-3.001A1.5 1.5 0 015.5 18zm13 0a1.5 1.5 0 11.001-3.001A1.5 1.5 0 0118.5 18zM7.441 9h9.117a1 1 0 01.949.684L18.613 13H5.387l1.105-3.316c.137-.409.519-.684.949-.684z" />
                                     </svg>
                                     <select name="garage" id="garage" onChange={(e) => setSelect('garage', e.target.value)}>
                                         <option value="all" selected>Seleccione una opción</option>
@@ -365,7 +383,6 @@ function ExtSearchBar(){
                                     height="1.3em"
                                     width="1.3em"
                                     >
-                                    <path fill="none" d="M0 0h24v24H0z" />
                                     <path d="M22 11v9h-2v-3H4v3H2V4h2v10h8V7h6a4 4 0 014 4zM8 13a3 3 0 110-6 3 3 0 010 6z" />
                                     </svg>
                                     <select name="bedrooms" id="bedrooms" onChange={(e) => setSelect('bedrooms', e.target.value)}>
@@ -474,24 +491,74 @@ function ExtSearchBar(){
                                     Baños completos
                                 </li>
                                 <li>
-                                    <svg
-                                    viewBox="0 0 24 24"
-                                    fill="currentColor"
-                                    height="1.3em"
-                                    width="1.3em"
-                                    >
-                                    <path d="M12 12a3 3 0 103 3 3 3 0 00-3-3zm0 4a1 1 0 111-1 1 1 0 01-1 1zm-.71-6.29a1 1 0 00.33.21.94.94 0 00.76 0 1 1 0 00.33-.21L15 7.46A1 1 0 1013.54 6l-.54.59V3a1 1 0 00-2 0v3.59L10.46 6A1 1 0 009 7.46zM19 15a1 1 0 10-1 1 1 1 0 001-1zm1-7h-3a1 1 0 000 2h3a1 1 0 011 1v8a1 1 0 01-1 1H4a1 1 0 01-1-1v-8a1 1 0 011-1h3a1 1 0 000-2H4a3 3 0 00-3 3v8a3 3 0 003 3h16a3 3 0 003-3v-8a3 3 0 00-3-3zM5 15a1 1 0 101-1 1 1 0 00-1 1z" />
+    <svg
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        height="1.3em"
+        width="1.3em"
+    >
+        <path d="M19.2 17.41A6 6 0 0114.46 20c-2.68 0-5-2-6-5H14a1 1 0 000-2H8.05c0-.33-.05-.67-.05-1s0-.67.05-1H14a1 1 0 000-2H8.47c1-3 3.31-5 6-5a6 6 0 014.73 2.59 1 1 0 101.6-1.18A7.92 7.92 0 0014.46 2c-3.76 0-7 2.84-8.07 7H4a1 1 0 000 2h2.05v2H4a1 1 0 000 2h2.39c1.09 4.16 4.31 7 8.07 7a7.92 7.92 0 006.34-3.41 1 1 0 00-1.6-1.18z" />
+    </svg>
+    <div className="range-container">
+        <div className="range-inputs">
+            <input 
+                type="number" 
+                placeholder={'min'} 
+                onChange={(e) => {
+                    const value = Math.max(1, Math.min(10000000, Number(e.target.value) || 1));
+                    e.target.value = value;
+                    setSelect('minPrice', value);
+                }}
+                min="1"
+                max="10000000"
+                className="range-min"
+            />
+            <span>-</span>
+            <input 
+                type="number" 
+                placeholder={'max'} 
+                onChange={(e) => {
+                    const value = Math.max(1, Math.min(10000000, Number(e.target.value) || 10000000));
+                    e.target.value = value;
+                    setSelect('maxPrice', value);
+                }}
+                min="1"
+                max="10000000"
+                className="range-max"
+            />
+        </div>
+    </div>
+    Precio
+</li>
+                                <li>
+                                     <svg
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                        height="1.3em"
+                                        width="1.3em"
+                                        >
+                                        <path d="M20 9a1 1 0 001-1V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v1H9V4a1 1 0 00-1-1H4a1 1 0 00-1 1v4a1 1 0 001 1h1v6H4a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1v-1h6v1a1 1 0 001 1h4a1 1 0 001-1v-4a1 1 0 00-1-1h-1V9h1zm-3-4h2v2h-2V5zM5 5h2v2H5V5zm2 14H5v-2h2v2zm12 0h-2v-2h2v2zm-2-4h-1a1 1 0 00-1 1v1H9v-1a1 1 0 00-1-1H7V9h1a1 1 0 001-1V7h6v1a1 1 0 001 1h1v6z" />
                                     </svg>
-                                    <select name="min-price" id="min-price" onChange={(e) => setSelect('minPrice', e.target.value)}>
-                                        <option value="all" selected>Todos los precios</option>
-                                        {selectOptions.prices.map((price) => {
-                                            return(
-                                                <option value={price}>{price}</option>
-                                            )
-                                        })}
-                                    </select>
-                                    Precio mínimo
+                                    <div className="range-container">
+                                        <div className="range-inputs">
+                                            <input 
+                                                type="number" 
+                                                placeholder={'min'} 
+                                                onChange={(e) => setSelect('minSurface', e.target.value)}
+                                                className="range-min"
+                                            />
+                                            <span>-</span>
+                                            <input 
+                                                type="number" 
+                                                placeholder={'max'} 
+                                                onChange={(e) => setSelect('maxSurface', e.target.value)}
+                                                className="range-max"
+                                            />
+                                        </div>
+                                    </div>
+                                    Superficie
                                 </li>
+
                                 <li>
                                     <svg
                                     viewBox="0 0 24 24"
@@ -500,25 +567,6 @@ function ExtSearchBar(){
                                     width="1.3em"
                                     >
                                     <path d="M10.46 6l.54-.59V9a1 1 0 002 0V5.41l.54.55A1 1 0 0015 6a1 1 0 000-1.42l-2.29-2.29a1 1 0 00-.33-.21 1 1 0 00-.76 0 1 1 0 00-.33.21L9 4.54A1 1 0 0010.46 6zM12 12a3 3 0 103 3 3 3 0 00-3-3zm0 4a1 1 0 111-1 1 1 0 01-1 1zm-7-1a1 1 0 101-1 1 1 0 00-1 1zm14 0a1 1 0 10-1 1 1 1 0 001-1zm1-7h-4a1 1 0 000 2h4a1 1 0 011 1v8a1 1 0 01-1 1H4a1 1 0 01-1-1v-8a1 1 0 011-1h4a1 1 0 000-2H4a3 3 0 00-3 3v8a3 3 0 003 3h16a3 3 0 003-3v-8a3 3 0 00-3-3z" />
-                                    </svg>
-                                    <select name="max-price" id="max-price" onChange={(e) => setSelect('maxPrice', e.target.value)}>
-                                        <option value="all" selected>Todos los precios</option>
-                                        {selectOptions.prices.map((price) => {
-                                            return(
-                                                <option value={price}>{price}</option>
-                                            )
-                                        })}
-                                    </select>
-                                    Precio máximo
-                                </li>
-                                <li>
-                                    <svg
-                                    viewBox="0 0 24 24"
-                                    fill="currentColor"
-                                    height="1.3em"
-                                    width="1.3em"
-                                    >
-                                    <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-9 15v-4h1v-2.5c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2V14h1v4h3M8.5 8.5a1.25 1.25 0 100-2.5 1.25 1.25 0 000 2.5M18 11l-2.5-4-2.5 4h5m-5 2l2.5 4 2.5-4h-5z" />
                                     </svg>
                                     <select name="elevator" id="elevator" onChange={(e) => setSelect('elevator', e.target.value)}>
                                         <option value="all" selected>Seleccione una opción</option>
@@ -534,7 +582,7 @@ function ExtSearchBar(){
                                     height="1.3em"
                                     width="1.3em"
                                     >
-                                    <path d="M2 15c1.67-.75 3.33-1.5 5-1.83V5a3 3 0 013-3c1.31 0 2.42.83 2.83 2H10a1 1 0 00-1 1v1h5V5a3 3 0 013-3c1.31 0 2.42.83 2.83 2H17a1 1 0 00-1 1v9.94c2-.32 4-1.94 6-1.94v2c-2.22 0-4.44 2-6.67 2-2.22 0-4.44-2-6.66-2-2.23 0-4.45 1-6.67 2v-2m12-7H9v2h5V8m0 4H9v1c1.67.16 3.33 1.31 5 1.79V12M2 19c2.22-1 4.44-2 6.67-2 2.22 0 4.44 2 6.66 2 2.23 0 4.45-2 6.67-2v2c-2.22 0-4.44 2-6.67 2-2.22 0-4.44-2-6.66-2-2.23 0-4.45 1-6.67 2v-2z" />
+                                    <path d="M22 11v9h-2v-3H4v3H2V4h2v10h8V7h6a4 4 0 014 4zM8 13a3 3 0 110-6 3 3 0 010 6z" />
                                     </svg>
                                     <select name="pool" id="pool" onChange={(e) => setSelect('pool', e.target.value)}>
                                         <option value="all" selected>Seleccione una opción</option>
@@ -554,9 +602,8 @@ function ExtSearchBar(){
                                     height="1.3em"
                                     width="1.3em"
                                     >
-                                    <path d="M12 5a3 3 0 113 3m-3-3a3 3 0 10-3 3m3-3v1M9 8a3 3 0 103 3M9 8h1m5 0a3 3 0 11-3 3m3-3h-1m-2 3v-1" />
-                                    <path d="M14 8 A2 2 0 0 1 12 10 A2 2 0 0 1 10 8 A2 2 0 0 1 14 8 z" />
-                                    <path d="M12 10v12M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5zM12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5z" />
+                                    <path d="M22 12 A10 10 0 0 1 12 22 A10 10 0 0 1 2 12 A10 10 0 0 1 22 12 z" />
+                                    <path d="M9 17V7h4a3 3 0 010 6H9" />
                                     </svg>
                                     <select name="garden" id="garden" onChange={(e) => setSelect('garden', e.target.value)}>
                                         <option value="all" selected>Seleccione una opción</option>

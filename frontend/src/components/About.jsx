@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import Navbar from "./Navbar";
 import ValCard from "./ValCard";
 import Footer from "./Footer";
@@ -23,7 +24,9 @@ import teamCard2 from '../static/media/Leonardo_Phoenix_A_professionally_dressed
 import teamCard3 from '../static/media/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.png';
 import teamCard4 from '../static/media/Leonardo_Phoenix_A_highquality_professionally_lit_photograph_o_0.png';
 import ExtSearchBar from './ExtSearchBar'
+import WhatsAppButton from "./WhatsAppButton";
 function About(){
+    const { t } = useTranslation();
 
     const changePage = (e) =>{
         const buttons = document.querySelectorAll('#header-button-container button');
@@ -70,29 +73,26 @@ function About(){
             <div id="header-about-container">
                 <div id = "header-about-img-container"><img src={proper} alt="Property" /></div>
                 <div id = "header-about-text-container">
-                    <h1>¿Quiénes somos?</h1>
-                    <p>Somos un equipo dedicado de profesionales inmobiliarios comprometidos en ayudarte a encontrar la propiedad ideal. Con años de experiencia en el mercado, nos especializamos en bienes raíces residenciales y comerciales, brindando asesoramiento experto en cada etapa del proceso.</p>
+                    <h1>{t('about.title', 'Who we are?')}</h1>
+                    <p>{t('about.description', 'We are a dedicated team of real estate professionals committed to helping you find the ideal property. With years of experience in the market, we specialize in residential and commercial real estate, providing expert advice at every stage of the process.')}</p>
                     <div id = "header-button-container">
-                        <button id = "history-page-button" index = "0" style={{ backgroundColor: '#FE6D36' }} onClick = {changePage}>Nuestra Historia</button>
-                        <button id = "mission-page-button" index = "1" onClick = {changePage}>Nuestra Misión</button>
-                        <button id = "vision-page-button"  index = "2" onClick = {changePage}>Nuestra Visión</button>
-                        <button id = "val-page-button"  index = "3" onClick = {changePage}>Nuestros Valores</button>
-                        <button id = "filosofy-page-button"  index = "4" onClick = {changePage}>Filosofía Empresarial</button>
-                        <button id = "team-page-button"  index = "5" onClick = {changePage}>Nuestro Equipo</button>
+                        <button id = "history-page-button" index = "0" style={{ backgroundColor: '#FE6D36' }} onClick = {changePage}>{t('about.history.button')}</button>
+                        <button id = "mission-page-button" index = "1" onClick = {changePage}>{t('about.mission.button')}</button>
+                        <button id = "vision-page-button"  index = "2" onClick = {changePage}>{t('about.vision.button')}</button>
+                        <button id = "val-page-button"  index = "3" onClick = {changePage}>{t('about.values.button')}</button>
+                        <button id = "filosofy-page-button"  index = "4" onClick = {changePage}>{t('about.philosophy.button')}</button>
+                        <button id = "team-page-button"  index = "5" onClick = {changePage}>{t('about.team.button')}</button>
                     </div>
                 </div>
             </div>  
             <div id = "history-container" className="about-pag-container">
                     <img src={historyImg} alt="Property" />
-                    <p>
-                        Calu nació con una visión clara: revolucionar el mercado inmobiliario al ofrecer un servicio basado en la confianza, la dedicación y el compromiso con nuestros clientes. Desde nuestros inicios, hemos crecido gracias a la pasión por conectar personas con sus sueños inmobiliarios, comenzando como una pequeña agencia y expandiéndonos hasta convertirnos en un referente en la industria.
-                        A lo largo de los años, hemos ayudado a cientos de familias y empresas a encontrar el espacio ideal, acompañándolos en cada paso con un enfoque personalizado y una profunda comprensión del mercado. Nuestro éxito se basa en relaciones duraderas, construidas sobre una base de transparencia, experiencia y resultados.
-                    </p>
+                    <p>{t('about.history.text')}</p>
             </div>
             <div id = "mission-container" className="about-pag-container">
                 <img src={missionImg} alt="People chating" />
                 <div>
-                    <p>Nuestra misión es brindar soluciones inmobiliarias personalizadas que superen las expectativas de nuestros clientes. Nos comprometemos a ofrecer un servicio excepcional, guiado por la integridad, la confianza y el profesionalismo, ayudando a cada persona a encontrar la propiedad perfecta para sus necesidades. Nos esforzamos por ser un referente en el mercado, creando relaciones duraderas y proporcionando asesoría experta en cada etapa del proceso. Nuestro compromiso es brindar un enfoque integral, utilizando nuestra profunda comprensión del mercado y las últimas herramientas tecnológicas para garantizar que cada transacción sea eficiente, fluida y satisfactoria. </p>
+                    <p>{t('about.mission')}</p>
                     <div>
                         <img src={bubblePic1} alt="Property" />
                         <img src={caljLogo} alt="CalJ Logo" />
@@ -111,36 +111,36 @@ function About(){
                 <img src={visProp1} alt="Property" />
                 <div>
                     <img src={visCrew}  alt="Crew" />
-                    <p><b>Nuestra visión</b> es ser líderes en el sector inmobiliario, reconocidos por ofrecer soluciones innovadoras y un servicio excepcional que genera valor duradero para nuestros clientes.</p>
+                    <p><b>{t('about.vision')}</b></p>
                 </div>
                 <img src={visProp2}  alt="Property" />
             </div>
             <div id = "val-container" className="about-pag-container">
                 <ValCard
                     img = {valCrew1}
-                    title = "Integridad"
-                    text = "Actuamos con transparencia y ética en cada transacción"
+                    title = {t('about.values.integrity.title')}
+                    text = {t('about.values.integrity.text')}
                 />
                 <ValCard
                     img = {valCrew2}
-                    title = "Excelencia"
-                    text = "Ofreciendo un servicio de alta calidad y soluciones personalizadas"
+                    title = {t('about.values.excellence.title')}
+                    text = {t('about.values.excellence.text')}
                 />
                 <ValCard
                     img = {valCrew3}
-                    title = "Innovación"
-                    text = "Ofrecemos soluciones creativas en el mercado inmobiliario"
+                    title = {t('about.values.innovation.title')}
+                    text = {t('about.values.innovation.text')}
                 />
                 <ValCard
                     img = {valCrew4}
-                    title = "Compromiso"
-                    text = "Construimos relaciones a largo plazo con nuestros clientes"
+                    title = {t('about.values.commitment.title')}
+                    text = {t('about.values.commitment.text')}
                 />
             </div>
             <div id = "filosofy-container" className="about-pag-container">
                 <div>
                     <img src={livingRoom} alt="Living Room" />
-                    <p>En Calu creemos en construir relaciones basadas en confianza y respeto, ofreciendo soluciones innovadoras con integridad y compromiso para generar un impacto positivo en nuestros clientes y comunidades.</p>
+                    <p>{t('about.philosophy')}</p>
                 </div>
             </div>
             <div id = "team-container" className="about-pag-container">
@@ -148,32 +148,33 @@ function About(){
                         <img src={valCrew2} alt="Michael Thompson" />
                         <div>
                             <h3>Michael Thompson</h3>
-                            <span>CEO de Calu</span>
+                            <span>{t('about.team.ceo')}</span>
                         </div>
                     </div>
                     <div className = "team-card">
                         <img src={teamCard2} alt="Ana María Chiva Rodríguez" />
                         <div>
                             <h3>Ana María Chiva Rodríguez</h3>
-                            <span>CEO de Calu</span>
+                            <span>{t('about.team.ceo')}</span>
                         </div>
                     </div>
                     <div className = "team-card">
                         <img src={teamCard3} alt="Michael Thompson" />
                         <div>
                             <h3>Michael Thompson</h3>
-                            <span>CEO de Calu</span>
+                            <span>{t('about.team.ceo')}</span>
                         </div>
                     </div>
                     <div className = "team-card">
                         <img src={teamCard4} alt="Ana María Chiva Rodríguez" />
                         <div>
                             <h3>Ana María Chiva Rodríguez</h3>
-                            <span>CEO de Calu</span>
+                            <span>{t('about.team.ceo')}</span>
                         </div>
                     </div>
             </div>
             <Footer/>
+            <WhatsAppButton />
         </>
     );
 }
