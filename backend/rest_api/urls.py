@@ -28,6 +28,6 @@ router.register(r'faqs', FaqViewSet)
 
 urlpatterns = [
     path('admin/', admin_site.urls),  # Usar el admin site personalizado
-    path('api/', include(router.urls)),
+    path('api/v1/', include(router.urls)),
     path('api/login/', LoginView.as_view(), name='login'),
 ]
