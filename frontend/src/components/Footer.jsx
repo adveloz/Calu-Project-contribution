@@ -31,11 +31,11 @@ function Footer(){
                 </ul>
             </div>
             <ul id = "social-media">
-                <li><img src={facebook} alt="Facebook" /></li>
-                <li><img src={instagram} alt="Instagram" /></li>
-                <li><img src={tiktok} alt="TikTok" /></li>
-                <li><img src={linkedin} alt="LinkedIn" /></li>
-                <li><img src={youtube} alt="YouTube" /></li>
+                <li><a href="https://www.facebook.com/calurealestate" target="_blank" rel="noopener noreferrer"><img src={facebook} alt="Facebook" /></a></li>
+                <li><a href="https://www.instagram.com/inmobiliaria_calu" target="_blank" rel="noopener noreferrer"><img src={instagram} alt="Instagram" /></a></li>
+                {/* <li><img src={tiktok} alt="TikTok" /></li> */}
+                {/* <li><img src={linkedin} alt="LinkedIn" /></li> */}
+                {/* <li><img src={youtube} alt="YouTube" /></li> */}
             </ul>
             <h5 id = "copyright-tablet">© 2025CalJ. All rights reserved.</h5>
         </div>
