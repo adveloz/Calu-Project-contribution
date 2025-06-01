@@ -136,9 +136,9 @@
         line-height: 5vw;
         margin: 2vw;
     }
-    #property-card-picture{
+    /* #property-card-picture{
         height: 50%;
-    }
+    } */
     #property-card-picture img{
         border-radius: 3vw;
     }

@@ -16,9 +16,10 @@ import visProp1 from "../static/media/Group 35022.png";
 import visProp2 from "../static/media/Group 35023.png";
 import visCrew from '../static/media/Leonardo_Phoenix_A_warm_and_inviting_photograph_showcasing_a_d_1.png';
 import valCrew1 from '../static/media/Leonardo_Phoenix_A_warm_and_inviting_photograph_showcasing_a_d_2.png';
-import valCrew2 from '../static/media/Leonardo_Phoenix_A_group_of_three_confident_and_charismatic_re_1.png';
+import valCrew2 from '../static/media/carla_foto2.png';
 import valCrew3 from '../static/media/ai-generated-9030608.png';
 import valCrew4 from '../static/media/cowomen-hz-6prUpVss-unsplash.png';
+import valCrew5 from '../static/media/Leonardo_Phoenix_A_group_of_three_confident_and_charismatic_re_1.png';
 import livingRoom from '../static/media/nathan-fertig-FBXuXp57eM0-unsplash.png';
 import teamCard2 from '../static/media/Leonardo_Phoenix_A_professionally_dressed_real_estate_agent_wi_2.png';
 import teamCard3 from '../static/media/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.png';
@@ -123,8 +124,8 @@ function About(){
                 />
                 <ValCard
                     img = {valCrew2}
-                    title = {t('about.values.excellence.title')}
-                    text = {t('about.values.excellence.text')}
+                    title = "Excelencia"
+                    text = "Ofreciendo un servicio de alta calidad y soluciones personalizadas"
                 />
                 <ValCard
                     img = {valCrew3}
@@ -145,13 +146,13 @@ function About(){
             </div>
             <div id = "team-container" className="about-pag-container">
                     <div className = "team-card">
-                        <img src={valCrew2} alt="Michael Thompson" />
+                        <img src={valCrew2} alt="Carla Lunardi" />
                         <div>
-                            <h3>Michael Thompson</h3>
-                            <span>{t('about.team.ceo')}</span>
+                            <h3>Carla Lunardi</h3>
+                            <span>CEO de Calu</span>
                         </div>
                     </div>
-                    <div className = "team-card">
+                    {/* <div className = "team-card">
                         <img src={teamCard2} alt="Ana María Chiva Rodríguez" />
                         <div>
                             <h3>Ana María Chiva Rodríguez</h3>
@@ -171,7 +172,7 @@ function About(){
                             <h3>Ana María Chiva Rodríguez</h3>
                             <span>{t('about.team.ceo')}</span>
                         </div>
-                    </div>
+                    </div> */}
             </div>
             <Footer/>
             <WhatsAppButton />
