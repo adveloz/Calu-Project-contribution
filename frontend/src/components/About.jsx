@@ -16,7 +16,7 @@ import visProp1 from "../static/media/Group 35022.png";
 import visProp2 from "../static/media/Group 35023.png";
 import visCrew from '../static/media/Leonardo_Phoenix_A_warm_and_inviting_photograph_showcasing_a_d_1.png';
 import valCrew1 from '../static/media/Leonardo_Phoenix_A_warm_and_inviting_photograph_showcasing_a_d_2.png';
-import valCrew2 from '../static/media/carla_foto2.png';
+import valCrew2 from '../static/media/Leonardo_Phoenix_A_group_of_three_confident_and_charismatic_re_1.png';
 import valCrew3 from '../static/media/ai-generated-9030608.png';
 import valCrew4 from '../static/media/cowomen-hz-6prUpVss-unsplash.png';
 import valCrew5 from '../static/media/Leonardo_Phoenix_A_group_of_three_confident_and_charismatic_re_1.png';
