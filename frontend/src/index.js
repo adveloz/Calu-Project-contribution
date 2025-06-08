@@ -14,26 +14,12 @@ import PropView from './components/PropView';
 import AdminSite from './components/AdminSite';
 import Login from './components/Login';
 import './i18n';
-import GoogleTranslate from './components/GoogleTranslate';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const isSmallScreen = window.innerWidth < 1000;
 console.log(isSmallScreen)
 root.render(
   <React.StrictMode>
-
-<div style={{
-  position: "fixed",
-  top: isSmallScreen ? "0px" : "35px",
-  right: "20px",
-  zIndex: 9999,
-  backgroundColor: 'transparent',
-  borderRadius: '4px',
-  padding: '5px',
-}}>
-  <GoogleTranslate />
-</div>
-
 
     <Router>
       <Routes>
