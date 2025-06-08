@@ -23,12 +23,10 @@ root.render(
   <React.StrictMode>
 
 <div style={{
-  position: "fixed",
-  top: isSmallScreen ? "0px" : "35px",
-  right: "20px",
+  display: 'flex',
+  justifyContent: 'flex-end',
   zIndex: 9999,
   backgroundColor: 'transparent',
-  borderRadius: '4px',
   padding: '5px',
 }}>
   <GoogleTranslate />
