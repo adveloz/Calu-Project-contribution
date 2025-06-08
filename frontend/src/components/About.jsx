@@ -24,6 +24,7 @@ import livingRoom from '../static/media/nathan-fertig-FBXuXp57eM0-unsplash.png';
 import teamCard2 from '../static/media/Leonardo_Phoenix_A_professionally_dressed_real_estate_agent_wi_2.png';
 import teamCard3 from '../static/media/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.png';
 import teamCard4 from '../static/media/Leonardo_Phoenix_A_highquality_professionally_lit_photograph_o_0.png';
+import Carlalunardi from '../static/media/carla_foto2.png';
 import ExtSearchBar from './ExtSearchBar'
 import WhatsAppButton from "./WhatsAppButton";
 function About(){
@@ -146,7 +147,7 @@ function About(){
             </div>
             <div id = "team-container" className="about-pag-container">
                     <div className = "team-card">
-                        <img src={valCrew2} alt="Carla Lunardi" />
+                        <img src={Carlalunardi} alt="Carla Lunardi" />
                         <div>
                             <h3>Carla Lunardi</h3>
                             <span>CEO de Calu</span>
