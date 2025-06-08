@@ -83,6 +83,24 @@
     transform: scale(1.2);
 }
 
+.nav-translate {
+    display: flex;
+    align-items: center;
+    margin-left: 2vw;
+}
+
+@media (max-width: 768px) {
+    .nav-translate {
+        margin-left: 1.5vw;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-translate {
+        margin-left: 1vw;
+    }
+}
+
 @media screen and (max-width: 580px){
     #bars{
         display: inline-block;
